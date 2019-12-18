@@ -43,4 +43,13 @@ X.add([0])
 X.add([1])
 X.add([0,1])
 X.print_summary()
+X.boundary(1).print() 
+```
+
+## CSCMatrix
+
+```python
+A = bats.CSCMatrix(2,2,[0,1,2],[0,1],[-1,-1])
+A.print() # prints matrix
+A(0,0) # returns -1
 ```
