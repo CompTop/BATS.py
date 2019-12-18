@@ -5,6 +5,11 @@ Python bindings for the BATS library
 conda create -n bats python=3
 ```
 
+clone repository *use recursive option for submodules*
+```bash
+git clone --recursive git@github.com:bnels/BATS.py.git
+```
+
 
 ## Development
 
