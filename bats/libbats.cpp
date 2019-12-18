@@ -3,14 +3,38 @@
 #include <pybind11/stl_bind.h>
 #include <bats.h>
 #include <vector>
+#include <iostream>
 
 namespace py = pybind11;
 
 using IntVec = SparseVector<int, size_t>;
 using IntMat = ColumnMatrix<IntVec>;
+using F2 = ModP<int, 2>;
+using F3 = ModP<int, 3>;
+using F3 = ModP<int, 5>;
+
+// interface of common functions between F2 and other modP
+#define BasicModPInterface(F, name) py::class_<F>(m, name)\
+.def(py::init<>())\
+.def(py::init<int>())\
+.def("__add__", &F::operator+)\
+.def("__mul__", &F::operator*)\
+.def("__sub__", py::overload_cast<const F&>(&F::operator-, py::const_))\
+.def("__truediv__", &F::operator/)\
+.def("__str__", &F::str)
+
+// interface for everything other than F2
+#define ModPInterface(F, name) BasicModPInterface(F, name)\
+.def("__neg__", py::overload_cast<>(&F3::operator-, py::const_));
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
+
+    BasicModPInterface(F2, "F2")
+        .def("__neg__", py::overload_cast<>(&F2::operator-));
+
+    ModPInterface(F3, "F3")
+    ModPInterface(F5, "F5")
 
     py::class_<IntVec>(m, "IntVector")
         .def(py::init<>())
