@@ -27,3 +27,20 @@ pull and update submodules
 ```bash
 git pull --recurse-submodules
 ```
+
+# Interface
+
+You can load BATS via
+```python
+import bats
+````
+
+## SimplicialComplex
+
+```python
+X = bats.SimplicialComplex()
+X.add([0])
+X.add([1])
+X.add([0,1])
+X.print_summary()
+```
