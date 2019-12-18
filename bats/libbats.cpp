@@ -18,6 +18,9 @@ using V2 = SparseVector<F2, size_t>;
 using V3 = SparseVector<F3, size_t>;
 using V5 = SparseVector<F5, size_t>;
 
+using M2 = ColumnMatrix<V2>;
+using M3 = ColumnMatrix<V3>;
+
 // interface of common functions between F2 and other modP
 #define BasicModPInterface(F, name) py::class_<F>(m, name)\
 .def(py::init<>())\
@@ -41,6 +44,11 @@ using V5 = SparseVector<F5, size_t>;
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\
 .def("print", &ColumnMatrix<VT>::print);
+
+#define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const SimplicialComplex&>())\
+.def("__getitem__", &ChainComplex<MT>::operator[]);
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
@@ -85,4 +93,7 @@ PYBIND11_MODULE(libbats, m) {
         .def(py::init<size_t>())
         .def("__getitem__", py::overload_cast<size_t>(&CellularMap::operator[], py::const_))\
         .def("__setitem__", py::overload_cast<size_t>(&CellularMap::operator[]));
+
+    ChainComplexInterface(M2, "F2ChainComplex")
+    ChainComplexInterface(M3, "F3ChainComplex")
 }
