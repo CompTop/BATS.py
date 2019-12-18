@@ -38,7 +38,9 @@ using M3 = ColumnMatrix<V3>;
 #define SparseVectorInterface(F, name) py::class_<SparseVector<F, size_t>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const std::vector<size_t>&, const std::vector<F>&>())\
+.def("__getitem__", py::overload_cast<size_t>(&SparseVector<F, size_t>::getval, py::const_))\
 .def("print", &SparseVector<F, size_t>::print);
+// .def("__getitem__", (F (SparseVector<F, size_t>::*)(size_t))(&SparseVector<F, size_t>::operator[]))
 
 #define ColumnMatrixInterface(VT, name) py::class_<ColumnMatrix<VT>>(m, name)\
 .def(py::init<>())\
@@ -49,6 +51,14 @@ using M3 = ColumnMatrix<V3>;
 .def(py::init<>())\
 .def(py::init<const SimplicialComplex&>())\
 .def("__getitem__", &ChainComplex<MT>::operator[]);
+
+#define ReducedChainComplexInterface(MT, name) py::class_<ReducedChainComplex<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const ChainComplex<MT>&>())\
+.def("hdim", &ReducedChainComplex<MT>::hdim)\
+.def("get_preferred_representative", &ReducedChainComplex<MT>::get_preferred_representative)\
+.def("find_preferred_representative", &ReducedChainComplex<MT>::find_preferred_representative)\
+.def("maxdim", &ReducedChainComplex<MT>::maxdim);
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
@@ -96,4 +106,7 @@ PYBIND11_MODULE(libbats, m) {
 
     ChainComplexInterface(M2, "F2ChainComplex")
     ChainComplexInterface(M3, "F3ChainComplex")
+
+    ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
+    ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
 }
