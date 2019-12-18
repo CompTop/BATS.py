@@ -86,7 +86,8 @@ PYBIND11_MODULE(libbats, m) {
 
     py::class_<cell_ind>(m, "cell_ind")
         .def(py::init<>())
-        .def(py::init<size_t, size_t>());
+        .def(py::init<size_t, size_t>())
+        .def("__str__", &cell_ind::str);
 
     py::class_<SimplicialComplex>(m, "SimplicialComplex")
         .def(py::init<>())
