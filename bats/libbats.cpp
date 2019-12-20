@@ -60,6 +60,33 @@ using M3 = ColumnMatrix<V3>;
 .def("find_preferred_representative", &ReducedChainComplex<MT>::find_preferred_representative)\
 .def("maxdim", &ReducedChainComplex<MT>::maxdim);
 
+#define FilteredSimplicialComplexInterface(T, name) py::class_<Filtration<T, SimplicialComplex>>(m, name)\
+.def(py::init<>())\
+.def("add", (cell_ind (Filtration<T, SimplicialComplex>::*)(T, std::vector<size_t>&))(&Filtration<T, SimplicialComplex>::add))\
+.def("complex", &Filtration<T, SimplicialComplex>::complex)\
+.def("vals", py::overload_cast<>(&Filtration<T, SimplicialComplex>::vals, py::const_));
+
+#define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const Filtration<T, SimplicialComplex>&>());
+
+#define ReducedFilteredChainComplexInterface(T, MT, name) py::class_<ReducedFilteredChainComplex<T, MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const FilteredChainComplex<T, MT>&>())\
+.def("dim", &ReducedFilteredChainComplex<T, MT>::dim)\
+.def("maxdim", &ReducedFilteredChainComplex<T, MT>::maxdim)\
+.def("representative", &ReducedFilteredChainComplex<T, MT>::representative )\
+.def("persistence_pairs", &ReducedFilteredChainComplex<T, MT>::persistence_pairs);
+
+#define PersistencePairInterface(T, name) py::class_<PersistencePair<T>>(m, name)\
+.def(py::init<>())\
+.def(py::init<size_t, size_t, size_t, T, T>())\
+.def("dim", &PersistencePair<T>::get_dim)\
+.def("birth_ind", &PersistencePair<T>::get_birth_ind)\
+.def("death_ind", &PersistencePair<T>::get_death_ind)\
+.def("birth", &PersistencePair<T>::get_birth)\
+.def("death", &PersistencePair<T>::get_death);
+
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
 
@@ -99,6 +126,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("boundary", &SimplicialComplex::boundary_csc)
         .def("print_summary", &SimplicialComplex::print_summary);
 
+    FilteredSimplicialComplexInterface(double, "FilteredSimplicialComplex")
+
     py::class_<CellularMap>(m, "CellularMap")
         .def(py::init<>())
         .def(py::init<size_t>())
@@ -110,4 +139,12 @@ PYBIND11_MODULE(libbats, m) {
 
     ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
+
+    FilteredChainComplexInterface(double, M2, "FilteredF2ChainComplex")
+    FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
+
+    ReducedFilteredChainComplexInterface(double, M2, "ReducedFilteredF2ChainComplex")
+    ReducedFilteredChainComplexInterface(double, M3, "ReducedFilteredF3ChainComplex")
+
+    PersistencePairInterface(double, "PersistencePair")
 }
