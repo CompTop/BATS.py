@@ -105,11 +105,11 @@ using F3ChainMap = ChainMap<M3>;
 .def("set_node", (void (Diagram<NT, ET>::*)(size_t, NT&))(&Diagram<NT, ET>::set_node))\
 .def("set_edge", (void (Diagram<NT, ET>::*)(size_t, size_t, size_t, ET&))(&Diagram<NT, ET>::set_edge));
 
+using CoverDiagram = Diagram<bats::Cover, std::vector<size_t>>;
 using SetDiagram = Diagram<std::set<size_t>, std::vector<size_t>>;
 using SimplicialComplexDiagram = Diagram<SimplicialComplex, CellularMap>;
 using F2ChainDiagram = Diagram<F2ChainComplex, F2ChainMap>;
 using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;
-
 
 #define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
 
@@ -179,10 +179,14 @@ PYBIND11_MODULE(libbats, m) {
 
     PersistencePairInterface(double, "PersistencePair")
 
+    DiagramInterface(bats::Cover, std::vector<size_t>, "CoverDiagram")
     DiagramInterface(std::set<size_t>, std::vector<size_t>, "SetDiagram")
     DiagramInterface(SimplicialComplex, CellularMap, "SimplicialComplexDiagram")
     DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
     DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
+
+    // NerveFunctor
+    m.def("Nerve", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
 
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")

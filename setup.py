@@ -24,6 +24,14 @@ ext_modules = [
         extra_link_args=["-lgomp"],
         language='c++'
     ),
+    Extension(
+        'bats.topology',
+        ['bats/topology.cpp'],
+        include_dirs=include_dirs,
+        extra_compile_args=extra['cxx'],
+        extra_link_args=["-lgomp"],
+        language='c++'
+    ),
 ]
 
 
