@@ -52,6 +52,18 @@ using M3 = ColumnMatrix<V3>;
 .def(py::init<const SimplicialComplex&>())\
 .def("__getitem__", &ChainComplex<MT>::operator[]);
 
+using F2ChainComplex = ChainComplex<M2>;
+using F3ChainComplex = ChainComplex<M3>;
+
+#define ChainMapInterface(MT, name) py::class_<ChainMap<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const CellularMap&>())\
+.def("__getitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[]));
+
+using F2ChainMap = ChainMap<M2>;
+using F3ChainMap = ChainMap<M3>;
+
 #define ReducedChainComplexInterface(MT, name) py::class_<ReducedChainComplex<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const ChainComplex<MT>&>())\
@@ -86,6 +98,20 @@ using M3 = ColumnMatrix<V3>;
 .def("death_ind", &PersistencePair<T>::get_death_ind)\
 .def("birth", &PersistencePair<T>::get_birth)\
 .def("death", &PersistencePair<T>::get_death);
+
+#define DiagramInterface(NT, ET, name) py::class_<Diagram<NT, ET>>(m, name)\
+.def(py::init<>())\
+.def(py::init<size_t, size_t>())\
+.def("set_node", (void (Diagram<NT, ET>::*)(size_t, NT&))(&Diagram<NT, ET>::set_node))\
+.def("set_edge", (void (Diagram<NT, ET>::*)(size_t, size_t, size_t, ET&))(&Diagram<NT, ET>::set_edge));
+
+using SetDiagram = Diagram<std::set<size_t>, std::vector<size_t>>;
+using SimplicialComplexDiagram = Diagram<SimplicialComplex, CellularMap>;
+using F2ChainDiagram = Diagram<F2ChainComplex, F2ChainMap>;
+using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;
+
+
+#define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
@@ -134,8 +160,13 @@ PYBIND11_MODULE(libbats, m) {
         .def("__getitem__", py::overload_cast<size_t>(&CellularMap::operator[], py::const_))\
         .def("__setitem__", py::overload_cast<size_t>(&CellularMap::operator[]));
 
+    m.def("SimplicialMap", &SimplicialMap);
+
     ChainComplexInterface(M2, "F2ChainComplex")
     ChainComplexInterface(M3, "F3ChainComplex")
+
+    ChainMapInterface(M2, "F2ChainMap")
+    ChainMapInterface(M3, "F3ChainMap")
 
     ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
@@ -147,4 +178,12 @@ PYBIND11_MODULE(libbats, m) {
     ReducedFilteredChainComplexInterface(double, M3, "ReducedFilteredF3ChainComplex")
 
     PersistencePairInterface(double, "PersistencePair")
+
+    DiagramInterface(std::set<size_t>, std::vector<size_t>, "SetDiagram")
+    DiagramInterface(SimplicialComplex, CellularMap, "SimplicialComplexDiagram")
+    DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
+    DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
+
+    ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
+    ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
 }
