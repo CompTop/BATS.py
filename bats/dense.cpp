@@ -30,7 +30,7 @@ PYBIND11_MODULE(dense, m) {
 	        if (info.ndim != 2)
 	            throw std::runtime_error("Incompatible buffer dimension!");
 
-	        new (&m) Matrix<double>(info.shape[1], info.shape[0], (double*) info.ptr);
+	        new (&m) Matrix<double>(info.shape[0], info.shape[1], (double*) info.ptr);
 	    })
 		.def("print", &Matrix<double>::print)
 		.def("__str__", &Matrix<double>::str)

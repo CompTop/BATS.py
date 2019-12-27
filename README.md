@@ -74,3 +74,20 @@ X.add([0,1])
 C2 = bats.F2ChainComplex(X)
 C3 = bats.F3ChainComplex(X)
 ```
+
+## Dense Matrices
+
+
+
+BATS dense matrices are by default stored in column major order.  For numpy compatibility, use the
+`order='F'` flag when initializing an array to pass to BATS.  
+
+```python
+import bats
+import numpy as np
+Bnp = np.array([[0,1,2],[3,4,5]], dtype=np.float, order='F')
+B = bats.DenseDoubleMatrix(Bnp)
+Bnp2 = np.array(B)
+```
+
+You can check `Bnp.flags` to see `C_CONTIGUOUS : False, F_CONTIGUOUS : True`
