@@ -1,5 +1,9 @@
 # BATS.py
-Python bindings for the BATS library
+Python bindings for the [BATS library](https://github.com/bnels/BATS).
+
+Note that the C++ repository is the main library, and contains more features.  This repository provides bindings for a subset of the functionality of BATS, and is under active development.
+
+## Setup
 
 ```bash
 conda create -n bats python=3
