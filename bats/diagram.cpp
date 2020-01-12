@@ -25,6 +25,9 @@ PYBIND11_MODULE(diagram, m) {
 	// NerveFunctor
     m.def("Nerve", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
 
+	// RipsFunctor
+	// m.def("Rips", (SimplicialComplexDiagram (const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips));
+
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
 

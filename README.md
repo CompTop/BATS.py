@@ -79,9 +79,25 @@ C2 = bats.F2ChainComplex(X)
 C3 = bats.F3ChainComplex(X)
 ```
 
+## Reduced Chain Complex
+
+```python
+R2 = bats.ReducedF2ChainComplex(C2)
+
+R2.hdim(1) # = 1
+
+v = bats.F2Vector([1], [bats.F2(1)])
+print(v[0], v[1], v[2]) # 0 1 0
+
+R2.find_preferred_representative(v, 0)
+print(v[0], v[1], v[2]) # 1 0 0
+
+# get preferred rep for first basis element in dim 0
+v = R2.get_preferred_representative(0,0)
+print(v[0], v[1], v[2]) # 1 0 0
+```
+
 ## Dense Matrices
-
-
 
 BATS dense matrices are by default stored in column major order.  For numpy compatibility, use the
 `order='F'` flag when initializing an array to pass to BATS.  
@@ -95,3 +111,55 @@ Bnp2 = np.array(B)
 ```
 
 You can check `Bnp.flags` to see `C_CONTIGUOUS : False, F_CONTIGUOUS : True`
+
+# Diagrams
+
+Several Types of diagrams are available for use
+```python
+import bats
+
+c1 = [{0,1}, {1,2}]
+c2 = [{0,2}, {0,1}]
+c3, f1, f2 = bats.bivariate_cover(c1, c2)
+
+D = bats.CoverDiagram(3,2)
+D.set_node(0, c1)
+D.set_node(1, c3)
+D.set_node(2, c2)
+D.set_edge(0, 1, 0, f1)
+D.set_edge(1, 1, 2, f2)
+
+# Nerve Functor applied to cover diagram
+ND = bats.Nerve(D, 0)
+
+# F2 Chain functor applied to diagram of spaces
+bats.F2Chain(ND)
+
+```
+
+# Filtrations
+
+BATS also exposes functionality for filtered verisons of `SimplicialComplex`, `ChainComplex`, and `ReducedChainComplex`
+
+```python
+import bats
+
+# create FilteredSimplicialComplex
+F = bats.FilteredSimplicialComplex()
+F.add(0.0, [0])
+F.add(0.0, [1])
+F.add(0.0, [2])
+F.add(1.0, [0,1])
+F.add(1.0, [0,2])
+F.add(1.0, [1,2])
+
+FC2 = bats.FilteredF2ChainComplex(F)
+
+RFC2 = bats.ReducedFilteredF2ChainComplex(FC2)
+
+# H1, first generator
+p = RFC2.persistence_pairs(1)[0]
+
+# extract a homology representative for the generator
+v = RFC2.representative(p)
+```
