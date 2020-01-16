@@ -23,6 +23,7 @@ namespace py = pybind11;
 #define SparseVectorInterface(F, name) py::class_<SparseVector<F, size_t>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const std::vector<size_t>&, const std::vector<F>&>())\
+.def("nzinds", &SparseVector<F, size_t>::nzinds)\
 .def("__getitem__", py::overload_cast<size_t>(&SparseVector<F, size_t>::getval, py::const_))\
 .def("print", &SparseVector<F, size_t>::print);
 // .def("__getitem__", (F (SparseVector<F, size_t>::*)(size_t))(&SparseVector<F, size_t>::operator[]))
