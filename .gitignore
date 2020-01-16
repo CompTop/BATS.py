@@ -2,3 +2,6 @@ build
 *.so
 __pycache__
 *.ipynb
+*.egg-info
+dist
+files.txt

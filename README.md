@@ -14,6 +14,10 @@ clone repository *use recursive option for submodules*
 git clone --recursive git@github.com:bnels/BATS.py.git
 ```
 
+```bash
+python setup.py install
+```
+
 
 ## Development
 

@@ -56,6 +56,7 @@ setup(
     version=__version__,
     author='Brad Nelson',
     author_email='bradnelson@stanford.edu',
+    packages=['bats',],
     ext_modules=ext_modules,
     zip_safe=False
 )

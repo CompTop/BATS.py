@@ -10,11 +10,19 @@ namespace py = pybind11;
 #define MetricInterface(M, name) py::class_<M>(m, name)\
 .def(py::init<>());
 
+
+#define FilteredEdgeInterface(T, name) py::class_<filtered_edge<T>>(m, name)\
+.def(py::init<>())\
+.def(py::init<size_t, size_t, T>());
+
+
 PYBIND11_MODULE(topology, m) {
 
 	MetricInterface(Euclidean, "Euclidean")
 	MetricInterface(L1Dist, "L1Dist")
 	MetricInterface(LInfDist, "LInfDist")
+
+	FilteredEdgeInterface(double, "FilteredEdge")
 
 	m.def("bivariate_cover", &bivariate_cover);
 
@@ -23,5 +31,8 @@ PYBIND11_MODULE(topology, m) {
 		.def(py::init<const Matrix<double>& >())
 		.def("size", &DataSet<double>::size)
 		.def("dim", &DataSet<double>::dim);
+
+	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
+	m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&RipsFiltration));
 
 }

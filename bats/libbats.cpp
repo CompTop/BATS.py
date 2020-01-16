@@ -55,7 +55,9 @@ namespace py = pybind11;
 .def(py::init<>())\
 .def("add", (cell_ind (Filtration<T, SimplicialComplex>::*)(T, std::vector<size_t>&))(&Filtration<T, SimplicialComplex>::add))\
 .def("complex", &Filtration<T, SimplicialComplex>::complex)\
-.def("vals", py::overload_cast<>(&Filtration<T, SimplicialComplex>::vals, py::const_));
+.def("maxdim", &Filtration<T, SimplicialComplex>::maxdim)\
+.def("vals", py::overload_cast<size_t>(&Filtration<T, SimplicialComplex>::vals, py::const_))\
+.def("all_vals", py::overload_cast<>(&Filtration<T, SimplicialComplex>::vals, py::const_));
 
 #define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
@@ -76,7 +78,8 @@ namespace py = pybind11;
 .def("birth_ind", &PersistencePair<T>::get_birth_ind)\
 .def("death_ind", &PersistencePair<T>::get_death_ind)\
 .def("birth", &PersistencePair<T>::get_birth)\
-.def("death", &PersistencePair<T>::get_death);
+.def("death", &PersistencePair<T>::get_death)\
+.def("__str__", &PersistencePair<T>::str);
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
@@ -115,6 +118,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("add", (cell_ind (SimplicialComplex::*)(std::vector<size_t>&))( &SimplicialComplex::add ), "add simplex")
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&SimplicialComplex::find_idx))
         .def("boundary", &SimplicialComplex::boundary_csc)
+        .def("get_simplex", &SimplicialComplex::get_simplex)
+        .def("get_simplices", &SimplicialComplex::get_simplices)
         .def("print_summary", &SimplicialComplex::print_summary);
 
     FilteredSimplicialComplexInterface(double, "FilteredSimplicialComplex")
