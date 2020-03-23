@@ -57,6 +57,7 @@ namespace py = pybind11;
 .def("add", (cell_ind (Filtration<T, SimplicialComplex>::*)(T, std::vector<size_t>&))(&Filtration<T, SimplicialComplex>::add))\
 .def("complex", &Filtration<T, SimplicialComplex>::complex)\
 .def("maxdim", &Filtration<T, SimplicialComplex>::maxdim)\
+.def("ncells", &Filtration<T, SimplicialComplex>::ncells)\
 .def("vals", py::overload_cast<size_t>(&Filtration<T, SimplicialComplex>::vals, py::const_))\
 .def("all_vals", py::overload_cast<>(&Filtration<T, SimplicialComplex>::vals, py::const_));
 
