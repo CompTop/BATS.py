@@ -34,6 +34,7 @@ PYBIND11_MODULE(topology, m) {
 
 	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&RipsFiltration));
+	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
 	m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const Euclidean&, double, size_t))(&RipsFiltration));
 
 	m.def("greedy_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t, const Euclidean&, const size_t))(&greedy_landmarks));
