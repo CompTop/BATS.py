@@ -30,13 +30,18 @@ PYBIND11_MODULE(topology, m) {
 		.def(py::init<>())
 		.def(py::init<const Matrix<double>& >())
 		.def("size", &DataSet<double>::size)
+		.def("data", &DataSet<double>::get_data)
 		.def("dim", &DataSet<double>::dim);
 
 	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&RipsFiltration));
 	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
 	m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const Euclidean&, double, size_t))(&RipsFiltration));
+	m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&DowkerFiltration));
 
 	m.def("greedy_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t, const Euclidean&, const size_t))(&greedy_landmarks));
 	m.def("landmark_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, const size_t))(&landmark_cover));
+
+	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
+	m.def("force_repel_rp", (void (*)(DataSet<double>&, double))(&force_repel_rp));
 }

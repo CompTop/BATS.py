@@ -18,7 +18,8 @@ PYBIND11_MODULE(dense, m) {
 		.def("ncol", &Matrix<double>::ncol)
 		.def("__call__", py::overload_cast<int, int>(&Matrix<double>::operator(), py::const_))
 		.def("__init__", [](Matrix<double> &m, py::buffer b) {
-			// WARNING: this has the side-effect of transposing the matrix
+			// WARNING: this has the side-effect of transposing the matrix if not
+			// in row major order
 
 	        /* Request a buffer descriptor from Python */
 	        py::buffer_info info = b.request();
@@ -30,7 +31,16 @@ PYBIND11_MODULE(dense, m) {
 	        if (info.ndim != 2)
 	            throw std::runtime_error("Incompatible buffer dimension!");
 
-	        new (&m) Matrix<double>(info.shape[0], info.shape[1], (double*) info.ptr);
+			size_t nrow = info.shape[0];
+			size_t ncol = info.shape[1];
+
+			if (info.strides[0] == sizeof(double)) {
+				// transpose matrix
+				nrow = info.shape[1];
+				ncol = info.shape[0];
+			}
+
+	        new (&m) Matrix<double>(nrow, ncol, (double*) info.ptr);
 	    })
 		.def("print", &Matrix<double>::print)
 		.def("__str__", &Matrix<double>::str)
@@ -41,8 +51,8 @@ PYBIND11_MODULE(dense, m) {
 	            py::format_descriptor<double>::format(), /* Python struct-style format descriptor */
 	            2,                                      /* Number of dimensions */
 	            { m.nrow(), m.ncol() },                 /* Buffer dimensions */
-	            { sizeof(double),                        /* Strides (in bytes) for each index */
-	              sizeof(double) * m.nrow()}
+	            { sizeof(double) * m.ncol(),                        /* Strides (in bytes) for each index */
+	              sizeof(double)}
 	        );
 	    })
 		.def("__getitem__", [](const Matrix<double> &m, std::vector<int> &inds) {return m(inds[0], inds[1]); } );
