@@ -11,7 +11,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(dense, m) {
 
-	py::class_< Matrix<double> >(m, "DenseDoubleMatrix", py::buffer_protocol())
+	py::class_< Matrix<double> >(m, "Matrix", py::buffer_protocol())
 		.def(py::init<>())
 		.def(py::init<size_t, size_t>())
 		.def("nrow", &Matrix<double>::nrow)

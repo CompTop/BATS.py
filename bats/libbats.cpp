@@ -7,7 +7,7 @@
 namespace py = pybind11;
 
 // interface of common functions between F2 and other modP
-#define BasicModPInterface(F, name) py::class_<F>(m, name)\
+#define BasicFieldInterface(F, name) py::class_<F>(m, name)\
 .def(py::init<>())\
 .def(py::init<int>())\
 .def("__add__", &F::operator+)\
@@ -17,7 +17,7 @@ namespace py = pybind11;
 .def("__str__", &F::str)
 
 // interface for everything other than F2
-#define ModPInterface(F, name) BasicModPInterface(F, name)\
+#define FieldInterface(F, name) BasicFieldInterface(F, name)\
 .def("__neg__", py::overload_cast<>(&F::operator-, py::const_));
 
 #define SparseVectorInterface(F, name) py::class_<SparseVector<F, size_t>>(m, name)\
@@ -73,6 +73,11 @@ namespace py = pybind11;
 .def("representative", &ReducedFilteredChainComplex<T, MT>::representative )\
 .def("persistence_pairs", &ReducedFilteredChainComplex<T, MT>::persistence_pairs);
 
+// ReducedFilteredChainComplex for field type T
+#define AutoReducedFilteredChainComplexInterface(T) \
+m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));
+
+
 #define PersistencePairInterface(T, name) py::class_<PersistencePair<T>>(m, name)\
 .def(py::init<>())\
 .def(py::init<size_t, size_t, size_t, T, T>())\
@@ -86,19 +91,22 @@ namespace py = pybind11;
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
 
-    BasicModPInterface(F2, "F2")
+    BasicFieldInterface(F2, "F2")
         .def("__neg__", py::overload_cast<>(&F2::operator-));
 
-    ModPInterface(F3, "F3")
-    ModPInterface(F5, "F5")
+    FieldInterface(F3, "F3")
+    FieldInterface(F5, "F5")
+    FieldInterface(FQ, "Rational")
 
     SparseVectorInterface(int, "IntVector")
     SparseVectorInterface(F2, "F2Vector")
     SparseVectorInterface(F3, "F3Vector")
+    SparseVectorInterface(FQ, "RationalVector")
 
     ColumnMatrixInterface(VInt, "IntMat")
     ColumnMatrixInterface(V2, "F2Mat")
     ColumnMatrixInterface(V3, "F3Mat")
+    ColumnMatrixInterface(VQ, "RationalMat")
 
 
     py::class_<CSCMatrix<int, size_t>>(m, "CSCMatrix")
@@ -136,18 +144,34 @@ PYBIND11_MODULE(libbats, m) {
 
     ChainComplexInterface(M2, "F2ChainComplex")
     ChainComplexInterface(M3, "F3ChainComplex")
+    ChainComplexInterface(M5, "F5ChainComplex")
+    ChainComplexInterface(MQ, "RationalChainComplex")
 
     ChainMapInterface(M2, "F2ChainMap")
     ChainMapInterface(M3, "F3ChainMap")
+    ChainMapInterface(M5, "F5ChainMap")
+    ChainMapInterface(MQ, "RationalChainMap")
+
 
     ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
+    ReducedChainComplexInterface(M5, "ReducedF5ChainComplex")
+    ReducedChainComplexInterface(MQ, "ReducedRationalChainComplex")
 
     FilteredChainComplexInterface(double, M2, "FilteredF2ChainComplex")
     FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
+    FilteredChainComplexInterface(double, M5, "FilteredF5ChainComplex")
+    FilteredChainComplexInterface(double, MQ, "FilteredRationalChainComplex")
 
     ReducedFilteredChainComplexInterface(double, M2, "ReducedFilteredF2ChainComplex")
     ReducedFilteredChainComplexInterface(double, M3, "ReducedFilteredF3ChainComplex")
+    ReducedFilteredChainComplexInterface(double, M5, "ReducedFilteredF5ChainComplex")
+    ReducedFilteredChainComplexInterface(double, MQ, "ReducedFilteredRationalChainComplex")
+
+    AutoReducedFilteredChainComplexInterface(F2)
+    AutoReducedFilteredChainComplexInterface(F3)
+    AutoReducedFilteredChainComplexInterface(F5)
+    AutoReducedFilteredChainComplexInterface(FQ)
 
     PersistencePairInterface(double, "PersistencePair")
 
