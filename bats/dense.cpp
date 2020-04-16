@@ -60,4 +60,11 @@ PYBIND11_MODULE(dense, m) {
 		// .def("__getitem__", py::overload_cast<int, int>(&Matrix<double>::operator()))
 		//.def("__setitem__", py::overload_cast<int, int>(&Matrix<double>::operator()))
 
+		py::class_<DataSet<double>>(m, "DataSet")
+			.def(py::init<>())
+			.def(py::init<const Matrix<double>& >())
+			.def("size", &DataSet<double>::size)
+			.def("data", &DataSet<double>::get_data)
+			.def("dim", &DataSet<double>::dim);
+
 }

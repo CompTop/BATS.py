@@ -19,7 +19,9 @@ namespace py = pybind11;
 // define filtration interfaces for metric
 #define FiltrationInterface(M) \
 m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
-m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));
+m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));\
+m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, double, size_t))(&DowkerFiltration));\
+m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));
 
 // define landmark interfaces for metric
 #define LandmarkInterface(M) \
@@ -46,19 +48,13 @@ PYBIND11_MODULE(topology, m) {
 
 	m.def("bivariate_cover", &bivariate_cover);
 
-	py::class_<DataSet<double>>(m, "DataSet")
-		.def(py::init<>())
-		.def(py::init<const Matrix<double>& >())
-		.def("size", &DataSet<double>::size)
-		.def("data", &DataSet<double>::get_data)
-		.def("dim", &DataSet<double>::dim);
-
 	//RipsFiltrationInterface(Euclidean)
 	//RipsFiltrationInterface(L1Dist)
 
 	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
 	m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&DowkerFiltration));
+	m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, const bats::Cover&, double, size_t))(&DowkerFiltration));
 
 
 	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
