@@ -21,7 +21,7 @@ namespace py = pybind11;
 m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
 m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));\
 m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, double, size_t))(&DowkerFiltration));\
-m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));
+m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));
 
 // define landmark interfaces for metric
 #define LandmarkInterface(M) \
@@ -56,6 +56,7 @@ PYBIND11_MODULE(topology, m) {
 	m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&DowkerFiltration));
 	m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, const bats::Cover&, double, size_t))(&DowkerFiltration));
 
+	m.def("Nerve", (SimplicialComplex (*)(const bats::Cover&, const size_t))(&Nerve));
 
 	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
 	m.def("force_repel_rp", (void (*)(DataSet<double>&, double))(&force_repel_rp));

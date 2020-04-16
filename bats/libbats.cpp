@@ -65,6 +65,10 @@ namespace py = pybind11;
 .def(py::init<>())\
 .def(py::init<const Filtration<T, SimplicialComplex>&>());
 
+// ReducedFilteredChainComplex for field type T
+#define AutoReducedChainComplexInterface(T) \
+m.def("ReducedChainComplex", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));
+
 #define ReducedFilteredChainComplexInterface(T, MT, name) py::class_<ReducedFilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const FilteredChainComplex<T, MT>&>())\
@@ -86,6 +90,8 @@ m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, Column
 .def("death_ind", &PersistencePair<T>::get_death_ind)\
 .def("birth", &PersistencePair<T>::get_birth)\
 .def("death", &PersistencePair<T>::get_death)\
+.def("length", &PersistencePair<T>::length)\
+.def("mid", &PersistencePair<T>::mid)\
 .def("__str__", &PersistencePair<T>::str);
 
 PYBIND11_MODULE(libbats, m) {
@@ -157,6 +163,11 @@ PYBIND11_MODULE(libbats, m) {
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
     ReducedChainComplexInterface(M5, "ReducedF5ChainComplex")
     ReducedChainComplexInterface(MQ, "ReducedRationalChainComplex")
+
+    AutoReducedChainComplexInterface(F3)
+    AutoReducedChainComplexInterface(F2)
+    AutoReducedChainComplexInterface(F5)
+    AutoReducedChainComplexInterface(FQ)
 
     FilteredChainComplexInterface(double, M2, "FilteredF2ChainComplex")
     FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
