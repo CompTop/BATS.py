@@ -185,5 +185,6 @@ PYBIND11_MODULE(libbats, m) {
     AutoReducedFilteredChainComplexInterface(FQ)
 
     PersistencePairInterface(double, "PersistencePair")
+    PersistencePairInterface(size_t, "PersistencePair_int")
 
 }

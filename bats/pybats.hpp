@@ -31,6 +31,11 @@ using F3ChainComplex = ChainComplex<M3>;
 using F5ChainComplex = ChainComplex<M5>;
 using FQChainComplex = ChainComplex<MQ>;
 
+using ReducedF2ChainComplex = ReducedChainComplex<M2>;
+using ReducedF3ChainComplex = ReducedChainComplex<M3>;
+using ReducedF5ChainComplex = ReducedChainComplex<M5>;
+using ReducedFQChainComplex = ReducedChainComplex<MQ>;
+
 using F2ChainMap = ChainMap<M2>;
 using F3ChainMap = ChainMap<M3>;
 using F5ChainMap = ChainMap<M5>;

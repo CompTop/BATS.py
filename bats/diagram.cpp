@@ -10,9 +10,22 @@ namespace py = pybind11;
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\
 .def("set_node", (void (Diagram<NT, ET>::*)(size_t, NT&))(&Diagram<NT, ET>::set_node))\
-.def("set_edge", (void (Diagram<NT, ET>::*)(size_t, size_t, size_t, ET&))(&Diagram<NT, ET>::set_edge));
+.def("set_edge", (void (Diagram<NT, ET>::*)(size_t, size_t, size_t, ET&))(&Diagram<NT, ET>::set_edge))\
+.def("add_node", (size_t (Diagram<NT, ET>::*)(NT&))(&Diagram<NT, ET>::add_node))\
+.def("add_edge", (size_t (Diagram<NT, ET>::*)(size_t, size_t, ET&))(&Diagram<NT, ET>::add_edge))\
+.def("nnode", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nnode))\
+.def("nedge", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nedge))\
+.def("node_data", (NT (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::node_data))\
+.def("edge_data", (ET (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_data))\
+.def("edge_source", (size_t (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_source))\
+.def("edge_target", (size_t (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_target));
 
 #define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
+
+#define HomFunctorInterface(MT, name) \
+m.def(name, &(Hom<MT>));\
+m.def("barcode", &(barcode<MT>));
+
 
 PYBIND11_MODULE(diagram, m) {
 
@@ -21,6 +34,8 @@ PYBIND11_MODULE(diagram, m) {
 	DiagramInterface(SimplicialComplex, CellularMap, "SimplicialComplexDiagram")
 	DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
 	DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
+	DiagramInterface(ReducedF2ChainComplex, M2, "F2HomDiagram")
+	DiagramInterface(ReducedF3ChainComplex, M3, "F3HomDiagram")
 
 	// NerveFunctor
     m.def("NerveDiagram", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
@@ -31,4 +46,7 @@ PYBIND11_MODULE(diagram, m) {
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
 
+	HomFunctorInterface(M2, "Hom")
+	HomFunctorInterface(M3, "Hom")
+	
 }
