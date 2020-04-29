@@ -26,22 +26,33 @@ def non_essential_pair_filter(a, remove_zeros=True):
         return f
 
 
-def persistence_diagram(ps, remove_zeros=True, **kwargs):
+def persistence_diagram(ps, remove_zeros=True, show_legend=True, **kwargs):
     fig, ax = plt.subplots(**kwargs)
     a = process_pairs(ps)
-    d = np.array(a[:,2], dtype=np.int) # homology dimension
-    cs=plt.get_cmap('Set1')(d) # set colors
-    eps = essential_pair_filter(a)
-    neps = non_essential_pair_filter(a, remove_zeros)
-    # plot non-essential pairs
-    ax.scatter(a[neps, 0], a[neps, 1], c=cs[neps], marker='o')
+    dims = np.array(a[:,2], dtype=np.int) # homology dimension
+    cs=plt.get_cmap('Set1')(dims) # set colors
 
-    # plot essential pairs
+    eps = essential_pair_filter(a)
     tmax = np.max(a[eps != True,:1])
     inf_to = tmax * 1.1
-    eb = a[eps, 0]
-    ed = [inf_to for _ in eb]
-    ax.scatter(eb, ed, c=cs[eps], marker='*')
+
+    # loop over dimensions
+    maxdim = np.max(dims)
+    for d in range(maxdim+1):
+        dinds = dims == d
+        ad = a[dinds]
+        cd = cs[dinds]
+
+        eps = essential_pair_filter(ad)
+        neps = non_essential_pair_filter(ad, remove_zeros)
+        # plot non-essential pairs
+        ax.scatter(ad[neps, 0], ad[neps, 1], c=cd[neps], marker='o', label="H{}".format(d))
+
+        # plot essential pairs
+        eps = essential_pair_filter(ad)
+        eb = ad[eps, 0]
+        ed = [inf_to for _ in eb]
+        ax.scatter(eb, ed, c=cd[eps], marker='*')
 
     # set axes
     xbnds = [0, inf_to*1.05]
@@ -57,4 +68,8 @@ def persistence_diagram(ps, remove_zeros=True, **kwargs):
     # add labels
     ax.set_xlabel("Birth")
     ax.set_ylabel("Death")
+
+    if show_legend:
+        ax.legend(loc='lower right')
+
     return fig, ax

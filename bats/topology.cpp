@@ -26,7 +26,9 @@ m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const 
 // define landmark interfaces for metric
 #define LandmarkInterface(M) \
 m.def("greedy_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t, const M&, const size_t))(&greedy_landmarks));\
-m.def("landmark_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, const size_t))(&landmark_cover));
+m.def("hausdorff_landmarks", (DataSet<double> (*)(const DataSet<double>&, const double, const M&, const size_t))(&hausdorff_landmarks));\
+m.def("landmark_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, const size_t))(&landmark_cover));\
+m.def("landmark_eps_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, double))(&landmark_eps_cover));
 
 #define MetricInterfaceAll(M, name) \
 MetricInterface(M, name)\
@@ -57,6 +59,8 @@ PYBIND11_MODULE(topology, m) {
 	m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, const bats::Cover&, double, size_t))(&DowkerFiltration));
 
 	m.def("Nerve", (SimplicialComplex (*)(const bats::Cover&, const size_t))(&Nerve));
+
+	m.def("random_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t))(&random_landmarks));
 
 	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
 	m.def("force_repel_rp", (void (*)(DataSet<double>&, double))(&force_repel_rp));
