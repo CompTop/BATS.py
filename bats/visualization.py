@@ -26,14 +26,14 @@ def non_essential_pair_filter(a, remove_zeros=True):
         return f
 
 
-def persistence_diagram(ps, remove_zeros=True, show_legend=True, **kwargs):
+def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, **kwargs):
     fig, ax = plt.subplots(**kwargs)
     a = process_pairs(ps)
     dims = np.array(a[:,2], dtype=np.int) # homology dimension
     cs=plt.get_cmap('Set1')(dims) # set colors
 
     eps = essential_pair_filter(a)
-    tmax = np.max(a[eps != True,:1])
+    tmax = np.max((tmax, np.max(a[eps != True,:1])))
     inf_to = tmax * 1.1
 
     # loop over dimensions
