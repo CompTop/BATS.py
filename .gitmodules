@@ -4,5 +4,5 @@
 	branch = master
 [submodule "BATS_include"]
 	path = BATS_include
-	url = git@github.com:bnels/BATS_private.git
-	branch = brad
+	url = git@github.com:bnels/BATS.git
+	branch = master
