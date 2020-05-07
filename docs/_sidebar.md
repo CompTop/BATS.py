@@ -7,9 +7,10 @@
 
 - Tutorials
 
-  - [Data and Metrics](tutorials/data.md)
   - [Complexes and Filtrations](tutorials/complexes.md)
+  - [Data and Metrics](tutorials/data.md)
   - [Geometric Constructions](tutorials/geometric.md)
+  - [Linear Algebra](tutorials/linalg.md)
   - [Chain Complexes and Reduction](tutorials/reduction.md)
   - [Maps](tutorials/maps.md)
   - [Diagrams](tutorials/diagrams.md)
