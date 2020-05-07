@@ -67,7 +67,8 @@ namespace py = pybind11;
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedChainComplexInterface(T) \
-m.def("ReducedChainComplex", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));
+m.def("ReducedChainComplex", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));\
+m.def("reduce", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));
 
 #define ReducedFilteredChainComplexInterface(T, MT, name) py::class_<ReducedFilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
@@ -79,7 +80,8 @@ m.def("ReducedChainComplex", (ReducedChainComplex<ColumnMatrix<SparseVector<T, s
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedFilteredChainComplexInterface(T) \
-m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));
+m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
+m.def("reduce", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));
 
 
 #define PersistencePairInterface(T, name) py::class_<PersistencePair<T>>(m, name)\
