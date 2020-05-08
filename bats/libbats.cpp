@@ -137,7 +137,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&SimplicialComplex::find_idx))
         .def("boundary", &SimplicialComplex::boundary_csc)
         .def("get_simplex", &SimplicialComplex::get_simplex)
-        .def("get_simplices", &SimplicialComplex::get_simplices)
+        .def("get_simplices", py::overload_cast<const size_t>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")
+        .def("get_simplices", py::overload_cast<>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices.")
         .def("print_summary", &SimplicialComplex::print_summary);
 
     FilteredSimplicialComplexInterface(double, "FilteredSimplicialComplex")

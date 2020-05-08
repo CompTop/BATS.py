@@ -22,6 +22,8 @@ namespace py = pybind11;
 
 #define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
 
+#define AutoChainFunctorInterface(DT, FT) m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__Chain));
+
 #define HomFunctorInterface(MT, name) \
 m.def(name, &(Hom<MT>));\
 m.def("barcode", &(barcode<MT>));
@@ -40,13 +42,19 @@ PYBIND11_MODULE(diagram, m) {
 	// NerveFunctor
     m.def("NerveDiagram", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
 
-	// RipsFunctor
-	// m.def("Rips", (SimplicialComplexDiagram (const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips));
+	// zigzag diagram of sets
+	m.def("ZigzagSetDiagram", &linear_subset_union_diagram, "Create a zigzag diagram of sets and pairwise unions.");
+
+	// Rips functor
+	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
 
+	AutoChainFunctorInterface(SimplicialComplexDiagram, F2)
+	AutoChainFunctorInterface(SimplicialComplexDiagram, F3)
+
 	HomFunctorInterface(M2, "Hom")
 	HomFunctorInterface(M3, "Hom")
-	
+
 }
