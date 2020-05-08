@@ -23,6 +23,14 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.CellularMap, arg0: int) -> None
 
+## Chain
+Chain(*args, **kwargs)
+Overloaded function.
+
+1. Chain(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
+
+2. Chain(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
+
 ## CosineDist
 ### __init__
 __init__(self: bats.topology.CosineDist) -> None
@@ -878,6 +886,11 @@ hdim(self: bats.libbats.ReducedRationalChainComplex, arg0: int) -> int
 ### maxdim
 maxdim(self: bats.libbats.ReducedRationalChainComplex) -> int
 
+## Rips
+Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.diagram.SimplicialComplexDiagram
+
+Construct a diagram of Rips complexes from a SetDiagram.
+
 ## RipsCoverFiltration
 RipsCoverFiltration(*args, **kwargs)
 Overloaded function.
@@ -972,7 +985,16 @@ find_idx(self: bats.libbats.SimplicialComplex, arg0: List[int]) -> int
 get_simplex(self: bats.libbats.SimplicialComplex, arg0: int, arg1: int) -> List[int]
 
 ### get_simplices
-get_simplices(self: bats.libbats.SimplicialComplex, arg0: int) -> List[List[int]]
+get_simplices(*args, **kwargs)
+Overloaded function.
+
+1. get_simplices(self: bats.libbats.SimplicialComplex, arg0: int) -> List[List[int]]
+
+Returns a list of all simplices in given dimension.
+
+2. get_simplices(self: bats.libbats.SimplicialComplex) -> List[List[int]]
+
+Returns a list of all simplices.
 
 ### maxdim
 maxdim(self: bats.libbats.SimplicialComplex) -> int
@@ -1038,6 +1060,11 @@ SimplicialMap(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.Simplicia
 
 ## WitnessFiltration
 WitnessFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+
+## ZigzagSetDiagram
+ZigzagSetDiagram(arg0: List[Set[int]]) -> bats.diagram.SetDiagram
+
+Create a zigzag diagram of sets and pairwise unions.
 
 ## barcode
 barcode(*args, **kwargs)
@@ -1141,6 +1168,26 @@ Basic Applied Topology Subprograms interface
 ## persistence_diagram
 ## random_landmarks
 random_landmarks(arg0: DataSet<double>, arg1: int) -> DataSet<double>
+
+## reduce
+reduce(*args, **kwargs)
+Overloaded function.
+
+1. reduce(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedF3ChainComplex
+
+2. reduce(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.F2) -> bats.libbats.ReducedF2ChainComplex
+
+3. reduce(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedF5ChainComplex
+
+4. reduce(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedRationalChainComplex
+
+5. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F2) -> bats.libbats.ReducedFilteredF2ChainComplex
+
+6. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
+
+7. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+
+8. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
 
 ## sample_sphere
 sample_sphere(arg0: int, arg1: int) -> DataSet<double>
