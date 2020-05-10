@@ -28,7 +28,10 @@ m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const 
 m.def("greedy_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t, const M&, const size_t))(&greedy_landmarks));\
 m.def("hausdorff_landmarks", (DataSet<double> (*)(const DataSet<double>&, const double, const M&, const size_t))(&hausdorff_landmarks));\
 m.def("landmark_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, const size_t))(&landmark_cover));\
-m.def("landmark_eps_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, double))(&landmark_eps_cover));
+m.def("landmark_eps_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, double))(&landmark_eps_cover));\
+m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&, size_t, size_t))(&approx_center));
+// m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&, size_t))(&approx_center));
+// m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&))(&approx_center), "Find index approximately in the center using an iterative landmarking procedure.");
 
 #define MetricInterfaceAll(M, name) \
 MetricInterface(M, name)\
@@ -64,4 +67,11 @@ PYBIND11_MODULE(topology, m) {
 
 	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
 	m.def("force_repel_rp", (void (*)(DataSet<double>&, double))(&force_repel_rp));
+
+	// zigzag zoo
+	//DiscreteMorozovZigzag
+	m.def("DiscreteMorozovZigzag",
+		(std::tuple<SimplicialComplexDiagram, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&DiscreteMorozovZigzag),
+		"discrete Morozov Zigzag (dM-ZZ) construction."
+	);
 }

@@ -10,6 +10,7 @@ namespace py = pybind11;
 #define BasicFieldInterface(F, name) py::class_<F>(m, name)\
 .def(py::init<>())\
 .def(py::init<int>())\
+.def("to_int", &F::to_int, "convert to integer.")\
 .def("__add__", &F::operator+)\
 .def("__mul__", &F::operator*)\
 .def("__sub__", py::overload_cast<const F&>(&F::operator-, py::const_))\
@@ -31,7 +32,10 @@ namespace py = pybind11;
 #define ColumnMatrixInterface(VT, name) py::class_<ColumnMatrix<VT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\
-.def("print", &ColumnMatrix<VT>::print);
+.def("nrow", &ColumnMatrix<VT>::nrow, "number of rows.")\
+.def("ncol", &ColumnMatrix<VT>::ncol, "number of columns.")\
+.def("__str__", &ColumnMatrix<VT>::str)\
+.def("__call__", &ColumnMatrix<VT>::operator());
 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
