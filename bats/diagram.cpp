@@ -47,6 +47,7 @@ PYBIND11_MODULE(diagram, m) {
 
 	// Rips functor
 	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
+	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const std::vector<double>&, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")

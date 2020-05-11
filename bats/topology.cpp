@@ -74,4 +74,9 @@ PYBIND11_MODULE(topology, m) {
 		(std::tuple<SimplicialComplexDiagram, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&DiscreteMorozovZigzag),
 		"discrete Morozov Zigzag (dM-ZZ) construction."
 	);
+
+	m.def("DiscreteMorozovZigzagSets",
+		(std::tuple<Diagram<std::set<size_t>, std::vector<size_t>>, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double))(&DiscreteMorozovZigzagSets),
+		"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction."
+	);
 }
