@@ -627,6 +627,8 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.PersistencePair, arg0: int, arg1: int, arg2: int, arg3: float, arg4: float) -> None
 
+initialize with hdim, birth_ind, death_ind, birth, death.
+
 ### birth
 birth(self: bats.libbats.PersistencePair) -> float
 
@@ -656,6 +658,8 @@ Overloaded function.
 1. __init__(self: bats.libbats.PersistencePair_int) -> None
 
 2. __init__(self: bats.libbats.PersistencePair_int, arg0: int, arg1: int, arg2: int, arg3: int, arg4: int) -> None
+
+initialize with hdim, birth_ind, death_ind, birth, death.
 
 ### birth
 birth(self: bats.libbats.PersistencePair_int) -> int

@@ -90,7 +90,7 @@ m.def("reduce", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T
 
 #define PersistencePairInterface(T, name) py::class_<PersistencePair<T>>(m, name)\
 .def(py::init<>())\
-.def(py::init<size_t, size_t, size_t, T, T>())\
+.def(py::init<size_t, size_t, size_t, T, T>(), "initialize with hdim, birth_ind, death_ind, birth, death.")\
 .def("dim", &PersistencePair<T>::get_dim)\
 .def("birth_ind", &PersistencePair<T>::get_birth_ind)\
 .def("death_ind", &PersistencePair<T>::get_death_ind)\
