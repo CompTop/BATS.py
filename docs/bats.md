@@ -92,6 +92,16 @@ dim(self: bats.dense.DataSet) -> int
 ### size
 size(self: bats.dense.DataSet) -> int
 
+## DiscreteMorozovZigzag
+DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+## DiscreteMorozovZigzagSets
+DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
 ## DowkerCoverFiltration
 DowkerCoverFiltration(*args, **kwargs)
 Overloaded function.
@@ -144,6 +154,11 @@ Overloaded function.
 1. __init__(self: bats.libbats.F2) -> None
 
 2. __init__(self: bats.libbats.F2, arg0: int) -> None
+
+### to_int
+to_int(self: bats.libbats.F2) -> int
+
+convert to integer.
 
 ## F2Chain
 F2Chain(arg0: bats.diagram.SimplicialComplexDiagram) -> bats.diagram.F2ChainDiagram
@@ -253,8 +268,15 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.F2Mat, arg0: int, arg1: int) -> None
 
-### print
-print(self: bats.libbats.F2Mat) -> None
+### ncol
+ncol(self: bats.libbats.F2Mat) -> int
+
+number of columns.
+
+### nrow
+nrow(self: bats.libbats.F2Mat) -> int
+
+number of rows.
 
 ## F2Vector
 ### __init__
@@ -279,6 +301,11 @@ Overloaded function.
 1. __init__(self: bats.libbats.F3) -> None
 
 2. __init__(self: bats.libbats.F3, arg0: int) -> None
+
+### to_int
+to_int(self: bats.libbats.F3) -> int
+
+convert to integer.
 
 ## F3Chain
 F3Chain(arg0: bats.diagram.SimplicialComplexDiagram) -> bats.diagram.F3ChainDiagram
@@ -388,8 +415,15 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.F3Mat, arg0: int, arg1: int) -> None
 
-### print
-print(self: bats.libbats.F3Mat) -> None
+### ncol
+ncol(self: bats.libbats.F3Mat) -> int
+
+number of columns.
+
+### nrow
+nrow(self: bats.libbats.F3Mat) -> int
+
+number of rows.
 
 ## F3Vector
 ### __init__
@@ -414,6 +448,11 @@ Overloaded function.
 1. __init__(self: bats.libbats.F5) -> None
 
 2. __init__(self: bats.libbats.F5, arg0: int) -> None
+
+### to_int
+to_int(self: bats.libbats.F5) -> int
+
+convert to integer.
 
 ## F5ChainComplex
 ### __init__
@@ -520,8 +559,15 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.IntMat, arg0: int, arg1: int) -> None
 
-### print
-print(self: bats.libbats.IntMat) -> None
+### ncol
+ncol(self: bats.libbats.IntMat) -> int
+
+number of columns.
+
+### nrow
+nrow(self: bats.libbats.IntMat) -> int
+
+number of rows.
 
 ## IntVector
 ### __init__
@@ -649,6 +695,11 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.Rational, arg0: int) -> None
 
+### to_int
+to_int(self: bats.libbats.Rational) -> int
+
+convert to integer.
+
 ## RationalChainComplex
 ### __init__
 __init__(*args, **kwargs)
@@ -676,8 +727,15 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.RationalMat, arg0: int, arg1: int) -> None
 
-### print
-print(self: bats.libbats.RationalMat) -> None
+### ncol
+ncol(self: bats.libbats.RationalMat) -> int
+
+number of columns.
+
+### nrow
+nrow(self: bats.libbats.RationalMat) -> int
+
+number of rows.
 
 ## RationalVector
 ### __init__
@@ -887,7 +945,14 @@ hdim(self: bats.libbats.ReducedRationalChainComplex, arg0: int) -> int
 maxdim(self: bats.libbats.ReducedRationalChainComplex) -> int
 
 ## Rips
-Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.diagram.SimplicialComplexDiagram
+Rips(*args, **kwargs)
+Overloaded function.
+
+1. Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.diagram.SimplicialComplexDiagram
+
+Construct a diagram of Rips complexes from a SetDiagram.
+
+2. Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: List[float], arg4: int) -> bats.diagram.SimplicialComplexDiagram
 
 Construct a diagram of Rips complexes from a SetDiagram.
 
@@ -1065,6 +1130,24 @@ WitnessFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topol
 ZigzagSetDiagram(arg0: List[Set[int]]) -> bats.diagram.SetDiagram
 
 Create a zigzag diagram of sets and pairwise unions.
+
+## approx_center
+approx_center(*args, **kwargs)
+Overloaded function.
+
+1. approx_center(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: int, arg3: int) -> int
+
+2. approx_center(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: int, arg3: int) -> int
+
+3. approx_center(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: int, arg3: int) -> int
+
+4. approx_center(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: int, arg3: int) -> int
+
+5. approx_center(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: int, arg3: int) -> int
+
+6. approx_center(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: int, arg3: int) -> int
+
+7. approx_center(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: int, arg3: int) -> int
 
 ## barcode
 barcode(*args, **kwargs)
