@@ -14,6 +14,74 @@ Overloaded function.
 ### print
 print(self: bats.libbats.CSCMatrix) -> None
 
+## CellComplex
+### __init__
+__init__(self: bats.libbats.CellComplex) -> None
+
+### add
+add(self: bats.libbats.CellComplex, arg0: List[int], arg1: List[int], arg2: int) -> int
+
+add cell in dimension k by specifying boundary and coefficients.
+
+### boundary
+boundary(self: bats.libbats.CellComplex, arg0: int) -> bats.libbats.CSCMatrix
+
+### maxdim
+maxdim(self: bats.libbats.CellComplex) -> int
+
+maximum dimension cell
+
+### ncells
+ncells(*args, **kwargs)
+Overloaded function.
+
+1. ncells(self: bats.libbats.CellComplex) -> int
+
+number of cells
+
+2. ncells(self: bats.libbats.CellComplex, arg0: int) -> int
+
+number of cells in given dimension
+
+## CellComplexDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.CellComplexDiagram) -> None
+
+2. __init__(self: bats.diagram.CellComplexDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.CellComplexDiagram, arg0: int, arg1: int, arg2: bats.libbats.CellularMap) -> int
+
+### add_node
+add_node(self: bats.diagram.CellComplexDiagram, arg0: bats.libbats.CellComplex) -> int
+
+### edge_data
+edge_data(self: bats.diagram.CellComplexDiagram, arg0: int) -> bats.libbats.CellularMap
+
+### edge_source
+edge_source(self: bats.diagram.CellComplexDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.CellComplexDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.CellComplexDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.CellComplexDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.CellComplexDiagram, arg0: int) -> bats.libbats.CellComplex
+
+### set_edge
+set_edge(self: bats.diagram.CellComplexDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.CellularMap) -> None
+
+### set_node
+set_node(self: bats.diagram.CellComplexDiagram, arg0: int, arg1: bats.libbats.CellComplex) -> None
+
 ## CellularMap
 ### __init__
 __init__(*args, **kwargs)
@@ -30,6 +98,10 @@ Overloaded function.
 1. Chain(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
 
 2. Chain(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
+
+3. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
+
+4. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
 
 ## CosineDist
 ### __init__
@@ -1034,6 +1106,11 @@ set_edge(self: bats.diagram.SetDiagram, arg0: int, arg1: int, arg2: int, arg3: L
 
 ### set_node
 set_node(self: bats.diagram.SetDiagram, arg0: int, arg1: Set[int]) -> None
+
+## SierpinskiDiagram
+SierpinskiDiagram(arg0: int) -> Diagram<CellComplex, CellularMap>
+
+Diagram of Sierpinski triangle iterations.
 
 ## SimplicialComplex
 ### __init__
