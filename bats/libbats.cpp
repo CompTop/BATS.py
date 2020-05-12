@@ -132,6 +132,14 @@ PYBIND11_MODULE(libbats, m) {
         .def(py::init<size_t, size_t>())
         .def("__str__", &cell_ind::str);
 
+    py::class_<CellComplex>(m, "CellComplex")
+        .def(py::init<>())
+        .def("maxdim", &CellComplex::maxdim, "maximum dimension cell")
+        .def("ncells", py::overload_cast<>(&CellComplex::ncells, py::const_), "number of cells")
+        .def("ncells", py::overload_cast<const size_t>(&CellComplex::ncells, py::const_), "number of cells in given dimension")
+        .def("add", (size_t (CellComplex::*)(const std::vector<size_t>&, const std::vector<size_t>&, size_t))( &CellComplex::add ), "add cell in dimension k by specifying boundary and coefficients.")
+        .def("boundary", &CellComplex::boundary_csc);
+
     py::class_<SimplicialComplex>(m, "SimplicialComplex")
         .def(py::init<>())
         .def("maxdim", &SimplicialComplex::maxdim, "maximum dimension simplex")

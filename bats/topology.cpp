@@ -79,4 +79,10 @@ PYBIND11_MODULE(topology, m) {
 		(std::tuple<Diagram<std::set<size_t>, std::vector<size_t>>, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double))(&DiscreteMorozovZigzagSets),
 		"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction."
 	);
+
+	// demo extra
+	m.def("SierpinskiDiagram",
+		&serpinski_diagram,
+		"Diagram of Sierpinski triangle iterations."
+	);
 }

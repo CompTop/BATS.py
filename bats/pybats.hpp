@@ -45,5 +45,6 @@ using FQChainMap = ChainMap<MQ>;
 using CoverDiagram = Diagram<bats::Cover, std::vector<size_t>>;
 using SetDiagram = Diagram<std::set<size_t>, std::vector<size_t>>;
 using SimplicialComplexDiagram = Diagram<SimplicialComplex, CellularMap>;
+using CellComplexDiagram = Diagram<CellComplex, CellularMap>;
 using F2ChainDiagram = Diagram<F2ChainComplex, F2ChainMap>;
 using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;

@@ -34,6 +34,7 @@ PYBIND11_MODULE(diagram, m) {
 	DiagramInterface(bats::Cover, std::vector<size_t>, "CoverDiagram")
 	DiagramInterface(std::set<size_t>, std::vector<size_t>, "SetDiagram")
 	DiagramInterface(SimplicialComplex, CellularMap, "SimplicialComplexDiagram")
+	DiagramInterface(CellComplex, CellularMap, "CellComplexDiagram")
 	DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
 	DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
 	DiagramInterface(ReducedF2ChainComplex, M2, "F2HomDiagram")
@@ -54,6 +55,8 @@ PYBIND11_MODULE(diagram, m) {
 
 	AutoChainFunctorInterface(SimplicialComplexDiagram, F2)
 	AutoChainFunctorInterface(SimplicialComplexDiagram, F3)
+	AutoChainFunctorInterface(CellComplexDiagram, F2)
+	AutoChainFunctorInterface(CellComplexDiagram, F3)
 
 	HomFunctorInterface(M2, "Hom")
 	HomFunctorInterface(M3, "Hom")
