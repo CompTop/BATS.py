@@ -26,7 +26,8 @@ namespace py = pybind11;
 
 #define HomFunctorInterface(MT, name) \
 m.def(name, &(Hom<MT>));\
-m.def("barcode", &(barcode<MT>));
+m.def("barcode", &(barcode<MT>));\
+m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse));
 
 
 PYBIND11_MODULE(diagram, m) {

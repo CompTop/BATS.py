@@ -118,13 +118,13 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
     for d in range(maxdim+1):
         dinds = dims == d
         ad = a[dinds]
-        ys = np.array([2*i for i in reversed(range(len(ad)))])
+        ys = np.array([i for i in reversed(range(len(ad)))])
 
         eps = essential_pair_filter(ad, tub)
         neps = non_essential_pair_filter(ad, tub)
 
         # plot non-essential pairs
-        ax[d].hlines(ys[neps], ad[neps, 0], ad[neps, 1], linewidth=1)
+        ax[d].hlines(ys[neps], ad[neps, 0], ad[neps, 1], colors='b', linewidth=1)
 
         # plot essential pairs
         eb = ad[eps, 0]
