@@ -1238,6 +1238,14 @@ Overloaded function.
 
 2. barcode(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
 
+## barcode_sparse
+barcode_sparse(*args, **kwargs)
+Overloaded function.
+
+1. barcode_sparse(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+2. barcode_sparse(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
 ## bivariate_cover
 bivariate_cover(arg0: List[Set[int]], arg1: List[Set[int]]) -> Tuple[List[Set[int]], List[int], List[int]]
 
@@ -1329,6 +1337,27 @@ Overloaded function.
 
 ## libbats
 Basic Applied Topology Subprograms interface
+## persistence_barcode
+
+    plot a persistence barcode for pairs in ps.
+    Each barcode is a pyplot axis.
+    Barcodes are stacked horizontally in figure.
+
+    Parameters:
+
+        ps: List of PersistencePair
+
+        remove_zeros: flag to remove zero-length bars (default: True)
+
+        tlb: lower bound on filtration parameter to display.  (default: 0.0)
+
+        tlb: upper bound on filtration parameter to display.  (default: inf)
+
+        **figkwargs - passed onto pyplot subplots construction
+
+    Returns:
+        fig, ax - pyplot figure and axes
+    
 ## persistence_diagram
 ## random_landmarks
 random_landmarks(arg0: DataSet<double>, arg1: int) -> DataSet<double>
