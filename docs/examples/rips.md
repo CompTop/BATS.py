@@ -1,3 +1,7 @@
+# Rips Filtrations
+
+In this example, we'll cover a couple of ways to construct Rips filtrations, compute persistent homology, and subsample data.
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
