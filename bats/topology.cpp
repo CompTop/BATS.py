@@ -29,14 +29,28 @@ m.def("greedy_landmarks", (DataSet<double> (*)(const DataSet<double>&, const siz
 m.def("hausdorff_landmarks", (DataSet<double> (*)(const DataSet<double>&, const double, const M&, const size_t))(&hausdorff_landmarks));\
 m.def("landmark_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, const size_t))(&landmark_cover));\
 m.def("landmark_eps_cover", (bats::Cover (*)(const DataSet<double>&, const DataSet<double>&, const M&, double))(&landmark_eps_cover));\
-m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&, size_t, size_t))(&approx_center));
+m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&, size_t, size_t))(&approx_center));\
+m.def("greedy_landmarks_hausdorff", (std::tuple<std::vector<size_t>, std::vector<double>> (*)(const DataSet<double>&, const M&, const size_t))(&greedy_landmarks_hausdorff));
 // m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&, size_t))(&approx_center));
 // m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&))(&approx_center), "Find index approximately in the center using an iterative landmarking procedure.");
+
+// define discrete morozov zigzag interfaces for metric
+#define dmzzInterface(M) \
+m.def("DiscreteMorozovZigzag", \
+	(std::tuple<SimplicialComplexDiagram, std::vector<double>> (*)(const DataSet<double>&, const M&, double, size_t))(&DiscreteMorozovZigzag), \
+	"discrete Morozov Zigzag (dM-ZZ) construction." \
+);\
+m.def("DiscreteMorozovZigzagSets", \
+	(std::tuple<Diagram<std::set<size_t>, std::vector<size_t>>, std::vector<double>> (*)(const DataSet<double>&, const M&, double))(&DiscreteMorozovZigzagSets), \
+	"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction." \
+);
+
 
 #define MetricInterfaceAll(M, name) \
 MetricInterface(M, name)\
 FiltrationInterface(M)\
-LandmarkInterface(M)
+LandmarkInterface(M)\
+dmzzInterface(M)
 
 
 PYBIND11_MODULE(topology, m) {
@@ -53,8 +67,12 @@ PYBIND11_MODULE(topology, m) {
 
 	m.def("bivariate_cover", &bivariate_cover);
 
-	//RipsFiltrationInterface(Euclidean)
-	//RipsFiltrationInterface(L1Dist)
+	// RipsFiltration on distance matrix
+	m.def("RipsFiltration",
+		(Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&RipsFiltration),
+		"Rips Filtration using built using pairwise distances."
+	);
+
 
 	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
@@ -64,21 +82,10 @@ PYBIND11_MODULE(topology, m) {
 	m.def("Nerve", (SimplicialComplex (*)(const bats::Cover&, const size_t))(&Nerve));
 
 	m.def("random_landmarks", (DataSet<double> (*)(const DataSet<double>&, const size_t))(&random_landmarks));
+	m.def("greedy_landmarks_hausdorff", (std::tuple<std::vector<size_t>, std::vector<double>> (*)(const Matrix<double>&, const size_t))(&greedy_landmarks_hausdorff));
 
 	m.def("sample_sphere", (DataSet<double> (*)(const size_t, const size_t))(&sample_sphere));
 	m.def("force_repel_rp", (void (*)(DataSet<double>&, double))(&force_repel_rp));
-
-	// zigzag zoo
-	//DiscreteMorozovZigzag
-	m.def("DiscreteMorozovZigzag",
-		(std::tuple<SimplicialComplexDiagram, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double, size_t))(&DiscreteMorozovZigzag),
-		"discrete Morozov Zigzag (dM-ZZ) construction."
-	);
-
-	m.def("DiscreteMorozovZigzagSets",
-		(std::tuple<Diagram<std::set<size_t>, std::vector<size_t>>, std::vector<double>> (*)(const DataSet<double>&, const Euclidean&, double))(&DiscreteMorozovZigzagSets),
-		"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction."
-	);
 
 	// demo extra
 	m.def("SierpinskiDiagram",

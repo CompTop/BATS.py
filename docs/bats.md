@@ -165,12 +165,66 @@ dim(self: bats.dense.DataSet) -> int
 size(self: bats.dense.DataSet) -> int
 
 ## DiscreteMorozovZigzag
-DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+DiscreteMorozovZigzag(*args, **kwargs)
+Overloaded function.
+
+1. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+2. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+3. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+4. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+5. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+6. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
+
+discrete Morozov Zigzag (dM-ZZ) construction.
+
+7. DiscreteMorozovZigzag(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> Tuple[Diagram<SimplicialComplex, CellularMap>, List[float]]
 
 discrete Morozov Zigzag (dM-ZZ) construction.
 
 ## DiscreteMorozovZigzagSets
-DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+DiscreteMorozovZigzagSets(*args, **kwargs)
+Overloaded function.
+
+1. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+2. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+3. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+4. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+5. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+6. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
+
+7. DiscreteMorozovZigzagSets(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float) -> Tuple[Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
 
 SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
 
@@ -1068,6 +1122,10 @@ Overloaded function.
 
 7. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
 
+8. RipsFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.FilteredSimplicialComplex
+
+Rips Filtration using built using pairwise distances.
+
 ## SetDiagram
 ### __init__
 __init__(*args, **kwargs)
@@ -1280,6 +1338,26 @@ Overloaded function.
 6. greedy_landmarks(arg0: DataSet<double>, arg1: int, arg2: bats.topology.AngleDist, arg3: int) -> DataSet<double>
 
 7. greedy_landmarks(arg0: DataSet<double>, arg1: int, arg2: bats.topology.RPAngleDist, arg3: int) -> DataSet<double>
+
+## greedy_landmarks_hausdorff
+greedy_landmarks_hausdorff(*args, **kwargs)
+Overloaded function.
+
+1. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: int) -> Tuple[List[int], List[float]]
+
+2. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: int) -> Tuple[List[int], List[float]]
+
+3. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: int) -> Tuple[List[int], List[float]]
+
+4. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: int) -> Tuple[List[int], List[float]]
+
+5. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: int) -> Tuple[List[int], List[float]]
+
+6. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: int) -> Tuple[List[int], List[float]]
+
+7. greedy_landmarks_hausdorff(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: int) -> Tuple[List[int], List[float]]
+
+8. greedy_landmarks_hausdorff(arg0: A<Dense<double, RowMaj> >, arg1: int) -> Tuple[List[int], List[float]]
 
 ## hausdorff_landmarks
 hausdorff_landmarks(*args, **kwargs)
