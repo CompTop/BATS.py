@@ -40,6 +40,7 @@ namespace py = pybind11;
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const SimplicialComplex&>())\
+.def(py::init<const CubicalComplex&>())\
 .def("__getitem__", &ChainComplex<MT>::operator[]);
 
 #define ChainMapInterface(MT, name) py::class_<ChainMap<MT>>(m, name)\
@@ -153,6 +154,20 @@ PYBIND11_MODULE(libbats, m) {
         .def("get_simplices", py::overload_cast<>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices.")
         .def("print_summary", &SimplicialComplex::print_summary);
 
+    py::class_<CubicalComplex>(m, "CubicalComplex")
+        .def(py::init<>())
+        .def(py::init<size_t>())
+        .def("maxdim", &CubicalComplex::maxdim, "maximum dimension cube")
+        .def("ncells", py::overload_cast<>(&CubicalComplex::ncells, py::const_), "number of cells")
+        .def("ncells", py::overload_cast<const size_t>(&CubicalComplex::ncells, py::const_), "number of cells in given dimension")
+        .def("add", (cell_ind (CubicalComplex::*)(std::vector<size_t>&))( &CubicalComplex::add ), "add cube")
+        .def("add_toplex", (cell_ind (CubicalComplex::*)(const std::vector<size_t>&))( &CubicalComplex::add_toplex ), "add toplex")
+        .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&CubicalComplex::find_idx))
+        .def("boundary", &CubicalComplex::boundary_csc)
+        .def("get_cube", &CubicalComplex::get_cube)
+        .def("get_cubes", py::overload_cast<const size_t>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes in given dimension.")
+        .def("get_cubes", py::overload_cast<>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes.");
+
     FilteredSimplicialComplexInterface(double, "FilteredSimplicialComplex")
 
     py::class_<CellularMap>(m, "CellularMap")
@@ -162,6 +177,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("__setitem__", py::overload_cast<size_t>(&CellularMap::operator[]));
 
     m.def("SimplicialMap", &SimplicialMap);
+    m.def("CubicalMap", &CubicalMap);
 
     ChainComplexInterface(M2, "F2ChainComplex")
     ChainComplexInterface(M3, "F3ChainComplex")

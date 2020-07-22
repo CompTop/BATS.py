@@ -114,6 +114,8 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
     # loop over dimensions
     maxdim = np.max(dims)
     fig, ax = plt.subplots(nrows=(maxdim+1), ncols=1, sharex=True, **figkwargs)
+    if maxdim == 0:
+        ax = [ax]
 
     for d in range(maxdim+1):
         dinds = dims == d
