@@ -4,6 +4,7 @@
 
   - [Rips Complexes](examples/rips.md)
   - [Covers and Nerves](examples/nerves.md)
+  - [Cubical Complexes](examples/cubical.md)
 
 - Tutorials
 
