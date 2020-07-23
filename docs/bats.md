@@ -99,9 +99,13 @@ Overloaded function.
 
 2. Chain(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
 
-3. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
+3. Chain(arg0: bats.diagram.CubicalComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
 
-4. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
+4. Chain(arg0: bats.diagram.CubicalComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
+
+5. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
+
+6. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
 
 ## CosineDist
 ### __init__
@@ -145,6 +149,105 @@ set_edge(self: bats.diagram.CoverDiagram, arg0: int, arg1: int, arg2: int, arg3:
 
 ### set_node
 set_node(self: bats.diagram.CoverDiagram, arg0: int, arg1: List[Set[int]]) -> None
+
+## CubicalComplex
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.CubicalComplex) -> None
+
+2. __init__(self: bats.libbats.CubicalComplex, arg0: int) -> None
+
+### add
+add(self: bats.libbats.CubicalComplex, arg0: List[int]) -> bats.libbats.cell_ind
+
+add cube
+
+### add_toplex
+add_toplex(self: bats.libbats.CubicalComplex, arg0: List[int]) -> bats.libbats.cell_ind
+
+add toplex
+
+### boundary
+boundary(self: bats.libbats.CubicalComplex, arg0: int) -> bats.libbats.CSCMatrix
+
+### find_idx
+find_idx(self: bats.libbats.CubicalComplex, arg0: List[int]) -> int
+
+### get_cube
+get_cube(self: bats.libbats.CubicalComplex, arg0: int, arg1: int) -> List[int]
+
+### get_cubes
+get_cubes(*args, **kwargs)
+Overloaded function.
+
+1. get_cubes(self: bats.libbats.CubicalComplex, arg0: int) -> List[List[int]]
+
+Returns a list of all cubes in given dimension.
+
+2. get_cubes(self: bats.libbats.CubicalComplex) -> List[List[int]]
+
+Returns a list of all cubes.
+
+### maxdim
+maxdim(self: bats.libbats.CubicalComplex) -> int
+
+maximum dimension cube
+
+### ncells
+ncells(*args, **kwargs)
+Overloaded function.
+
+1. ncells(self: bats.libbats.CubicalComplex) -> int
+
+number of cells
+
+2. ncells(self: bats.libbats.CubicalComplex, arg0: int) -> int
+
+number of cells in given dimension
+
+## CubicalComplexDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.CubicalComplexDiagram) -> None
+
+2. __init__(self: bats.diagram.CubicalComplexDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.CubicalComplexDiagram, arg0: int, arg1: int, arg2: bats.libbats.CellularMap) -> int
+
+### add_node
+add_node(self: bats.diagram.CubicalComplexDiagram, arg0: bats.libbats.CubicalComplex) -> int
+
+### edge_data
+edge_data(self: bats.diagram.CubicalComplexDiagram, arg0: int) -> bats.libbats.CellularMap
+
+### edge_source
+edge_source(self: bats.diagram.CubicalComplexDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.CubicalComplexDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.CubicalComplexDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.CubicalComplexDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.CubicalComplexDiagram, arg0: int) -> bats.libbats.CubicalComplex
+
+### set_edge
+set_edge(self: bats.diagram.CubicalComplexDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.CellularMap) -> None
+
+### set_node
+set_node(self: bats.diagram.CubicalComplexDiagram, arg0: int, arg1: bats.libbats.CubicalComplex) -> None
+
+## CubicalMap
+CubicalMap(arg0: bats.libbats.CubicalComplex, arg1: bats.libbats.CubicalComplex) -> bats.libbats.CellularMap
 
 ## DataSet
 ### __init__
@@ -232,41 +335,41 @@ SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction.
 DowkerCoverFiltration(*args, **kwargs)
 Overloaded function.
 
-1. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+1. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-2. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.L1Dist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+2. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.L1Dist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-3. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.LInfDist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+3. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.LInfDist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-4. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.CosineDist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+4. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.CosineDist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-5. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPCosineDist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+5. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPCosineDist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-6. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.AngleDist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+6. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.AngleDist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-7. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPAngleDist, arg3: List[Set[int]], arg4: float, arg5: int) -> bats.libbats.FilteredSimplicialComplex
+7. DowkerCoverFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPAngleDist, arg3: List[Set[int]], arg4: float, arg5: int) -> Filtration<double, SimplicialComplex>
 
-8. DowkerCoverFiltration(arg0: A<Dense<double, RowMaj> >, arg1: List[Set[int]], arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+8. DowkerCoverFiltration(arg0: A<Dense<double, RowMaj> >, arg1: List[Set[int]], arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
 ## DowkerFiltration
 DowkerFiltration(*args, **kwargs)
 Overloaded function.
 
-1. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+1. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-2. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.L1Dist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+2. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.L1Dist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-3. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.LInfDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+3. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.LInfDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-4. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.CosineDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+4. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.CosineDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-5. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPCosineDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+5. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPCosineDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-6. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.AngleDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+6. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.AngleDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-7. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPAngleDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+7. DowkerFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.RPAngleDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-8. DowkerFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.FilteredSimplicialComplex
+8. DowkerFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> Filtration<double, SimplicialComplex>
 
 ## Euclidean
 ### __init__
@@ -297,6 +400,8 @@ Overloaded function.
 1. __init__(self: bats.libbats.F2ChainComplex) -> None
 
 2. __init__(self: bats.libbats.F2ChainComplex, arg0: bats.libbats.SimplicialComplex) -> None
+
+3. __init__(self: bats.libbats.F2ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
 
 ## F2ChainDiagram
 ### __init__
@@ -445,6 +550,8 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.F3ChainComplex, arg0: bats.libbats.SimplicialComplex) -> None
 
+3. __init__(self: bats.libbats.F3ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
+
 ## F3ChainDiagram
 ### __init__
 __init__(*args, **kwargs)
@@ -589,6 +696,8 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.F5ChainComplex, arg0: bats.libbats.SimplicialComplex) -> None
 
+3. __init__(self: bats.libbats.F5ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
+
 ## F5ChainMap
 ### __init__
 __init__(*args, **kwargs)
@@ -666,7 +775,7 @@ ncells(self: bats.libbats.FilteredSimplicialComplex, arg0: int) -> int
 vals(self: bats.libbats.FilteredSimplicialComplex, arg0: int) -> List[float]
 
 ## FlagFiltration
-FlagFiltration(arg0: List[bats.topology.FilteredEdge], arg1: int, arg2: int, arg3: float) -> bats.libbats.FilteredSimplicialComplex
+FlagFiltration(arg0: List[bats.topology.FilteredEdge], arg1: int, arg2: int, arg3: float) -> Filtration<double, SimplicialComplex>
 
 ## Hom
 Hom(*args, **kwargs)
@@ -739,7 +848,7 @@ nrow(self: bats.dense.Matrix) -> int
 print(self: bats.dense.Matrix) -> None
 
 ## Nerve
-Nerve(arg0: List[Set[int]], arg1: int) -> bats.libbats.SimplicialComplex
+Nerve(arg0: List[Set[int]], arg1: int) -> SimplicialComplex
 
 ## NerveDiagram
 NerveDiagram(arg0: bats.diagram.CoverDiagram, arg1: int) -> bats.diagram.SimplicialComplexDiagram
@@ -838,6 +947,8 @@ Overloaded function.
 1. __init__(self: bats.libbats.RationalChainComplex) -> None
 
 2. __init__(self: bats.libbats.RationalChainComplex, arg0: bats.libbats.SimplicialComplex) -> None
+
+3. __init__(self: bats.libbats.RationalChainComplex, arg0: bats.libbats.CubicalComplex) -> None
 
 ## RationalChainMap
 ### __init__
@@ -1078,11 +1189,11 @@ maxdim(self: bats.libbats.ReducedRationalChainComplex) -> int
 Rips(*args, **kwargs)
 Overloaded function.
 
-1. Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.diagram.SimplicialComplexDiagram
+1. Rips(arg0: bats.diagram.SetDiagram, arg1: DataSet<double>, arg2: Euclidean, arg3: float, arg4: int) -> bats.diagram.SimplicialComplexDiagram
 
 Construct a diagram of Rips complexes from a SetDiagram.
 
-2. Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: List[float], arg4: int) -> bats.diagram.SimplicialComplexDiagram
+2. Rips(arg0: bats.diagram.SetDiagram, arg1: DataSet<double>, arg2: Euclidean, arg3: List[float], arg4: int) -> bats.diagram.SimplicialComplexDiagram
 
 Construct a diagram of Rips complexes from a SetDiagram.
 
@@ -1090,39 +1201,39 @@ Construct a diagram of Rips complexes from a SetDiagram.
 RipsCoverFiltration(*args, **kwargs)
 Overloaded function.
 
-1. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+1. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-2. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.L1Dist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+2. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.L1Dist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-3. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.LInfDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+3. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.LInfDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-4. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.CosineDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+4. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.CosineDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-5. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.RPCosineDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+5. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.RPCosineDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-6. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.AngleDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+6. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.AngleDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
-7. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.RPAngleDist, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+7. RipsCoverFiltration(arg0: DataSet<double>, arg1: List[Set[int]], arg2: bats.topology.RPAngleDist, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
 ## RipsFiltration
 RipsFiltration(*args, **kwargs)
 Overloaded function.
 
-1. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+1. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-2. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+2. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-3. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+3. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-4. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+4. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-5. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+5. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-6. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+6. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-7. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> bats.libbats.FilteredSimplicialComplex
+7. RipsFiltration(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> Filtration<double, SimplicialComplex>
 
-8. RipsFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.FilteredSimplicialComplex
+8. RipsFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> Filtration<double, SimplicialComplex>
 
 Rips Filtration using built using pairwise distances.
 
@@ -1263,7 +1374,7 @@ set_node(self: bats.diagram.SimplicialComplexDiagram, arg0: int, arg1: bats.libb
 SimplicialMap(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.SimplicialComplex, arg2: List[int]) -> bats.libbats.CellularMap
 
 ## WitnessFiltration
-WitnessFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+WitnessFiltration(arg0: DataSet<double>, arg1: DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> Filtration<double, SimplicialComplex>
 
 ## ZigzagSetDiagram
 ZigzagSetDiagram(arg0: List[Set[int]]) -> bats.diagram.SetDiagram
