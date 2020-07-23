@@ -4,5 +4,5 @@
 	branch = master
 [submodule "BATS_include"]
 	path = BATS_include
-	url = https://github.com/bnels/BATS.py.git
+	url = https://github.com/bnels/BATS.git
 	branch = master
