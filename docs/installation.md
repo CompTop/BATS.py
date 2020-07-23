@@ -2,6 +2,7 @@
 
 ```bash
 conda create -n bats python=3
+conda install numpy matplotlib
 ```
 
 clone repository *use recursive option for submodules*
