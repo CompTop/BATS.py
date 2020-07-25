@@ -161,7 +161,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("ncells", py::overload_cast<>(&CubicalComplex::ncells, py::const_), "number of cells")
         .def("ncells", py::overload_cast<const size_t>(&CubicalComplex::ncells, py::const_), "number of cells in given dimension")
         .def("add", (cell_ind (CubicalComplex::*)(std::vector<size_t>&))( &CubicalComplex::add ), "add cube")
-        .def("add_toplex", (cell_ind (CubicalComplex::*)(const std::vector<size_t>&))( &CubicalComplex::add_toplex ), "add toplex")
+        .def("add_recursive", (cell_ind (CubicalComplex::*)(const std::vector<size_t>&))( &CubicalComplex::add_recursive ), "add cube as well as faces")
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&CubicalComplex::find_idx))
         .def("boundary", &CubicalComplex::boundary_csc)
         .def("get_cube", &CubicalComplex::get_cube)

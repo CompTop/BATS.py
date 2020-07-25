@@ -164,10 +164,10 @@ add(self: bats.libbats.CubicalComplex, arg0: List[int]) -> bats.libbats.cell_ind
 
 add cube
 
-### add_toplex
-add_toplex(self: bats.libbats.CubicalComplex, arg0: List[int]) -> bats.libbats.cell_ind
+### add_recursive
+add_recursive(self: bats.libbats.CubicalComplex, arg0: List[int]) -> bats.libbats.cell_ind
 
-add toplex
+add cube as well as faces
 
 ### boundary
 boundary(self: bats.libbats.CubicalComplex, arg0: int) -> bats.libbats.CSCMatrix

@@ -5,6 +5,11 @@ conda create -n bats python=3
 conda install numpy matplotlib
 ```
 
+if you want to use ipython notebooks, you may want to install
+```bash
+conda install ipython notebook
+```
+
 clone repository *use recursive option for submodules*
 ```bash
 git clone --recursive git@github.com:bnels/BATS.py.git

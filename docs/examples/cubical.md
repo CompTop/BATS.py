@@ -31,7 +31,7 @@ lower dimensional cubes have degeneracies, but are still a list of length `2*d`
 A toplex is a complex described by maximum dimension cells.  All faces that must exist exist.  Cubical complexes can be created by adding these top-level cells.
 
 ```python
-X.add_toplex([0,1,0,1,0,1]) # adds cube (0,1) x (0,1) x (0,1)
+X.add_recursive([0,1,0,1,0,1]) # adds cube (0,1) x (0,1) x (0,1)
 print(X.ncells()) # 27
 ```
 
@@ -84,7 +84,7 @@ def image_to_complex(A):
     toplex_list = to_toplexes(A)
     X = bats.CubicalComplex(2)
     for t in toplex_list:
-        X.add_toplex(t)
+        X.add_recursive(t)
     return X
 ```
 
