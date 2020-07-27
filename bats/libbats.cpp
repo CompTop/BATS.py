@@ -165,7 +165,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&CubicalComplex::find_idx))
         .def("boundary", &CubicalComplex::boundary_csc, "integer boundary matrix")
         .def("skeleton", &CubicalComplex::skeleton, "k-skeleton of complex")
-        .def("get_cube", &CubicalComplex::get_cube)
+        .def("get_cube", &CubicalComplex::get_cube, "get cube in given dimension")
         .def("get_cubes", py::overload_cast<const size_t>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes in given dimension.")
         .def("get_cubes", py::overload_cast<>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes.");
 
