@@ -172,6 +172,8 @@ add cube as well as faces
 ### boundary
 boundary(self: bats.libbats.CubicalComplex, arg0: int) -> bats.libbats.CSCMatrix
 
+integer boundary matrix
+
 ### find_idx
 find_idx(self: bats.libbats.CubicalComplex, arg0: List[int]) -> int
 
@@ -206,6 +208,11 @@ number of cells
 2. ncells(self: bats.libbats.CubicalComplex, arg0: int) -> int
 
 number of cells in given dimension
+
+### skeleton
+skeleton(self: bats.libbats.CubicalComplex, arg0: int) -> bats.libbats.CubicalComplex
+
+k-skeleton of complex
 
 ## CubicalComplexDiagram
 ### __init__
