@@ -72,5 +72,6 @@ If you want to update BATS.py to the latest development version, you need to pul
 From the repository root directory:
 ```bash
 git pull --recurse-submodules
+python setup.py build --force # rebuilds all pybind executables
 python setup.py install
 ```
