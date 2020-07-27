@@ -43,6 +43,29 @@ pull and update submodules
 git pull --recurse-submodules
 ```
 
+## Testing
+
+BATS.py uses the `unittest` framework. See [documentation here](https://docs.python.org/3.8/library/unittest.html).
+
+### Running all tests
+
+First, you need to have the `bats` module built in-place.
+```bash
+python setup.py build_ext --inplace
+```
+
+From the root of the repository, run
+```bash
+python -m unittest discover
+```
+
+### Running individual test files
+
+From `BATS.py/test`, you can run individual test files
+```bash
+python -m unittest simplicial.py
+```
+
 ## Upgrading
 
 If you want to update BATS.py to the latest development version, you need to pull and re-build.
