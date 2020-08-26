@@ -57,6 +57,12 @@ namespace py = pybind11;
 .def("find_preferred_representative", &ReducedChainComplex<MT>::find_preferred_representative)\
 .def("maxdim", &ReducedChainComplex<MT>::maxdim);
 
+#define InducedMapInterface(m, MT) \
+m.def("InducedMap",\
+	(MT (*)(const ChainMap<MT> &, const ReducedChainComplex<MT> &, const ReducedChainComplex<MT>&, size_t))(&induced_map), \
+	"Induced map on homology." \
+);
+
 #define FilteredSimplicialComplexInterface(T, name) py::class_<Filtration<T, SimplicialComplex>>(m, name)\
 .def(py::init<>())\
 .def("add", (cell_ind (Filtration<T, SimplicialComplex>::*)(T, std::vector<size_t>&))(&Filtration<T, SimplicialComplex>::add))\
@@ -196,6 +202,9 @@ PYBIND11_MODULE(libbats, m) {
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
     ReducedChainComplexInterface(M5, "ReducedF5ChainComplex")
     ReducedChainComplexInterface(MQ, "ReducedRationalChainComplex")
+
+	InducedMapInterface(m, M2)
+	InducedMapInterface(m, M3)
 
     AutoReducedChainComplexInterface(F3)
     AutoReducedChainComplexInterface(F2)
