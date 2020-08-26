@@ -81,7 +81,7 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, **kwa
     return fig, ax
 
 
-def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs):
+def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, essential_color=None, figargs={}, lineargs={"linewidth":1}):
     """
     plot a persistence barcode for pairs in ps.
     Each barcode is a pyplot axis.
@@ -97,7 +97,11 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
 
         tlb: upper bound on filtration parameter to display.  (default: inf)
 
-        **figkwargs - passed onto pyplot subplots construction
+        essential_color: color for essential pairs (defualt: 'r')
+
+        figargs - passed onto pyplot subplots construction (default {})
+
+        lineargs - passed onto hlines construction (default {"linewidth":1})
 
     Returns:
         fig, ax - pyplot figure and axes
@@ -113,7 +117,7 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
 
     # loop over dimensions
     maxdim = np.max(dims)
-    fig, ax = plt.subplots(nrows=(maxdim+1), ncols=1, sharex=True, **figkwargs)
+    fig, ax = plt.subplots(nrows=(maxdim+1), ncols=1, sharex=True, **figargs)
     if maxdim == 0:
         ax = [ax]
 
@@ -126,7 +130,9 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
         neps = non_essential_pair_filter(ad, tub)
 
         # plot non-essential pairs
-        ax[d].hlines(ys[neps], ad[neps, 0], ad[neps, 1], colors='b', linewidth=1)
+        if 'colors' not in lineargs:
+            lineargs['colors'] = 'b'
+        ax[d].hlines(ys[neps], ad[neps, 0], ad[neps, 1], **lineargs)
 
         # plot essential pairs
         eb = ad[eps, 0]
@@ -134,7 +140,11 @@ def persistence_barcode(ps, remove_zeros=True, tlb=0.0, tub=np.inf, **figkwargs)
 #         for y, b in zip(ys[eps], eb):
 #             print("arrow")
 #             ax[d].arrow(b, y, ar_to - b, 0, head_width=10, head_length=0.5, length_includes_head=True, fc='k', ec='k')
-        ax[d].hlines(ys[eps], eb, ed, colors='r', linewidth=1)
+        if essential_color is None:
+            lineargs['colors'] = 'r'
+        else:
+            lineargs['colors'] = essential_color
+        ax[d].hlines(ys[eps], eb, ed, **lineargs)
 
         # remove labels from y axis
         ax[d].get_yaxis().set_ticks([])
