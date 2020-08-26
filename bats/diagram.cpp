@@ -22,7 +22,11 @@ namespace py = pybind11;
 
 #define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
 
-#define AutoChainFunctorInterface(DT, FT) m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__Chain));
+#define AutoChainFunctorInterface(DT, FT) \
+m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__Chain)); \
+
+#define SimpleChainFunctorInterface(m, FT) \
+m.def("Chain", [](const CellularMap & A, FT) { return ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>(A); });
 
 #define HomFunctorInterface(MT, name) \
 m.def(name, &(Hom<MT>));\
@@ -61,6 +65,9 @@ PYBIND11_MODULE(diagram, m) {
 	AutoChainFunctorInterface(CubicalComplexDiagram, F3)
 	AutoChainFunctorInterface(CellComplexDiagram, F2)
 	AutoChainFunctorInterface(CellComplexDiagram, F3)
+
+	SimpleChainFunctorInterface(m, F2)
+	SimpleChainFunctorInterface(m, F3)
 
 	HomFunctorInterface(M2, "Hom")
 	HomFunctorInterface(M3, "Hom")

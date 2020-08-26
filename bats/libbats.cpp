@@ -43,7 +43,7 @@ namespace py = pybind11;
 .def(py::init<const CubicalComplex&>())\
 .def("__getitem__", &ChainComplex<MT>::operator[]);
 
-#define ChainMapInterface(MT, name) py::class_<ChainMap<MT>>(m, name)\
+#define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const CellularMap&>())\
 .def("__getitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[], py::const_))\
@@ -192,10 +192,10 @@ PYBIND11_MODULE(libbats, m) {
     ChainComplexInterface(M5, "F5ChainComplex")
     ChainComplexInterface(MQ, "RationalChainComplex")
 
-    ChainMapInterface(M2, "F2ChainMap")
-    ChainMapInterface(M3, "F3ChainMap")
-    ChainMapInterface(M5, "F5ChainMap")
-    ChainMapInterface(MQ, "RationalChainMap")
+    ChainMapInterface(m, M2, "F2ChainMap")
+    ChainMapInterface(m, M3, "F3ChainMap")
+    ChainMapInterface(m, M5, "F5ChainMap")
+    ChainMapInterface(m, MQ, "RationalChainMap")
 
 
     ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
