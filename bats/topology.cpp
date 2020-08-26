@@ -45,12 +45,20 @@ m.def("DiscreteMorozovZigzagSets", \
 	"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction." \
 );
 
+// define RipsComplex interface
+#define RipsInterface(M) \
+m.def("RipsComplex",\
+	(SimplicialComplex (*)(const DataSet<double>&, const M&, double, size_t))(&RipsComplex), \
+	"Rips Complex constructed from data set and metric." \
+);
+
 
 #define MetricInterfaceAll(M, name) \
 MetricInterface(M, name)\
 FiltrationInterface(M)\
 LandmarkInterface(M)\
-dmzzInterface(M)
+dmzzInterface(M)\
+RipsInterface(M)
 
 
 PYBIND11_MODULE(topology, m) {
@@ -71,6 +79,11 @@ PYBIND11_MODULE(topology, m) {
 	m.def("RipsFiltration",
 		(Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&RipsFiltration),
 		"Rips Filtration using built using pairwise distances."
+	);
+
+	m.def("RipsComplex",\
+		(SimplicialComplex (*)(const Matrix<double>&, double, size_t))(&RipsComplex), \
+		"Rips Complex constructed from pairwise distances." \
 	);
 
 
