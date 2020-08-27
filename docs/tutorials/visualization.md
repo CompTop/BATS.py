@@ -45,9 +45,22 @@ fig.show()
 ```
 ![Rips Generators](figures/rips_8_gen.png)
 
+Let's now look at a single generator:
+
 ```python
 fig.reset() # resets figure to have no generators
 fig.show_generator(0, hdim=1, color='red')
 fig.show()
 ```
 ![Rips Generator 0](figures/rips_8_gen0.png)
+
+Let's visualize the second generator by passing in the representative 1-chain:
+```python
+RC = bats.ReducedChainComplex(R, bats.F2())
+r = RC.get_preferred_representative(1, 1)
+fig.reset()
+fig.show_chain(r, color='blue')
+fig.show()
+```
+
+![Rips Generator 1](figures/rips_8_gen1.png)

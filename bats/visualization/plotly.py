@@ -46,16 +46,13 @@ class ScatterVisualization(go.Figure):
         if not hasattr(self, '_RC'):
             self._RC = bats.ReducedChainComplex(self._cpx, field())
 
-    def show_generator(self, i, hdim=1, color="red"):
-        if hdim != 1:
-            raise NotImplementedError("Only H1 generators ars supported")
-
-        self.reduce()
-        r = self._RC.get_preferred_representative(i, hdim)
+    def show_chain(self, c, dim=1, color="red"):
+        if dim != 1:
+            raise NotImplementedError("Only 1-chains are supported")
 
         edge_x = []
         edge_y = []
-        nzind = r.nzinds()
+        nzind = c.nzinds()
         for k in nzind:
             [i, j] = self._cpx.get_simplex(1, k)
             edge_x.extend([self._pos[i,0], self._pos[j,0], None])
@@ -66,6 +63,15 @@ class ScatterVisualization(go.Figure):
             hoverinfo='none',
             mode='lines')
          )
+
+    def show_generator(self, i, hdim=1, color="red"):
+        if hdim != 1:
+            raise NotImplementedError("Only H1 generators are supported")
+
+        self.reduce()
+        r = self._RC.get_preferred_representative(i, hdim)
+
+        self.show_chain(r, dim=hdim, color=color)
 
     def show_generators(self, hdim):
         self.reduce()
