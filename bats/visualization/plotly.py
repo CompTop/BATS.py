@@ -13,6 +13,10 @@ class ScatterVisualization(go.Figure):
             raise NotImplementedError("pos must be specified")
         self._pos = pos # positions of points
 
+        self.reset()
+
+    def reset(self):
+        self.data = ()
         self.add_points()
         self.add_edges()
 
