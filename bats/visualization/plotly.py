@@ -108,15 +108,16 @@ class MapVisualization(go.Figure):
         if len(maps) != len(cpx) - 1:
             raise ValueError("number of maps must be one less than number of spaces")
 
+        self._pos = pos
 
         template_fig = make_subplots(rows=1, cols=nspaces,
-                    specs=[[{"type": "scene"} for i in range(nspaces)]],
+                    specs=[[{"type": "scene"} if self.vis_dim(i) == 3 else {"type": "xy"} for i in range(nspaces)]],
                     subplot_titles=tuple("Space {}".format(i) for i in range(nspaces)))
         self.layout = template_fig.layout
         # copy subplot grid ref
         self.__dict__["_grid_ref"] = template_fig._grid_ref
         self.__dict__["_grid_str"] = template_fig._grid_str
-        self._pos = pos
+
         self._dgm = SimplicialTower(cpx, maps)
 
         self.reset()
@@ -129,41 +130,74 @@ class MapVisualization(go.Figure):
     def size(self):
         return self._dgm.nnode()
 
+    def vis_dim(self, k):
+        return self._pos[k].shape[1]
+
     def draw_points(self):
 
         for i in range(self.size()):
-            self.append_trace(
-                go.Scatter3d(x=self._pos[i][:,0], y=self._pos[i][:,1], z=self._pos[i][:,2],
-                             mode='markers',
-                             marker={'color':'#888', 'size':4},
-                             name="nodes",
-                             legendgroup="nodes"
-                            ),
-                     row=1, col=i+1)
+            if self.vis_dim(i) == 3:
+                self.append_trace(
+                    go.Scatter3d(x=self._pos[i][:,0], y=self._pos[i][:,1], z=self._pos[i][:,2],
+                                 mode='markers',
+                                 marker={'color':'#888', 'size':4},
+                                 name="nodes",
+                                 legendgroup="nodes"
+                                ),
+                         row=1, col=i+1)
+            elif self.vis_dim(i) == 2:
+                self.append_trace(
+                    go.Scatter(x=self._pos[i][:,0], y=self._pos[i][:,1],
+                                 mode='markers',
+                                 marker={'color':'#888', 'size':4},
+                                 name="nodes",
+                                 legendgroup="nodes"
+                                ),
+                         row=1, col=i+1)
+
 
         return self
 
 
     def draw_edges(self):
         for k in range(self.size()):
-            # add edges in complex
-            edge_x = []
-            edge_y = []
-            edge_z = []
-            for i, j in self._dgm.node_data(k).get_simplices(1):
-                edge_x.extend([self._pos[k][i,0], self._pos[k][j,0], None])
-                edge_y.extend([self._pos[k][i,1], self._pos[k][j,1], None])
-                edge_z.extend([self._pos[k][i,2], self._pos[k][j,2], None])
+            if self.vis_dim(k) == 3:
+                # add edges in complex
+                edge_x = []
+                edge_y = []
+                edge_z = []
+                for i, j in self._dgm.node_data(k).get_simplices(1):
+                    edge_x.extend([self._pos[k][i,0], self._pos[k][j,0], None])
+                    edge_y.extend([self._pos[k][i,1], self._pos[k][j,1], None])
+                    edge_z.extend([self._pos[k][i,2], self._pos[k][j,2], None])
 
-            self.add_trace(go.Scatter3d(x=edge_x, y=edge_y, z=edge_z,
-                                        line=dict(width=0.5, color='#888'),
-                                        hoverinfo='none',
-                                        mode='lines',
-                                        name="edges",
-                                        legendgroup="edges"
-                                       ),
-                row=1, col=k+1
-             )
+                self.add_trace(go.Scatter3d(x=edge_x, y=edge_y, z=edge_z,
+                                            line=dict(width=0.5, color='#888'),
+                                            hoverinfo='none',
+                                            mode='lines',
+                                            name="edges",
+                                            legendgroup="edges"
+                                           ),
+                    row=1, col=k+1
+                 )
+            elif self.vis_dim(k) == 2:
+                # add edges in complex
+                edge_x = []
+                edge_y = []
+                for i, j in self._dgm.node_data(k).get_simplices(1):
+                    edge_x.extend([self._pos[k][i,0], self._pos[k][j,0], None])
+                    edge_y.extend([self._pos[k][i,1], self._pos[k][j,1], None])
+
+                self.add_trace(go.Scatter(x=edge_x, y=edge_y,
+                                            line=dict(width=0.5, color='#888'),
+                                            hoverinfo='none',
+                                            mode='lines',
+                                            name="edges",
+                                            legendgroup="edges"
+                                           ),
+                    row=1, col=k+1
+                 )
+
 
     def complex_diagram(self):
         return self._dgm
@@ -219,30 +253,49 @@ class MapVisualization(go.Figure):
 
     def _render_chain(self, cpxind, c, dim=1, color='red', **kwargs):
         """
-        render chain c at space i
+        render chain c at space cpxind
         """
         if dim != 1:
             raise NotImplementedError("Only 1-chains are supported")
 
-        edge_x = []
-        edge_y = []
-        edge_z = []
-        nzind = c.nzinds()
-        for k in nzind:
-            [i, j] = self.get_complex(cpxind).get_simplex(1, k)
-            edge_x.extend([self._pos[cpxind][i,0], self._pos[cpxind][j,0], None])
-            edge_y.extend([self._pos[cpxind][i,1], self._pos[cpxind][j,1], None])
-            edge_z.extend([self._pos[cpxind][i,2], self._pos[cpxind][j,2], None])
+        if self.vis_dim(cpxind) == 3:
+            edge_x = []
+            edge_y = []
+            edge_z = []
+            nzind = c.nzinds()
+            for k in nzind:
+                [i, j] = self.get_complex(cpxind).get_simplex(1, k)
+                edge_x.extend([self._pos[cpxind][i,0], self._pos[cpxind][j,0], None])
+                edge_y.extend([self._pos[cpxind][i,1], self._pos[cpxind][j,1], None])
+                edge_z.extend([self._pos[cpxind][i,2], self._pos[cpxind][j,2], None])
 
-        self.add_trace(go.Scatter3d(
-            x=edge_x, y=edge_y, z=edge_z,
-            line=dict(width=2, color=color),
-            hoverinfo='none',
-            mode='lines',
-            **kwargs
-        ),
-            row=1, col=cpxind+1
-         )
+            self.add_trace(go.Scatter3d(
+                x=edge_x, y=edge_y, z=edge_z,
+                line=dict(width=2, color=color),
+                hoverinfo='none',
+                mode='lines',
+                **kwargs
+            ),
+                row=1, col=cpxind+1
+             )
+        elif self.vis_dim(cpxind) == 2:
+            edge_x = []
+            edge_y = []
+            nzind = c.nzinds()
+            for k in nzind:
+                [i, j] = self.get_complex(cpxind).get_simplex(1, k)
+                edge_x.extend([self._pos[cpxind][i,0], self._pos[cpxind][j,0], None])
+                edge_y.extend([self._pos[cpxind][i,1], self._pos[cpxind][j,1], None])
+
+            self.add_trace(go.Scatter(
+                x=edge_x, y=edge_y,
+                line=dict(width=2, color=color),
+                hoverinfo='none',
+                mode='lines',
+                **kwargs
+            ),
+                row=1, col=cpxind+1
+             )
 
 
     def compute_hom(self, dim=1, field=bats.F2):

@@ -9,7 +9,8 @@ from bats import F2
 print(F2(1) + F2(1)) # should be 0
 ```
 
-## CSCMatrix
+## Matrices
+### CSCMatrix
 
 ```python
 A = bats.CSCMatrix(2,2,[0,1,2],[0,1],[-1,-1])
@@ -17,7 +18,44 @@ A.print() # prints matrix
 A(0,0) # returns -1
 ```
 
-## Dense Matrices
+To construct a `CSCMatrix` using `scipy.sparse`:
+```python
+import scipy.sparse as sparse
+
+# create 2x2 identity matrix
+data = [1, 1]
+row = [0,1,2]
+col = [0, 1]
+A = sparse.csc_matrix((data, col, row), shape=[2,2])
+
+# create BATS CSCMatrix
+Ab = bats.CSCMatrix(*A.shape, A.indptr, A.indices, A.data)
+```
+You could also construct the `scipy.sparse` `csc_matrix` in a variety of different ways before passing to BATS.
+
+### Column Matrices
+
+Column matrices can be created from `CSCMatrix`
+```python
+A = bats.CSCMatrix(2,2,[0,1,2],[0,1],[1,1]) # 2x2 identity
+C = bats.IntMat(A)
+C2 = bats.F2Mat(A)
+C3 = bats.F3mat(A)
+CQ = bats.RationalMat(A)
+```
+
+You can also use `bats.Mat` and pass in the field.
+```python
+C = bats.Mat(A) # IntMat
+C = bats.Mat(A, bats.F2()) # F2Mat
+```
+
+In order to get the contents of a ColumnMatrix in Python, use the `tolist()` method
+```python
+C.toarray()
+```
+
+### Dense Matrices
 
 BATS dense matrices are by default stored in row major order to be compatible with numpy.  
 

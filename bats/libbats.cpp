@@ -15,6 +15,7 @@ namespace py = pybind11;
 .def("__mul__", &F::operator*)\
 .def("__sub__", py::overload_cast<const F&>(&F::operator-, py::const_))\
 .def("__truediv__", &F::operator/)\
+.def("__repr__", &F::str)\
 .def("__str__", &F::str)
 
 // interface for everything other than F2
@@ -32,12 +33,17 @@ namespace py = pybind11;
 #define ColumnMatrixInterface(VT, name) py::class_<ColumnMatrix<VT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\
+.def(py::init<const CSCMatrix<int, size_t> &>())\
 .def("nrow", &ColumnMatrix<VT>::nrow, "number of rows.")\
 .def("ncol", &ColumnMatrix<VT>::ncol, "number of columns.")\
+.def("tolist", &ColumnMatrix<VT>::to_row_array, "return as C-style array")\
 .def("__str__", &ColumnMatrix<VT>::str)\
 .def("__mul__", py::overload_cast<const VT &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__mul__", py::overload_cast<const ColumnMatrix<VT> &>(&ColumnMatrix<VT>::operator*, py::const_))\
-.def("__call__", &ColumnMatrix<VT>::operator());
+.def("__getitem__", py::overload_cast<size_t>(&ColumnMatrix<VT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<size_t>(&ColumnMatrix<VT>::operator[]))\
+.def("__call__", &ColumnMatrix<VT>::operator());\
+m.def("Mat", [](const CSCMatrix<int, size_t> &A, VT::val_type) { return ColumnMatrix<VT>(A); });
 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
@@ -130,6 +136,7 @@ PYBIND11_MODULE(libbats, m) {
     SparseVectorInterface(FQ, "RationalVector")
 
     ColumnMatrixInterface(VInt, "IntMat")
+	m.def("Mat", [](const CSCMatrix<int, size_t> &A) { return ColumnMatrix<VInt>(A); });
     ColumnMatrixInterface(V2, "F2Mat")
     ColumnMatrixInterface(V3, "F3Mat")
     ColumnMatrixInterface(VQ, "RationalMat")
@@ -139,6 +146,8 @@ PYBIND11_MODULE(libbats, m) {
         .def(py::init<>())
         .def(py::init<size_t, size_t, const std::vector<size_t> &, const std::vector<size_t> &, const std::vector<int> &>())
         .def("__call__", &CSCMatrix<int, size_t>::getval)
+		.def("nrow", &CSCMatrix<int, size_t>::nrow, "number of rows.")\
+		.def("ncol", &CSCMatrix<int, size_t>::ncol, "number of columns.")\
         .def("print", py::overload_cast<>(&CSCMatrix<int, size_t>::print, py::const_));
 
     py::class_<cell_ind>(m, "cell_ind")
@@ -151,7 +160,9 @@ PYBIND11_MODULE(libbats, m) {
         .def("maxdim", &CellComplex::maxdim, "maximum dimension cell")
         .def("ncells", py::overload_cast<>(&CellComplex::ncells, py::const_), "number of cells")
         .def("ncells", py::overload_cast<const size_t>(&CellComplex::ncells, py::const_), "number of cells in given dimension")
-        .def("add", (size_t (CellComplex::*)(const std::vector<size_t>&, const std::vector<size_t>&, size_t))( &CellComplex::add ), "add cell in dimension k by specifying boundary and coefficients.")
+		.def("add_vertex", &CellComplex::add_vertex, "add vertex to cell complex")
+		.def("add_vertices", &CellComplex::add_vertices, "add vertices to cell complex")
+        .def("add", (size_t (CellComplex::*)(const std::vector<size_t>&, const std::vector<int>&, size_t))( &CellComplex::add ), "add cell in dimension k by specifying boundary and coefficients.")
         .def("boundary", &CellComplex::boundary_csc);
 
     py::class_<SimplicialComplex>(m, "SimplicialComplex")
@@ -189,10 +200,11 @@ PYBIND11_MODULE(libbats, m) {
         .def(py::init<>())
         .def(py::init<size_t>())
         .def("__getitem__", py::overload_cast<size_t>(&CellularMap::operator[], py::const_))\
-        .def("__setitem__", py::overload_cast<size_t>(&CellularMap::operator[]));
+        .def("__setitem__", [](CellularMap &M, size_t k, ColumnMatrix<VInt> &A){return M[k] = A;} );
 	m.def("IdentityMap", (CellularMap (*)(const SimplicialComplex &))(&CellularMap::identity));
 
-    m.def("SimplicialMap", &SimplicialMap);
+    m.def("SimplicialMap", py::overload_cast<const SimplicialComplex&, const SimplicialComplex &>(&SimplicialMap), "Inclusion map of simplicial complexes");
+	m.def("SimplicialMap", py::overload_cast<const SimplicialComplex&, const SimplicialComplex &, const std::vector<size_t> &>(&SimplicialMap), "simplicial map extended from function on vertices");
     m.def("CubicalMap", &CubicalMap);
 
     ChainComplexInterface(M2, "F2ChainComplex")
