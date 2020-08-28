@@ -64,3 +64,73 @@ fig.show()
 ```
 
 ![Rips Generator 1](figures/rips_8_gen1.png)
+
+## Visualization of Maps
+
+You can visualize a `SimplicialMap` with a `MapVisualization`.
+
+```python
+import numpy as np
+import bats
+from bats.visualization.plotly import MapVisualization
+import scipy.spatial.distance as distance
+
+np.random.seed(0)
+```
+
+Let's generate a cylinder in three dimensions:
+```python
+def gen_cylinder(n, r=1.0, sigma=0.1):
+    X = np.random.randn(n,2)
+    X = r * X / np.linalg.norm(X, axis=1).reshape(-1,1)
+    X = np.hstack((X, r*np.random.rand(n,1) - r/2))
+    return X
+
+X = gen_cylinder(500)
+```
+
+We'll generate a Rips Complex with parameter `0.25`
+```python
+pdist = distance.squareform(distance.pdist(X, 'euclidean'))
+R = bats.RipsComplex(bats.Matrix(pdist), 0.25, 2)
+```
+
+Let's investigate the inclusion of the lower half of the cylinder
+```python
+inds = np.where(X[:,2] < 0)[0]
+Xi = X[inds]
+pdisti = distance.squareform(distance.pdist(Xi, 'euclidean'))
+Ri = bats.RipsComplex(bats.Matrix(pdisti), 0.25, 2)
+```
+
+The inclusion map is
+```python
+M = bats.SimplicialMap(Ri, R, inds)
+```
+
+Now, we can construct a visualization
+```python
+fig = MapVisualization(pos=(Xi,X), cpx=(Ri,R), maps=(M,))
+fig.update_layout(scene_aspectmode='manual',
+                  scene_aspectratio=dict(x=1, y=1, z=0.5))
+fig.show()
+```
+[First Map](figures/map0.html ':include width=100% height=600px')
+
+The `show_generator` method will visualize homology generators in the domain by visualizing the preferred representative used in calculations.  By default, the image of the chain is visualized in the range, as well as the preferred representative for the homology class.
+
+```python
+fig.reset()
+fig.show_generator(1)
+fig.show()
+```
+[Generator](figures/map_gen.html ':include width=100% height=600px')
+
+The `reset` method clears the visualization of chains/generators.  You can also change the color of chains and homology.  `group_suffix` can be used to group visualizations in the legend - try using the legend to toggle visualizations below:
+```python
+fig.reset()
+fig.show_generator(5, group_suffix=0)
+fig.show_generator(3, color='orange', hcolor='black', group_suffix=1)
+fig.show()
+```
+[Generators](figures/map_gen2.html ':include width=100% height=600px')

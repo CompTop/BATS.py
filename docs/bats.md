@@ -107,6 +107,22 @@ Overloaded function.
 
 6. Chain(arg0: bats.diagram.CellComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
 
+7. Chain(arg0: bats.libbats.CellularMap, arg1: bats.libbats.F2) -> bats.libbats.F2ChainMap
+
+8. Chain(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.F2) -> bats.libbats.F2ChainComplex
+
+9. Chain(arg0: bats.libbats.CubicalComplex, arg1: bats.libbats.F2) -> bats.libbats.F2ChainComplex
+
+10. Chain(arg0: bats.libbats.CellComplex, arg1: bats.libbats.F2) -> bats.libbats.F2ChainComplex
+
+11. Chain(arg0: bats.libbats.CellularMap, arg1: bats.libbats.F3) -> bats.libbats.F3ChainMap
+
+12. Chain(arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.F3ChainComplex
+
+13. Chain(arg0: bats.libbats.CubicalComplex, arg1: bats.libbats.F3) -> bats.libbats.F3ChainComplex
+
+14. Chain(arg0: bats.libbats.CellComplex, arg1: bats.libbats.F3) -> bats.libbats.F3ChainComplex
+
 ## CosineDist
 ### __init__
 __init__(self: bats.topology.CosineDist) -> None
@@ -799,6 +815,21 @@ Overloaded function.
 
 2. Hom(arg0: bats.diagram.F3ChainDiagram, arg1: int) -> bats.diagram.F3HomDiagram
 
+## IdentityMap
+IdentityMap(arg0: bats.libbats.SimplicialComplex) -> bats.libbats.CellularMap
+
+## InducedMap
+InducedMap(*args, **kwargs)
+Overloaded function.
+
+1. InducedMap(arg0: bats.libbats.F2ChainMap, arg1: bats.libbats.ReducedF2ChainComplex, arg2: bats.libbats.ReducedF2ChainComplex, arg3: int) -> bats.libbats.F2Mat
+
+Induced map on homology.
+
+2. InducedMap(arg0: bats.libbats.F3ChainMap, arg1: bats.libbats.ReducedF3ChainComplex, arg2: bats.libbats.ReducedF3ChainComplex, arg3: int) -> bats.libbats.F3Mat
+
+Induced map on homology.
+
 ## IntMat
 ### __init__
 __init__(*args, **kwargs)
@@ -1028,17 +1059,40 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2ChainComplex) -> None
 
+### chain_preferred_representative
+chain_preferred_representative(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> bats.libbats.F2Vector
+
+return the preferred representative of a chain
+
 ### find_preferred_representative
 find_preferred_representative(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> None
 
+### from_hom_basis
+from_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. from_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Mat, arg1: int) -> bats.libbats.F2Mat
+
+2. from_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> bats.libbats.F2Vector
+
 ### get_preferred_representative
 get_preferred_representative(self: bats.libbats.ReducedF2ChainComplex, arg0: int, arg1: int) -> bats.libbats.F2Vector
+
+get the preferred representative for homology class
 
 ### hdim
 hdim(self: bats.libbats.ReducedF2ChainComplex, arg0: int) -> int
 
 ### maxdim
 maxdim(self: bats.libbats.ReducedF2ChainComplex) -> int
+
+### to_hom_basis
+to_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. to_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Mat, arg1: int) -> bats.libbats.F2Mat
+
+2. to_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> bats.libbats.F2Vector
 
 ## ReducedF3ChainComplex
 ### __init__
@@ -1049,17 +1103,40 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3ChainComplex) -> None
 
+### chain_preferred_representative
+chain_preferred_representative(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> bats.libbats.F3Vector
+
+return the preferred representative of a chain
+
 ### find_preferred_representative
 find_preferred_representative(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> None
 
+### from_hom_basis
+from_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. from_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Mat, arg1: int) -> bats.libbats.F3Mat
+
+2. from_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> bats.libbats.F3Vector
+
 ### get_preferred_representative
 get_preferred_representative(self: bats.libbats.ReducedF3ChainComplex, arg0: int, arg1: int) -> bats.libbats.F3Vector
+
+get the preferred representative for homology class
 
 ### hdim
 hdim(self: bats.libbats.ReducedF3ChainComplex, arg0: int) -> int
 
 ### maxdim
 maxdim(self: bats.libbats.ReducedF3ChainComplex) -> int
+
+### to_hom_basis
+to_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. to_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Mat, arg1: int) -> bats.libbats.F3Mat
+
+2. to_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> bats.libbats.F3Vector
 
 ## ReducedF5ChainComplex
 ### __init__
@@ -1070,17 +1147,40 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.ReducedF5ChainComplex, arg0: bats.libbats.F5ChainComplex) -> None
 
+### chain_preferred_representative
+chain_preferred_representative(self: bats.libbats.ReducedF5ChainComplex, arg0: SparseVector<ModP<int, 5u>, unsigned long>, arg1: int) -> SparseVector<ModP<int, 5u>, unsigned long>
+
+return the preferred representative of a chain
+
 ### find_preferred_representative
 find_preferred_representative(self: bats.libbats.ReducedF5ChainComplex, arg0: SparseVector<ModP<int, 5u>, unsigned long>, arg1: int) -> None
 
+### from_hom_basis
+from_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. from_hom_basis(self: bats.libbats.ReducedF5ChainComplex, arg0: ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >, arg1: int) -> ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >
+
+2. from_hom_basis(self: bats.libbats.ReducedF5ChainComplex, arg0: SparseVector<ModP<int, 5u>, unsigned long>, arg1: int) -> SparseVector<ModP<int, 5u>, unsigned long>
+
 ### get_preferred_representative
 get_preferred_representative(self: bats.libbats.ReducedF5ChainComplex, arg0: int, arg1: int) -> SparseVector<ModP<int, 5u>, unsigned long>
+
+get the preferred representative for homology class
 
 ### hdim
 hdim(self: bats.libbats.ReducedF5ChainComplex, arg0: int) -> int
 
 ### maxdim
 maxdim(self: bats.libbats.ReducedF5ChainComplex) -> int
+
+### to_hom_basis
+to_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. to_hom_basis(self: bats.libbats.ReducedF5ChainComplex, arg0: ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >, arg1: int) -> ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >
+
+2. to_hom_basis(self: bats.libbats.ReducedF5ChainComplex, arg0: SparseVector<ModP<int, 5u>, unsigned long>, arg1: int) -> SparseVector<ModP<int, 5u>, unsigned long>
 
 ## ReducedFilteredChainComplex
 ReducedFilteredChainComplex(*args, **kwargs)
@@ -1187,17 +1287,40 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalChainComplex) -> None
 
+### chain_preferred_representative
+chain_preferred_representative(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalVector, arg1: int) -> bats.libbats.RationalVector
+
+return the preferred representative of a chain
+
 ### find_preferred_representative
 find_preferred_representative(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalVector, arg1: int) -> None
 
+### from_hom_basis
+from_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. from_hom_basis(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalMat, arg1: int) -> bats.libbats.RationalMat
+
+2. from_hom_basis(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalVector, arg1: int) -> bats.libbats.RationalVector
+
 ### get_preferred_representative
 get_preferred_representative(self: bats.libbats.ReducedRationalChainComplex, arg0: int, arg1: int) -> bats.libbats.RationalVector
+
+get the preferred representative for homology class
 
 ### hdim
 hdim(self: bats.libbats.ReducedRationalChainComplex, arg0: int) -> int
 
 ### maxdim
 maxdim(self: bats.libbats.ReducedRationalChainComplex) -> int
+
+### to_hom_basis
+to_hom_basis(*args, **kwargs)
+Overloaded function.
+
+1. to_hom_basis(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalMat, arg1: int) -> bats.libbats.RationalMat
+
+2. to_hom_basis(self: bats.libbats.ReducedRationalChainComplex, arg0: bats.libbats.RationalVector, arg1: int) -> bats.libbats.RationalVector
 
 ## Rips
 Rips(*args, **kwargs)
@@ -1210,6 +1333,42 @@ Construct a diagram of Rips complexes from a SetDiagram.
 2. Rips(arg0: bats.diagram.SetDiagram, arg1: bats.dense.DataSet, arg2: bats.topology.Euclidean, arg3: List[float], arg4: int) -> bats.diagram.SimplicialComplexDiagram
 
 Construct a diagram of Rips complexes from a SetDiagram.
+
+## RipsComplex
+RipsComplex(*args, **kwargs)
+Overloaded function.
+
+1. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+2. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+3. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+4. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+5. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+6. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+7. RipsComplex(arg0: DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from data set and metric.
+
+8. RipsComplex(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.SimplicialComplex
+
+Rips Complex constructed from pairwise distances.
 
 ## RipsCoverFiltration
 RipsCoverFiltration(*args, **kwargs)
@@ -1556,7 +1715,11 @@ Basic Applied Topology Subprograms interface
 
         tlb: upper bound on filtration parameter to display.  (default: inf)
 
-        **figkwargs - passed onto pyplot subplots construction
+        essential_color: color for essential pairs (defualt: 'r')
+
+        figargs - passed onto pyplot subplots construction (default {})
+
+        lineargs - passed onto hlines construction (default {"linewidth":1})
 
     Returns:
         fig, ax - pyplot figure and axes
