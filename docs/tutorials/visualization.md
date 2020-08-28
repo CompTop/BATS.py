@@ -134,3 +134,24 @@ fig.show_generator(3, color='orange', hcolor='black', group_suffix=1)
 fig.show()
 ```
 [Generators](figures/map_gen2.html ':include width=100% height=600px')
+
+Let's now create a second map from the full data set to a projection onto two coordinates.
+```python
+Xp = X[:,:2]
+pdistp = distance.squareform(distance.pdist(Xp, 'euclidean'))
+Rp = bats.RipsComplex(bats.Matrix(pdistp), 0.25, 2)
+M2 = bats.SimplicialMap(R, Rp) # inclusion map
+```
+
+We can visualize the three spaces, with the maps between them, and mix 2-dimensional and 3-dimensional visualizations.  Note that the homology class visualized in `show_generator(1)` is killed by the second map.
+
+```python
+fig = MapVisualization(pos=(Xi,X, Xp), cpx=(Ri,R,Rp), maps=(M,M2))
+fig.update_layout(scene_aspectmode='manual',
+                  scene_aspectratio=dict(x=1, y=1, z=0.5))
+fig.show_generator(1, color='green', hcolor='black', group_suffix=1)
+fig.show_generator(5, color='red', hcolor='blue', group_suffix=5)
+fig.show()
+```
+
+[Generators](figures/map_gen3.html ':include width=100% height=600px')

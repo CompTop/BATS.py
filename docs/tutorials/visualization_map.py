@@ -36,3 +36,15 @@ fig.reset()
 fig.show_generator(5, group_suffix=0)
 fig.show_generator(3, color='orange', hcolor='black', group_suffix=1)
 fig.write_html('figures/map_gen2.html')
+
+Xp = X[:,:2]
+pdistp = distance.squareform(distance.pdist(Xp, 'euclidean'))
+Rp = bats.RipsComplex(bats.Matrix(pdistp), 0.25, 2)
+M2 = bats.SimplicialMap(R, Rp) # inclusion map
+
+fig = MapVisualization(pos=(Xi,X, Xp), cpx=(Ri,R,Rp), maps=(M,M2))
+fig.update_layout(scene_aspectmode='manual',
+                  scene_aspectratio=dict(x=1, y=1, z=0.5))
+fig.show_generator(1, color='green', hcolor='black', group_suffix=1)
+fig.show_generator(5, color='red', hcolor='blue', group_suffix=5)
+fig.write_html('figures/map_gen3.html')
