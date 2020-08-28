@@ -159,3 +159,7 @@ fig.show()
 ```
 
 [Generator](figures/map_circle_vis.html ':include width=100% height=600px')
+
+### CubicalMap
+
+Right now, `bats.CubicalMap` only supports inclusions - syntax is the same as that for `bats.SimplicialMap`, but inputs are `bats.CubicalComplex` objects.

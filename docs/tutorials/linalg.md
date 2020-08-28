@@ -52,7 +52,7 @@ C = bats.Mat(A, bats.F2()) # F2Mat
 
 In order to get the contents of a ColumnMatrix in Python, use the `tolist()` method
 ```python
-C.toarray()
+C.tolist()
 ```
 
 ### Dense Matrices
