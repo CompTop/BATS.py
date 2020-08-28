@@ -35,6 +35,8 @@ namespace py = pybind11;
 .def("nrow", &ColumnMatrix<VT>::nrow, "number of rows.")\
 .def("ncol", &ColumnMatrix<VT>::ncol, "number of columns.")\
 .def("__str__", &ColumnMatrix<VT>::str)\
+.def("__mul__", py::overload_cast<const VT &>(&ColumnMatrix<VT>::operator*, py::const_))\
+.def("__mul__", py::overload_cast<const ColumnMatrix<VT> &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__call__", &ColumnMatrix<VT>::operator());
 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
@@ -53,8 +55,13 @@ namespace py = pybind11;
 .def(py::init<>())\
 .def(py::init<const ChainComplex<MT>&>())\
 .def("hdim", &ReducedChainComplex<MT>::hdim)\
-.def("get_preferred_representative", &ReducedChainComplex<MT>::get_preferred_representative)\
+.def("get_preferred_representative", &ReducedChainComplex<MT>::get_preferred_representative, "get the preferred representative for homology class")\
+.def("chain_preferred_representative", &ReducedChainComplex<MT>::chain_preferred_representative, "return the preferred representative of a chain")\
 .def("find_preferred_representative", &ReducedChainComplex<MT>::find_preferred_representative)\
+.def("to_hom_basis", [](const ReducedChainComplex<MT> &R, const MT &A, size_t k) {return R.to_hom_basis(A, k);})\
+.def("to_hom_basis", [](const ReducedChainComplex<MT> &R, const MT::col_type &A, size_t k) {return R.to_hom_basis(A, k);})\
+.def("from_hom_basis", [](const ReducedChainComplex<MT> &R, const MT &A, size_t k) {return R.from_hom_basis(A, k);})\
+.def("from_hom_basis", [](const ReducedChainComplex<MT> &R, const MT::col_type &A, size_t k) {return R.from_hom_basis(A, k);})\
 .def("maxdim", &ReducedChainComplex<MT>::maxdim);
 
 #define InducedMapInterface(m, MT) \
@@ -183,6 +190,7 @@ PYBIND11_MODULE(libbats, m) {
         .def(py::init<size_t>())
         .def("__getitem__", py::overload_cast<size_t>(&CellularMap::operator[], py::const_))\
         .def("__setitem__", py::overload_cast<size_t>(&CellularMap::operator[]));
+	m.def("IdentityMap", (CellularMap (*)(const SimplicialComplex &))(&CellularMap::identity));
 
     m.def("SimplicialMap", &SimplicialMap);
     m.def("CubicalMap", &CubicalMap);
