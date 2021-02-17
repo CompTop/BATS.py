@@ -26,8 +26,10 @@ namespace py = pybind11;
 .def(py::init<>())\
 .def(py::init<const std::vector<size_t>&, const std::vector<F>&>())\
 .def("nzinds", &SparseVector<F, size_t>::nzinds)\
+.def("nzvals", &SparseVector<F, size_t>::nzvals)\
+.def("nzs", &SparseVector<F, size_t>::nzs)\
 .def("__getitem__", py::overload_cast<size_t>(&SparseVector<F, size_t>::getval, py::const_))\
-.def("print", &SparseVector<F, size_t>::print);
+.def("__str__", &SparseVector<F, size_t>::str);
 // .def("__getitem__", (F (SparseVector<F, size_t>::*)(size_t))(&SparseVector<F, size_t>::operator[]))
 
 #define ColumnMatrixInterface(VT, name) py::class_<ColumnMatrix<VT>>(m, name)\
@@ -37,6 +39,7 @@ namespace py = pybind11;
 .def("nrow", &ColumnMatrix<VT>::nrow, "number of rows.")\
 .def("ncol", &ColumnMatrix<VT>::ncol, "number of columns.")\
 .def("tolist", &ColumnMatrix<VT>::to_row_array, "return as C-style array")\
+.def("T", &ColumnMatrix<VT>::T, "transpose")\
 .def("__str__", &ColumnMatrix<VT>::str)\
 .def("__mul__", py::overload_cast<const VT &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__mul__", py::overload_cast<const ColumnMatrix<VT> &>(&ColumnMatrix<VT>::operator*, py::const_))\
@@ -44,6 +47,19 @@ namespace py = pybind11;
 .def("__setitem__", py::overload_cast<size_t>(&ColumnMatrix<VT>::operator[]))\
 .def("__call__", &ColumnMatrix<VT>::operator());\
 m.def("Mat", [](const CSCMatrix<int, size_t> &A, VT::val_type) { return ColumnMatrix<VT>(A); });
+
+// add factorizations if matrix is over a field
+#define ColumnMatrixInterfaceField(VT, name) \
+ColumnMatrixInterface(VT, name) \
+m.def("LQU", [](const ColumnMatrix<VT> &A) { auto F = LQU(A); return std::make_tuple(F.L, F.E, F.U); }, "LQU factorization");\
+m.def("LEUP", [](const ColumnMatrix<VT> &A) { auto F = LEUP(A); return std::make_tuple(F.L, F.E, F.U, F.P); }, "LEUP factorization");\
+m.def("PLEU", [](const ColumnMatrix<VT> &A) { auto F = PLEU(A); return std::make_tuple(F.P, F.L, F.E, F.U); }, "PLEU factorization");\
+m.def("UELP", [](const ColumnMatrix<VT> &A) { auto F = UELP(A); return std::make_tuple(F.U, F.E, F.L, F.P); }, "UELP factorization");\
+m.def("PUEL", [](const ColumnMatrix<VT> &A) { auto F = PUEL(A); return std::make_tuple(F.P, F.U, F.E, F.L); }, "PUEL factorization");\
+m.def("EL_L_commute", [](const ColumnMatrix<VT> &E, const ColumnMatrix<VT> &L) { return EL_L_commute(E, L); }, "E_L, L commutation");\
+m.def("L_EL_commute", [](const ColumnMatrix<VT> &L, const ColumnMatrix<VT> &EL) { return L_EL_commute(L, EL); }, "L, E_L commutation");\
+m.def("U_EU_commute", [](const ColumnMatrix<VT> &U, const ColumnMatrix<VT> &EU) { return U_EU_commute(U, EU); }, "U, E_U commutation");\
+m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) { return EU_U_commute(EU, U); }, "E_U, U commutation");
 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
@@ -60,6 +76,15 @@ m.def("Mat", [](const CSCMatrix<int, size_t> &A, VT::val_type) { return ColumnMa
 #define ReducedChainComplexInterface(MT, name) py::class_<ReducedChainComplex<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const ChainComplex<MT>&>())\
+.def(py::init<const ChainComplex<MT>&, bats::standard_reduction_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::standard_reduction_flag, bats::compute_basis_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::standard_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::standard_reduction_flag, bats::compression_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
+.def("__getitem__", &ReducedChainComplex<MT>::operator[]) \
 .def("hdim", &ReducedChainComplex<MT>::hdim)\
 .def("get_preferred_representative", &ReducedChainComplex<MT>::get_preferred_representative, "get the preferred representative for homology class")\
 .def("chain_preferred_representative", &ReducedChainComplex<MT>::chain_preferred_representative, "return the preferred representative of a chain")\
@@ -91,12 +116,45 @@ m.def("InducedMap",\
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedChainComplexInterface(T) \
-m.def("ReducedChainComplex", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));\
-m.def("reduce", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));
+{\
+	using VT = SparseVector<T, size_t>;\
+	using MT = ColumnMatrix<VT>;\
+	m.def("ReducedChainComplex", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::standard_reduction_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", [](const ChainComplex<MT>& C) {return ReducedChainComplex(C); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag, bats::compute_basis_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag, bats::clearing_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag(), bats::clearing_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag, bats::compression_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag(), bats::compression_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag(), bats::compression_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::extra_reduction_flag) {return ReducedChainComplex(C, bats::extra_reduction_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::extra_reduction_flag, bats::compute_basis_flag) {return ReducedChainComplex(C, bats::extra_reduction_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::extra_reduction_flag, bats::clearing_flag) {return ReducedChainComplex(C, bats::extra_reduction_flag(), bats::clearing_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::extra_reduction_flag, bats::compression_flag) {return ReducedChainComplex(C, bats::extra_reduction_flag(), bats::compression_flag()); });\
+	m.def("reduce", [](const ChainComplex<MT>& C, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag) {return ReducedChainComplex(C, bats::extra_reduction_flag(), bats::compression_flag(), bats::compute_basis_flag()); });\
+}
 
 #define ReducedFilteredChainComplexInterface(T, MT, name) py::class_<ReducedFilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const FilteredChainComplex<T, MT>&>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::standard_reduction_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::standard_reduction_flag, bats::compute_basis_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::standard_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::standard_reduction_flag, bats::compression_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
 .def("dim", &ReducedFilteredChainComplex<T, MT>::dim)\
 .def("maxdim", &ReducedFilteredChainComplex<T, MT>::maxdim)\
 .def("representative", &ReducedFilteredChainComplex<T, MT>::representative )\
@@ -104,8 +162,33 @@ m.def("reduce", (ReducedChainComplex<ColumnMatrix<SparseVector<T, size_t>>> (*)(
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedFilteredChainComplexInterface(T) \
-m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
-m.def("reduce", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T, size_t>>> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));
+{\
+	using VT = SparseVector<T, size_t>;\
+	using MT = ColumnMatrix<VT>;\
+	m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::standard_reduction_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C) {return ReducedFilteredChainComplex(C); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::clearing_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::clearing_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::compression_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::compression_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::compression_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::extra_reduction_flag) {return ReducedFilteredChainComplex(C, bats::extra_reduction_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::extra_reduction_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::extra_reduction_flag(), bats::compute_basis_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::extra_reduction_flag, bats::clearing_flag) {return ReducedFilteredChainComplex(C, bats::extra_reduction_flag(), bats::clearing_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::extra_reduction_flag, bats::compression_flag) {return ReducedFilteredChainComplex(C, bats::extra_reduction_flag(), bats::compression_flag()); });\
+	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::extra_reduction_flag(), bats::compression_flag(), bats::compute_basis_flag()); });\
+}
 
 
 #define PersistencePairInterface(T, name) py::class_<PersistencePair<T>>(m, name)\
@@ -119,6 +202,9 @@ m.def("reduce", (ReducedFilteredChainComplex<double, ColumnMatrix<SparseVector<T
 .def("length", &PersistencePair<T>::length)\
 .def("mid", &PersistencePair<T>::mid)\
 .def("__str__", &PersistencePair<T>::str);
+
+#define FlagInterface(T, name) py::class_<T>(m, name) \
+	.def(py::init<>());
 
 PYBIND11_MODULE(libbats, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
@@ -137,10 +223,9 @@ PYBIND11_MODULE(libbats, m) {
 
     ColumnMatrixInterface(VInt, "IntMat")
 	m.def("Mat", [](const CSCMatrix<int, size_t> &A) { return ColumnMatrix<VInt>(A); });
-    ColumnMatrixInterface(V2, "F2Mat")
-    ColumnMatrixInterface(V3, "F3Mat")
-    ColumnMatrixInterface(VQ, "RationalMat")
-
+    ColumnMatrixInterfaceField(V2, "F2Mat")
+    ColumnMatrixInterfaceField(V3, "F3Mat")
+    ColumnMatrixInterfaceField(VQ, "RationalMat")
 
     py::class_<CSCMatrix<int, size_t>>(m, "CSCMatrix")
         .def(py::init<>())
@@ -217,6 +302,12 @@ PYBIND11_MODULE(libbats, m) {
     ChainMapInterface(m, M5, "F5ChainMap")
     ChainMapInterface(m, MQ, "RationalChainMap")
 
+	FlagInterface(bats::no_optimization_flag, "no_optimization_flag")
+	FlagInterface(bats::clearing_flag, "clearing_flag")
+	FlagInterface(bats::compression_flag, "compression_flag")
+	FlagInterface(bats::standard_reduction_flag, "standard_reduction_flag")
+	FlagInterface(bats::extra_reduction_flag, "extra_reduction_flag")
+	FlagInterface(bats::compute_basis_flag, "compute_basis_flag")
 
     ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
