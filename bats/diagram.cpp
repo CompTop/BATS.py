@@ -5,6 +5,7 @@
 #include <pybind11/stl_bind.h>
 
 namespace py = pybind11;
+using namespace bats;
 
 #define DiagramInterface(NT, ET, name) py::class_<Diagram<NT, ET>>(m, name)\
 .def(py::init<>())\

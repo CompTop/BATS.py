@@ -7,6 +7,7 @@ header with typedefs and includes
 #include <set>
 #include <iostream>
 #include <bats.hpp>
+using namespace bats;
 
 using IntVec = SparseVector<int, size_t>;
 using IntMat = ColumnMatrix<IntVec>;

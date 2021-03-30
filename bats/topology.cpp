@@ -5,6 +5,7 @@
 
 
 namespace py = pybind11;
+using namespace bats;
 
 
 #define MetricInterface(M, name) py::class_<M>(m, name)\

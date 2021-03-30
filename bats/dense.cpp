@@ -8,6 +8,7 @@
 
 
 namespace py = pybind11;
+using namespace bats;
 
 PYBIND11_MODULE(dense, m) {
 

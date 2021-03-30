@@ -5,6 +5,7 @@
 #include <pybind11/stl_bind.h>
 
 namespace py = pybind11;
+using namespace bats;
 
 // interface of common functions between F2 and other modP
 #define BasicFieldInterface(F, name) py::class_<F>(m, name)\
