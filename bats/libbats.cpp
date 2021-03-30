@@ -102,18 +102,21 @@ m.def("InducedMap",\
 	"Induced map on homology." \
 );
 
-#define FilteredSimplicialComplexInterface(T, name) py::class_<Filtration<T, SimplicialComplex>>(m, name)\
+//.def("add_recursive"(std::vector<cell_ind> (Filtration<T, CpxT>::*)(T, std::vector<size_t>&))(&Filtration<T, CpxT>::add_recursive))
+#define FilteredComplexInterface(T, CpxT, name) py::class_<Filtration<T, CpxT>>(m, name)\
 .def(py::init<>())\
-.def("add", (cell_ind (Filtration<T, SimplicialComplex>::*)(T, std::vector<size_t>&))(&Filtration<T, SimplicialComplex>::add))\
-.def("complex", &Filtration<T, SimplicialComplex>::complex)\
-.def("maxdim", &Filtration<T, SimplicialComplex>::maxdim)\
-.def("ncells", &Filtration<T, SimplicialComplex>::ncells)\
-.def("vals", py::overload_cast<size_t>(&Filtration<T, SimplicialComplex>::vals, py::const_))\
-.def("all_vals", py::overload_cast<>(&Filtration<T, SimplicialComplex>::vals, py::const_));
+.def("add", (cell_ind (Filtration<T, CpxT>::*)(T, std::vector<size_t>&))(&Filtration<T, CpxT>::add))\
+.def("add_recursive", [](Filtration<T, CpxT> &F, T t, std::vector<size_t>& s){return F.add_recursive(t, s);})\
+.def("complex", &Filtration<T, CpxT>::complex)\
+.def("maxdim", &Filtration<T, CpxT>::maxdim)\
+.def("ncells", &Filtration<T, CpxT>::ncells)\
+.def("vals", py::overload_cast<size_t>(&Filtration<T, CpxT>::vals, py::const_))\
+.def("all_vals", py::overload_cast<>(&Filtration<T, CpxT>::vals, py::const_))
 
 #define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
-.def(py::init<const Filtration<T, SimplicialComplex>&>());
+.def(py::init<const Filtration<T, SimplicialComplex>&>())\
+.def(py::init<const Filtration<T, CubicalComplex>&>());
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedChainComplexInterface(T) \
@@ -257,12 +260,15 @@ PYBIND11_MODULE(libbats, m) {
         .def("ncells", py::overload_cast<>(&SimplicialComplex::ncells, py::const_), "number of cells")
         .def("ncells", py::overload_cast<const size_t>(&SimplicialComplex::ncells, py::const_), "number of cells in given dimension")
         .def("add", (cell_ind (SimplicialComplex::*)(std::vector<size_t>&))( &SimplicialComplex::add ), "add simplex")
+		.def("add_recursive", (std::vector<cell_ind> (SimplicialComplex::*)(std::vector<size_t>&))( &SimplicialComplex::add_recursive ), "add simplex and missing faces")
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&SimplicialComplex::find_idx))
         .def("boundary", &SimplicialComplex::boundary_csc)
         .def("get_simplex", &SimplicialComplex::get_simplex)
         .def("get_simplices", py::overload_cast<const size_t>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")
         .def("get_simplices", py::overload_cast<>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices.")
         .def("print_summary", &SimplicialComplex::print_summary);
+
+	m.def("TriangulatedProduct", &TriangulatedProduct);
 
     py::class_<CubicalComplex>(m, "CubicalComplex")
         .def(py::init<>())
@@ -271,7 +277,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("ncells", py::overload_cast<>(&CubicalComplex::ncells, py::const_), "number of cells")
         .def("ncells", py::overload_cast<const size_t>(&CubicalComplex::ncells, py::const_), "number of cells in given dimension")
         .def("add", (cell_ind (CubicalComplex::*)(std::vector<size_t>&))( &CubicalComplex::add ), "add cube")
-        .def("add_recursive", (cell_ind (CubicalComplex::*)(const std::vector<size_t>&))( &CubicalComplex::add_recursive ), "add cube as well as faces")
+        .def("add_recursive", (std::vector<cell_ind> (CubicalComplex::*)(const std::vector<size_t>&))( &CubicalComplex::add_recursive ), "add cube as well as faces")
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&CubicalComplex::find_idx))
         .def("boundary", &CubicalComplex::boundary_csc, "integer boundary matrix")
         .def("skeleton", &CubicalComplex::skeleton, "k-skeleton of complex")
@@ -280,7 +286,10 @@ PYBIND11_MODULE(libbats, m) {
         .def("get_cubes", py::overload_cast<const size_t>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes in given dimension.")
         .def("get_cubes", py::overload_cast<>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes.");
 
-    FilteredSimplicialComplexInterface(double, "FilteredSimplicialComplex")
+    FilteredComplexInterface(double, SimplicialComplex, "FilteredSimplicialComplex");
+
+	FilteredComplexInterface(double, CubicalComplex, "FilteredCubicalComplex")\
+	.def(py::init<size_t>());
 
     py::class_<CellularMap>(m, "CellularMap")
         .def(py::init<>())
