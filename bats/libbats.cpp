@@ -65,12 +65,14 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const SimplicialComplex&>())\
+.def(py::init<const SimplicialComplex&, const SimplicialComplex&>(), "relative chain complex")\
 .def(py::init<const CubicalComplex&>())\
 .def("__getitem__", &ChainComplex<MT>::operator[]);
 
 #define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const CellularMap&>())\
+.def(py::init<const CellularMap&, const SimplicialComplex&, const SimplicialComplex&, const SimplicialComplex&, const SimplicialComplex&>(), "relative chain map")\
 .def("__getitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[], py::const_))\
 .def("__setitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[]));
 
