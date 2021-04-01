@@ -124,3 +124,69 @@ for hdim in range(2):
 fig, ax = bats.visualization.persistence_barcode(ps)
 ```
 ![diagram](figures/cubical_levelset_zz.png)
+
+## Filtered Cubical Complexes
+
+We'll now look at computing persistent homology on the image from before
+
+![image](figures/cubical_image.png")
+
+The idea is to filter toplexes by the largest pixel value
+
+```python
+def to_filtered_toplexes(A):
+    """
+    Create list of toplexes from array A
+
+    assume 2-dimensional for now
+    """
+    dims = A.shape
+    toplex_list = []
+    for i in range(dims[0]-1):
+        for j in range(dims[1]-1):
+            t = max(A[i,j], A[i+1,j],A[i,j+1],A[i+1,j+1])
+            toplex_list.append((t,[i,i+1,j,j+1]))
+
+    return toplex_list
+```
+
+We can then create a filtered cubical complex
+```python
+def image_to_filtration(A):
+    """
+    Create cubical complex from boolean image A
+    """
+    toplex_list = to_filtered_toplexes(A)
+    toplex_list = sorted(toplex_list)
+    X = bats.FilteredCubicalComplex(2)
+    for t, s in toplex_list:
+        X.add_recursive(t, s)
+    return X
+```
+
+To put everything together:
+```python
+X = image_to_filtration(A)
+C = bats.FilteredF2ChainComplex(X)
+R = bats.reduce(C)
+ps = R.persistence_pairs(0) + R.persistence_pairs(1)
+
+for p in ps:
+    if p.length() > 0.1:
+        print(p)
+```
+yields the following output
+```
+0 : (-0.996841,inf) <0,-1>
+0 : (-0.995794,0.0029413) <4,9802>
+0 : (-0.99572,0.00345711) <8,9812>
+0 : (-0.994674,0.00268533) <12,9796>
+0 : (-0.99272,0.0014712) <16,9770>
+0 : (-0.991188,0.00242617) <20,9789>
+0 : (-0.365212,0.00216782) <2463,9779>
+0 : (-0.364648,0.00219438) <2470,9783>
+1 : (0.00363827,0.999058) <9817,9790>
+1 : (0.00382229,0.9988) <9821,9784>
+1 : (0.0998193,0.999432) <11671,9794>
+1 : (0.930355,0.999616) <19275,9800>
+```

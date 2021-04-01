@@ -67,7 +67,8 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 .def(py::init<const SimplicialComplex&>())\
 .def(py::init<const SimplicialComplex&, const SimplicialComplex&>(), "relative chain complex")\
 .def(py::init<const CubicalComplex&>())\
-.def("__getitem__", &ChainComplex<MT>::operator[]);
+.def("__getitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[]));
 
 #define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
 .def(py::init<>())\
@@ -270,7 +271,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("get_simplices", py::overload_cast<>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices.")
         .def("print_summary", &SimplicialComplex::print_summary);
 
-	m.def("TriangulatedProduct", &TriangulatedProduct);
+	m.def("TriangulatedProduct", [](const SimplicialComplex &X, const SimplicialComplex& Y){ return TriangulatedProduct(X, Y);} );
 
     py::class_<CubicalComplex>(m, "CubicalComplex")
         .def(py::init<>())
