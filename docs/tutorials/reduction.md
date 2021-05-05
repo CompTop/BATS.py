@@ -97,3 +97,18 @@ and see how this compares to just using
 ```python
 bats.standard_reduction_flag()
 ```
+
+## Reducing Matrices Manually
+
+At a lower level, you can use the reduction algorithm on a matrix
+```python
+A = bats.F2Mat(3,0)
+A.append_column(bats.F2Vector([(0,1), (1,1)]))
+A.append_column(bats.F2Vector([(0,1), (2,1)]))
+A.append_column(bats.F2Vector([(1,1), (2,1)]))
+U = bats.Identity(3, bats.F2())
+
+R =
+p2c = bats.reduce_matrix(A, U)
+```
+This will modify the matrices A and U in-place so A is reduced, and U is the applied change of basis to columns.  I.e. it maintains the invariant `A * inv(U)`.  `p2c` will be the pivot-to-column map for the reduced matrix.

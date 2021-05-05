@@ -7,7 +7,10 @@ header with typedefs and includes
 #include <set>
 #include <iostream>
 #include <bats.hpp>
+
 using namespace bats;
+
+using DefaultLightSimplicialComplex = bats::LightSimplicialComplex<size_t, std::unordered_map<size_t, size_t>>;
 
 using IntVec = SparseVector<int, size_t>;
 using IntMat = ColumnMatrix<IntVec>;

@@ -20,6 +20,7 @@ using namespace bats;
 // define filtration interfaces for metric
 #define FiltrationInterface(M) \
 m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
+m.def("LightRipsFiltration", (Filtration<double, DefaultLightSimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
 m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));\
 m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, double, size_t))(&DowkerFiltration));\
 m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));
@@ -78,17 +79,26 @@ PYBIND11_MODULE(topology, m) {
 
 	// RipsFiltration on distance matrix
 	m.def("RipsFiltration",
-		(Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&RipsFiltration),
+		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration<SimplicialComplex>(M, r, k);},
+		"Rips Filtration using built using pairwise distances."
+	);
+	// RipsFiltration on distance matrix
+	m.def("LightRipsFiltration",
+		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration<DefaultLightSimplicialComplex>(M, r, k);},
 		"Rips Filtration using built using pairwise distances."
 	);
 
-	m.def("RipsComplex",\
-		(SimplicialComplex (*)(const Matrix<double>&, double, size_t))(&RipsComplex), \
-		"Rips Complex constructed from pairwise distances." \
+	m.def("RipsComplex",
+		[](const Matrix<double>& M, double r, size_t k){ return RipsComplex<SimplicialComplex>(M, r, k);},
+		"Rips Complex constructed from pairwise distances."
+	);
+	m.def("LightRipsComplex",
+		[](const Matrix<double>& M, double r, size_t k){ return RipsComplex<DefaultLightSimplicialComplex>(M, r, k);},
+		"Rips Complex constructed from pairwise distances."
 	);
 
 
-	m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
+	// m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
 	m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, double, size_t))(&DowkerFiltration));
 	m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const Matrix<double>&, const bats::Cover&, double, size_t))(&DowkerFiltration));

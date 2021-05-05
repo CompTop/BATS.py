@@ -9,6 +9,17 @@ from bats import F2
 print(F2(1) + F2(1)) # should be 0
 ```
 
+## Vectors
+
+Sparse vectors for each supported field class are available: `F2Vector`, `F3Vector`, etc. as well as an `IntVector`.
+
+The easiest way to construct these vectors is from a list of tuples, where each tuple contains a index-value pair (where the value is an integer - it will be cast to the relevant field).
+
+```python
+from bats import F2Vector
+v = F2Vector([(0,1), (2,1)])
+```
+
 ## Matrices
 ### CSCMatrix
 
@@ -53,6 +64,20 @@ C = bats.Mat(A, bats.F2()) # F2Mat
 In order to get the contents of a ColumnMatrix in Python, use the `tolist()` method
 ```python
 C.tolist()
+```
+
+You can add columns of the appropriate type to a column matrix
+```python
+A = bats.F2Mat(3,0)
+A.append_column(bats.F2Vector([(0,1), (1,1)]))
+A.append_column(bats.F2Vector([(0,1), (2,1)]))
+A.append_column(bats.F2Vector([(1,1), (2,1)]))
+np.array(A.tolist()) # this will display the matrix in a nice way
+```
+
+To generate an identity matrix, just pass the desired size and relevant field type to `bats.Identity`
+```python
+I = bats.Identity(3, bats.F2())
 ```
 
 ### Dense Matrices

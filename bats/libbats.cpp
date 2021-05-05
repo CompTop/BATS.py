@@ -26,9 +26,13 @@ using namespace bats;
 #define SparseVectorInterface(F, name) py::class_<SparseVector<F, size_t>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const std::vector<size_t>&, const std::vector<F>&>())\
+.def(py::init<const std::vector<std::tuple<size_t, int>>&>(), "construct from a list of index-value tuples")\
 .def("nzinds", &SparseVector<F, size_t>::nzinds)\
 .def("nzvals", &SparseVector<F, size_t>::nzvals)\
-.def("nzs", &SparseVector<F, size_t>::nzs)\
+.def("nnz", &SparseVector<F, size_t>::nnz, "number of non-zeros")\
+.def("nzs", &SparseVector<F, size_t>::nzs, "tuple of lists: non-zero indices, and non-zero values")\
+.def("permute", &SparseVector<F, size_t>::permute, "permute the indices")\
+.def("sort", &SparseVector<F, size_t>::sort, "put non-zeros in sorted order")\
 .def("__getitem__", py::overload_cast<size_t>(&SparseVector<F, size_t>::getval, py::const_))\
 .def("__str__", &SparseVector<F, size_t>::str);
 // .def("__getitem__", (F (SparseVector<F, size_t>::*)(size_t))(&SparseVector<F, size_t>::operator[]))
@@ -36,18 +40,27 @@ using namespace bats;
 #define ColumnMatrixInterface(VT, name) py::class_<ColumnMatrix<VT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\
+.def(py::init<size_t, size_t, std::vector<VT>&>())\
 .def(py::init<const CSCMatrix<int, size_t> &>())\
 .def("nrow", &ColumnMatrix<VT>::nrow, "number of rows.")\
 .def("ncol", &ColumnMatrix<VT>::ncol, "number of columns.")\
 .def("tolist", &ColumnMatrix<VT>::to_row_array, "return as C-style array")\
 .def("T", &ColumnMatrix<VT>::T, "transpose")\
+.def("permute_rows", &ColumnMatrix<VT>::permute_rows, "permute rows")\
+.def("permute_cols", &ColumnMatrix<VT>::permute_cols, "permute columns")\
+.def("append_column", [](ColumnMatrix<VT>& A, VT& v){A.append_column(v);}, "appends column")\
 .def("__str__", &ColumnMatrix<VT>::str)\
 .def("__mul__", py::overload_cast<const VT &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__mul__", py::overload_cast<const ColumnMatrix<VT> &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__getitem__", py::overload_cast<size_t>(&ColumnMatrix<VT>::operator[], py::const_))\
 .def("__setitem__", py::overload_cast<size_t>(&ColumnMatrix<VT>::operator[]))\
 .def("__call__", &ColumnMatrix<VT>::operator());\
-m.def("Mat", [](const CSCMatrix<int, size_t> &A, VT::val_type) { return ColumnMatrix<VT>(A); });
+m.def("Mat", [](const CSCMatrix<int, size_t> &A, VT::val_type) { return ColumnMatrix<VT>(A); });\
+m.def("Identity", [](size_t n, VT::val_type) { return ColumnMatrix<VT>::identity(n); });\
+m.def("reduce_matrix", [](ColumnMatrix<VT>& A){ return reduce_matrix(A); });\
+m.def("reduce_matrix", [](ColumnMatrix<VT>& A, bats::extra_reduction_flag f){ return reduce_matrix(A, f); });\
+m.def("reduce_matrix", [](ColumnMatrix<VT>& A, ColumnMatrix<VT>& U){ return reduce_matrix(A, U); });\
+m.def("reduce_matrix", [](ColumnMatrix<VT>& A, ColumnMatrix<VT>& U, bats::extra_reduction_flag f){ return reduce_matrix(A, U, f); });
 
 // add factorizations if matrix is over a field
 #define ColumnMatrixInterfaceField(VT, name) \
@@ -65,6 +78,7 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 #define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const SimplicialComplex&>())\
+.def(py::init<const DefaultLightSimplicialComplex&>())\
 .def(py::init<const SimplicialComplex&, const SimplicialComplex&>(), "relative chain complex")\
 .def(py::init<const CubicalComplex&>())\
 .def("__getitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[], py::const_))\
@@ -119,6 +133,7 @@ m.def("InducedMap",\
 #define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const Filtration<T, SimplicialComplex>&>())\
+.def(py::init<const Filtration<T, DefaultLightSimplicialComplex>&>())\
 .def(py::init<const Filtration<T, CubicalComplex>&>());
 
 // ReducedFilteredChainComplex for field type T
@@ -138,6 +153,18 @@ m.def("InducedMap",\
 	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedChainComplex));\
 	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedChainComplex));\
 	m.def("reduce", (ReducedChainComplex<MT> (*)(const SimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("ReducedChainComplex", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::standard_reduction_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::extra_reduction_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::extra_reduction_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedChainComplex));\
+	m.def("reduce", (ReducedChainComplex<MT> (*)(const DefaultLightSimplicialComplex&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedChainComplex));\
 	m.def("reduce", [](const ChainComplex<MT>& C) {return ReducedChainComplex(C); });\
 	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag()); });\
 	m.def("reduce", [](const ChainComplex<MT>& C, bats::standard_reduction_flag, bats::compute_basis_flag) {return ReducedChainComplex(C, bats::standard_reduction_flag(), bats::compute_basis_flag()); });\
@@ -184,6 +211,18 @@ m.def("InducedMap",\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, SimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C) {return ReducedFilteredChainComplex(C); });\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag()); });\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::compute_basis_flag()); });\
@@ -209,6 +248,20 @@ m.def("InducedMap",\
 .def("length", &PersistencePair<T>::length)\
 .def("mid", &PersistencePair<T>::mid)\
 .def("__str__", &PersistencePair<T>::str);
+
+#define SimplicialCpxInterface(T, name) py::class_<T>(m, name)\
+	.def(py::init<>())\
+	.def(py::init<size_t, size_t>())\
+	.def("maxdim", &T::maxdim, "maximum dimension simplex")\
+	.def("ncells", py::overload_cast<>(&T::ncells, py::const_), "number of cells")\
+	.def("ncells", py::overload_cast<const size_t>(&T::ncells, py::const_), "number of cells in given dimension")\
+	.def("add", [](T& X, std::vector<size_t>& s){return X.add(s);}, "add simplex")\
+	.def("add_recursive", [](T& X, std::vector<size_t>& s){return X.add_recursive(s);}, "add simplex and missing faces")\
+	.def("find_idx", [](const T& X, const std::vector<size_t>& s){return X.find_idx(s);})\
+	.def("boundary", &T::boundary_csc)\
+	.def("get_simplex", &T::get_simplex)\
+	.def("get_simplices", py::overload_cast<const size_t>(&T::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")\
+	.def("get_simplices", py::overload_cast<>(&T::get_simplices, py::const_), "Returns a list of all simplices.");
 
 #define FlagInterface(T, name) py::class_<T>(m, name) \
 	.def(py::init<>());
@@ -257,19 +310,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("add", (size_t (CellComplex::*)(const std::vector<size_t>&, const std::vector<int>&, size_t))( &CellComplex::add ), "add cell in dimension k by specifying boundary and coefficients.")
         .def("boundary", &CellComplex::boundary_csc);
 
-    py::class_<SimplicialComplex>(m, "SimplicialComplex")
-        .def(py::init<>())
-        .def("maxdim", &SimplicialComplex::maxdim, "maximum dimension simplex")
-        .def("ncells", py::overload_cast<>(&SimplicialComplex::ncells, py::const_), "number of cells")
-        .def("ncells", py::overload_cast<const size_t>(&SimplicialComplex::ncells, py::const_), "number of cells in given dimension")
-        .def("add", (cell_ind (SimplicialComplex::*)(std::vector<size_t>&))( &SimplicialComplex::add ), "add simplex")
-		.def("add_recursive", (std::vector<cell_ind> (SimplicialComplex::*)(std::vector<size_t>&))( &SimplicialComplex::add_recursive ), "add simplex and missing faces")
-        .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&SimplicialComplex::find_idx))
-        .def("boundary", &SimplicialComplex::boundary_csc)
-        .def("get_simplex", &SimplicialComplex::get_simplex)
-        .def("get_simplices", py::overload_cast<const size_t>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")
-        .def("get_simplices", py::overload_cast<>(&SimplicialComplex::get_simplices, py::const_), "Returns a list of all simplices.")
-        .def("print_summary", &SimplicialComplex::print_summary);
+	SimplicialCpxInterface(SimplicialComplex, "SimplicialComplex")
+	SimplicialCpxInterface(DefaultLightSimplicialComplex, "LightSimplicialComplex")
 
 	m.def("TriangulatedProduct", [](const SimplicialComplex &X, const SimplicialComplex& Y){ return TriangulatedProduct(X, Y);} );
 
@@ -290,6 +332,7 @@ PYBIND11_MODULE(libbats, m) {
         .def("get_cubes", py::overload_cast<>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes.");
 
     FilteredComplexInterface(double, SimplicialComplex, "FilteredSimplicialComplex");
+	FilteredComplexInterface(double, DefaultLightSimplicialComplex, "FilteredLightSimplicialComplex");
 
 	FilteredComplexInterface(double, CubicalComplex, "FilteredCubicalComplex")\
 	.def(py::init<size_t>());
@@ -301,8 +344,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("__setitem__", [](CellularMap &M, size_t k, ColumnMatrix<VInt> &A){return M[k] = A;} );
 	m.def("IdentityMap", (CellularMap (*)(const SimplicialComplex &))(&CellularMap::identity));
 
-    m.def("SimplicialMap", py::overload_cast<const SimplicialComplex&, const SimplicialComplex &>(&SimplicialMap), "Inclusion map of simplicial complexes");
-	m.def("SimplicialMap", py::overload_cast<const SimplicialComplex&, const SimplicialComplex &, const std::vector<size_t> &>(&SimplicialMap), "simplicial map extended from function on vertices");
+	m.def("SimplicialMap", [](const SimplicialComplex& X, const SimplicialComplex& Y){return SimplicialMap(X, Y);}, "Inclusion map of simplicial complexes");
+	m.def("SimplicialMap", [](const SimplicialComplex& X, const SimplicialComplex& Y, const std::vector<size_t>& f){return SimplicialMap(X, Y, f);}, "simplicial map extended from function on vertices");
     m.def("CubicalMap", &CubicalMap);
 
     ChainComplexInterface(M2, "F2ChainComplex")
