@@ -82,7 +82,10 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 .def(py::init<const SimplicialComplex&, const SimplicialComplex&>(), "relative chain complex")\
 .def(py::init<const CubicalComplex&>())\
 .def("__getitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[], py::const_))\
-.def("__setitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[]));
+.def("__setitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[]))\
+.def("maxdim", &ChainComplex<MT>::maxdim)\
+.def("dim", &ChainComplex<MT>::dim)\
+.def("clear_compress_apparent_pairs", &ChainComplex<MT>::clear_compress_apparent_pairs);
 
 #define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
 .def(py::init<>())\
@@ -122,6 +125,7 @@ m.def("InducedMap",\
 //.def("add_recursive"(std::vector<cell_ind> (Filtration<T, CpxT>::*)(T, std::vector<size_t>&))(&Filtration<T, CpxT>::add_recursive))
 #define FilteredComplexInterface(T, CpxT, name) py::class_<Filtration<T, CpxT>>(m, name)\
 .def(py::init<>())\
+.def(py::init<const CpxT&, const std::vector<std::vector<T>>& >())\
 .def("add", (cell_ind (Filtration<T, CpxT>::*)(T, std::vector<size_t>&))(&Filtration<T, CpxT>::add))\
 .def("add_recursive", [](Filtration<T, CpxT> &F, T t, std::vector<size_t>& s){return F.add_recursive(t, s);})\
 .def("complex", &Filtration<T, CpxT>::complex)\
@@ -130,11 +134,25 @@ m.def("InducedMap",\
 .def("vals", py::overload_cast<size_t>(&Filtration<T, CpxT>::vals, py::const_))\
 .def("all_vals", py::overload_cast<>(&Filtration<T, CpxT>::vals, py::const_))
 
+#define ZigzagComplexInterface(T, CpxT, name) py::class_<zigzag::ZigzagFiltration<CpxT, T>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const CpxT&, const std::vector<std::vector<std::pair<T, T>>>& >())\
+.def("add", [](zigzag::ZigzagFiltration<CpxT, T>& F, const T entr, const T exit, std::vector<size_t>& s){ return F.add(entr, exit, s); })\
+.def("add_recursive", [](zigzag::ZigzagFiltration<CpxT, T>& F, const T entr, const T exit, std::vector<size_t>& s){ return F.add_recursive(entr, exit, s); })\
+.def("complex", &zigzag::ZigzagFiltration<CpxT, T>::complex)\
+.def("maxdim", &zigzag::ZigzagFiltration<CpxT, T>::maxdim)\
+.def("ncells", &zigzag::ZigzagFiltration<CpxT, T>::ncells)\
+.def("vals", [](zigzag::ZigzagFiltration<CpxT, T>& F){ return F.vals(); })\
+.def("vals", [](zigzag::ZigzagFiltration<CpxT, T>& F, size_t k){ return F.vals(k); })
+
 #define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const Filtration<T, SimplicialComplex>&>())\
 .def(py::init<const Filtration<T, DefaultLightSimplicialComplex>&>())\
-.def(py::init<const Filtration<T, CubicalComplex>&>());
+.def(py::init<const Filtration<T, CubicalComplex>&>())\
+.def("val", [](FilteredChainComplex<T, MT>& C) {return C.val;}, "filtration values.")\
+.def("perm", [](FilteredChainComplex<T, MT>& C) {return C.perm;}, "permutation from original order")\
+.def("update_filtration", &FilteredChainComplex<T, MT>::update_filtration, "update filtration with new values");
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedChainComplexInterface(T) \
@@ -189,10 +207,15 @@ m.def("InducedMap",\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
+.def("val", [](ReducedFilteredChainComplex<T, MT>& C) {return C.val;}, "filtration values")\
+.def("perm", [](ReducedFilteredChainComplex<T, MT>& C) {return C.perm;}, "permutation from original order")\
 .def("dim", &ReducedFilteredChainComplex<T, MT>::dim)\
 .def("maxdim", &ReducedFilteredChainComplex<T, MT>::maxdim)\
-.def("representative", &ReducedFilteredChainComplex<T, MT>::representative )\
-.def("persistence_pairs", &ReducedFilteredChainComplex<T, MT>::persistence_pairs);
+.def("representative", [](ReducedFilteredChainComplex<T, MT>& F, PersistencePair<T>& p){return F.representative(p, false); })\
+.def("representative", [](ReducedFilteredChainComplex<T, MT>& F, PersistencePair<T>& p, bool perm){return F.representative(p, perm); })\
+.def("persistence_pairs", [](ReducedFilteredChainComplex<T, MT>& F, size_t k){return F.persistence_pairs(k);} )\
+.def("persistence_pairs", [](ReducedFilteredChainComplex<T, MT>& F, size_t k, bool perm){return F.persistence_pairs(k, perm);} )\
+.def("update_filtration", &ReducedFilteredChainComplex<T, MT>::update_filtration, "update filtration with new values");
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedFilteredChainComplexInterface(T) \
@@ -248,6 +271,17 @@ m.def("InducedMap",\
 .def("length", &PersistencePair<T>::length)\
 .def("mid", &PersistencePair<T>::mid)\
 .def("__str__", &PersistencePair<T>::str);
+
+#define ZigzagPairInterface(T, name) py::class_<zigzag::ZigzagPair<T>>(m, name)\
+.def(py::init<>())\
+.def("dim", &zigzag::ZigzagPair<T>::get_dim)\
+.def("birth_ind", &zigzag::ZigzagPair<T>::get_birth_ind)\
+.def("death_ind", &zigzag::ZigzagPair<T>::get_death_ind)\
+.def("birth", &zigzag::ZigzagPair<T>::get_birth)\
+.def("death", &zigzag::ZigzagPair<T>::get_death)\
+.def("length", &zigzag::ZigzagPair<T>::length)\
+.def("mid", &zigzag::ZigzagPair<T>::mid)\
+.def("__str__", &zigzag::ZigzagPair<T>::str);
 
 #define SimplicialCpxInterface(T, name) py::class_<T>(m, name)\
 	.def(py::init<>())\
@@ -326,16 +360,23 @@ PYBIND11_MODULE(libbats, m) {
         .def("find_idx", py::overload_cast<const std::vector<size_t> &>(&CubicalComplex::find_idx))
         .def("boundary", &CubicalComplex::boundary_csc, "integer boundary matrix")
         .def("skeleton", &CubicalComplex::skeleton, "k-skeleton of complex")
-        .def("get_cube", &CubicalComplex::get_cube, "get cube in given dimension")
+        .def("get_cube", py::overload_cast<size_t, size_t>(&CubicalComplex::get_cube, py::const_), "get cube in given dimension")
         .def("load_cubes", &CubicalComplex::load_cubes, "load cubes from a csv file.")
         .def("get_cubes", py::overload_cast<const size_t>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes in given dimension.")
         .def("get_cubes", py::overload_cast<>(&CubicalComplex::get_cubes, py::const_), "Returns a list of all cubes.");
+
+
 
     FilteredComplexInterface(double, SimplicialComplex, "FilteredSimplicialComplex");
 	FilteredComplexInterface(double, DefaultLightSimplicialComplex, "FilteredLightSimplicialComplex");
 
 	FilteredComplexInterface(double, CubicalComplex, "FilteredCubicalComplex")\
 	.def(py::init<size_t>());
+
+	// Zigzag barcodes
+	ZigzagComplexInterface(double, SimplicialComplex, "ZigzagSimplicialComplex");
+	m.def("extend_zigzag_filtration", [](std::vector<double>& f0, SimplicialComplex& X, double eps){return zigzag::extend_zigzag_filtration(f0, X, eps); });
+	m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<SimplicialComplex, double>& F, size_t maxdim, F2){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), standard_reduction_flag()); });
 
     py::class_<CellularMap>(m, "CellularMap")
         .def(py::init<>())
@@ -395,5 +436,10 @@ PYBIND11_MODULE(libbats, m) {
 
     PersistencePairInterface(double, "PersistencePair")
     PersistencePairInterface(size_t, "PersistencePair_int")
+	ZigzagPairInterface(double, "ZigzagPair")
+
+	// Filtration extension
+	m.def("lower_star_filtration", [](const SimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
+
 
 }

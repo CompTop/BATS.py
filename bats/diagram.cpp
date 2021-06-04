@@ -16,15 +16,15 @@ using namespace bats;
 .def("add_edge", (size_t (Diagram<NT, ET>::*)(size_t, size_t, ET&))(&Diagram<NT, ET>::add_edge))\
 .def("nnode", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nnode))\
 .def("nedge", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nedge))\
-.def("node_data", (NT (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::node_data))\
-.def("edge_data", (ET (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_data))\
-.def("edge_source", (size_t (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_source))\
-.def("edge_target", (size_t (Diagram<NT, ET>::*)(size_t))(&Diagram<NT, ET>::edge_target));
+.def("node_data", [](Diagram<NT, ET>& D, size_t k){return D.node_data(k);})\
+.def("edge_data", [](Diagram<NT, ET>& D, size_t k){return D.edge_data(k);})\
+.def("edge_source", [](Diagram<NT, ET>& D, size_t k){return D.edge_source(k);})\
+.def("edge_target", [](Diagram<NT, ET>& D, size_t k){return D.edge_target(k);});
 
-#define ChainFunctorInterface(MT, DT, name) m.def(name, &(Chain<MT, DT>));
+#define ChainFunctorInterface(MT, DT, name) m.def(name, &(ChainFunctor<MT, DT>));
 
 #define AutoChainFunctorInterface(DT, FT) \
-m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__Chain)); \
+m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__ChainFunctor)); \
 
 #define SimpleChainFunctorInterface(m, FT) \
 m.def("Chain", [](const CellularMap & A, FT) { return ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>(A); });\
@@ -37,7 +37,7 @@ m.def("Chain", [](const CellComplex &X, FT) {return ChainComplex<ColumnMatrix<Sp
 
 #define HomFunctorInterface(MT, name) \
 m.def(name, &(Hom<MT>));\
-m.def("barcode", &(barcode<MT>));\
+m.def("barcode", [](const Diagram<ReducedChainComplex<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
 m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse));
 
 

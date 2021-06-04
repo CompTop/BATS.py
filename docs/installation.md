@@ -43,6 +43,12 @@ pull and update submodules
 git pull --recurse-submodules
 ```
 
+force a new build (`-f`), use parallelism (`-j`)
+```bash
+python setup.py build_ext -f -j4
+python setup.py install
+```
+
 ## Testing
 
 BATS.py uses the `unittest` framework. See [documentation here](https://docs.python.org/3.8/library/unittest.html).

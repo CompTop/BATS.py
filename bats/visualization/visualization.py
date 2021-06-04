@@ -32,15 +32,32 @@ def non_essential_pair_filter(a, tub=np.inf):
     return f
 
 
-def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, **kwargs):
+def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=0.0, **kwargs):
     fig, ax = plt.subplots(**kwargs)
     a = process_pairs(ps, remove_zeros)
     dims = np.array(a[:,2], dtype=np.int) # homology dimension
     cs=plt.get_cmap('Set1')(dims) # set colors
 
     eps = essential_pair_filter(a)
-    tmax = np.max((tmax, np.max(a[eps != True,:1])))
+    tmax = np.max((tmax, np.max(a[eps != True,:2])))
+    tmin = np.min((tmin, np.min(a[eps != True,:2])))
     inf_to = tmax * 1.1
+    minf_to = tmin * 1.1
+
+    # set axes
+    xbnds = [minf_to*1.05, inf_to*1.05]
+    ybnds = [minf_to*1.05, inf_to*1.05]
+    ax.set_xlim((*xbnds))
+    ax.set_ylim((*ybnds))
+    ax.set_aspect('equal')
+
+    # add visual lines
+    ax.plot(xbnds, ybnds, '--k')
+    ax.plot([minf_to*1.05,tmax], [tmax, tmax], '--r')
+
+    # add labels
+    ax.set_xlabel("Birth")
+    ax.set_ylabel("Death")
 
     # loop over dimensions
     maxdim = np.max(dims)
@@ -60,20 +77,9 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, **kwa
         ed = [inf_to for _ in eb]
         ax.scatter(eb, ed, c=cd[eps], marker='*')
 
-    # set axes
-    xbnds = [0, inf_to*1.05]
-    ybnds = [0, inf_to*1.05]
-    ax.set_xlim((*xbnds))
-    ax.set_ylim((*ybnds))
-    ax.set_aspect('equal')
 
-    # add visual lines
-    ax.plot(xbnds, ybnds, '--k')
-    ax.plot([0,tmax], [tmax, tmax], '--r')
 
-    # add labels
-    ax.set_xlabel("Birth")
-    ax.set_ylabel("Death")
+
 
     if show_legend:
         ax.legend(loc='lower right')

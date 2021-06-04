@@ -4,6 +4,8 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys, os
 import setuptools
+# from pybind11.setup_helpers import Pybind11Extension, build_ext
+
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 include_dirs = [
@@ -55,7 +57,7 @@ setup(
     name='bats',
     version=__version__,
     author='Brad Nelson',
-    author_email='bradnelson@stanford.edu',
+    author_email='bradnelson@uchicago.edu',
     packages=['bats','bats.visualization'],
     ext_modules=ext_modules,
     zip_safe=False
