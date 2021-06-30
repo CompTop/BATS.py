@@ -45,10 +45,10 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
     minf_to = tmin * 1.1
 
     # set axes
-    xbnds = [minf_to*1.05, inf_to*1.05]
-    ybnds = [minf_to*1.05, inf_to*1.05]
-    ax.set_xlim((*xbnds))
-    ax.set_ylim((*ybnds))
+    xbnds = (minf_to*1.05, inf_to*1.05)
+    ybnds = (minf_to*1.05, inf_to*1.05)
+    ax.set_xlim(xbnds)
+    ax.set_ylim(ybnds)
     ax.set_aspect('equal')
 
     # add visual lines

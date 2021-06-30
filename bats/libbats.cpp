@@ -49,6 +49,7 @@ using namespace bats;
 .def("permute_rows", &ColumnMatrix<VT>::permute_rows, "permute rows")\
 .def("permute_cols", &ColumnMatrix<VT>::permute_cols, "permute columns")\
 .def("append_column", [](ColumnMatrix<VT>& A, VT& v){A.append_column(v);}, "appends column")\
+.def("nnz", [](ColumnMatrix<VT>& A){return A.nnz();}, "number of non-zeros")\
 .def("__str__", &ColumnMatrix<VT>::str)\
 .def("__mul__", py::overload_cast<const VT &>(&ColumnMatrix<VT>::operator*, py::const_))\
 .def("__mul__", py::overload_cast<const ColumnMatrix<VT> &>(&ColumnMatrix<VT>::operator*, py::const_))\
@@ -84,7 +85,8 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 .def("__getitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[], py::const_))\
 .def("__setitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[]))\
 .def("maxdim", &ChainComplex<MT>::maxdim)\
-.def("dim", &ChainComplex<MT>::dim)\
+.def("dim", [](const ChainComplex<MT>& C, size_t k){return C.dim(k);})\
+.def("dim", [](const ChainComplex<MT>& C){return C.dim();})\
 .def("clear_compress_apparent_pairs", &ChainComplex<MT>::clear_compress_apparent_pairs);
 
 #define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
@@ -106,6 +108,8 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 .def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
 .def(py::init<const ChainComplex<MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
 .def("__getitem__", &ReducedChainComplex<MT>::operator[]) \
+.def("U", [](ReducedChainComplex<MT> &R, size_t k){return R.U[k];}, "basis matrix in specified dimension")\
+.def("R", [](ReducedChainComplex<MT> &R, size_t k){return R.R[k];}, "reduced matrix in specified dimension")\
 .def("hdim", &ReducedChainComplex<MT>::hdim)\
 .def("get_preferred_representative", &ReducedChainComplex<MT>::get_preferred_representative, "get the preferred representative for homology class")\
 .def("chain_preferred_representative", &ReducedChainComplex<MT>::chain_preferred_representative, "return the preferred representative of a chain")\
@@ -136,7 +140,7 @@ m.def("InducedMap",\
 
 #define ZigzagComplexInterface(T, CpxT, name) py::class_<zigzag::ZigzagFiltration<CpxT, T>>(m, name)\
 .def(py::init<>())\
-.def(py::init<const CpxT&, const std::vector<std::vector<std::pair<T, T>>>& >())\
+.def(py::init<const CpxT&, const std::vector<std::vector<std::vector<std::pair<T, T>>>>& >())\
 .def("add", [](zigzag::ZigzagFiltration<CpxT, T>& F, const T entr, const T exit, std::vector<size_t>& s){ return F.add(entr, exit, s); })\
 .def("add_recursive", [](zigzag::ZigzagFiltration<CpxT, T>& F, const T entr, const T exit, std::vector<size_t>& s){ return F.add_recursive(entr, exit, s); })\
 .def("complex", &zigzag::ZigzagFiltration<CpxT, T>::complex)\
@@ -207,6 +211,7 @@ m.def("InducedMap",\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
+.def("reduced_complex", [](ReducedFilteredChainComplex<T, MT>& C){return C.RC;}, "underlying reduced complex")\
 .def("val", [](ReducedFilteredChainComplex<T, MT>& C) {return C.val;}, "filtration values")\
 .def("perm", [](ReducedFilteredChainComplex<T, MT>& C) {return C.perm;}, "permutation from original order")\
 .def("dim", &ReducedFilteredChainComplex<T, MT>::dim)\
@@ -377,6 +382,7 @@ PYBIND11_MODULE(libbats, m) {
 	ZigzagComplexInterface(double, SimplicialComplex, "ZigzagSimplicialComplex");
 	m.def("extend_zigzag_filtration", [](std::vector<double>& f0, SimplicialComplex& X, double eps){return zigzag::extend_zigzag_filtration(f0, X, eps); });
 	m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<SimplicialComplex, double>& F, size_t maxdim, F2){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), standard_reduction_flag()); });
+	m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<SimplicialComplex, double>& F, size_t maxdim, F2, extra_reduction_flag){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), extra_reduction_flag()); });
 
     py::class_<CellularMap>(m, "CellularMap")
         .def(py::init<>())
