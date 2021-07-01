@@ -23,7 +23,9 @@ m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet
 m.def("LightRipsFiltration", (Filtration<double, DefaultLightSimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
 m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));\
 m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, double, size_t))(&DowkerFiltration));\
-m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));
+m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));\
+m.def("RipsFiltration_extension", [](const DataSet<double>& X, const M& dist, double rmax,  size_t dmax) {return RipsFiltration_extension<SimplicialComplex>(X, dist, rmax, dmax);}, "Rips Filtration with inverse map returned");\
+m.def("LightRipsFiltration_extension", [](const DataSet<double>& X, const M& dist, double rmax,  size_t dmax) {return RipsFiltration_extension<DefaultLightSimplicialComplex>(X, dist, rmax, dmax);}, "Rips Filtration with inverse map returned");
 
 // define landmark interfaces for metric
 #define LandmarkInterface(M) \
@@ -86,6 +88,17 @@ PYBIND11_MODULE(topology, m) {
 	m.def("LightRipsFiltration",
 		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration<DefaultLightSimplicialComplex>(M, r, k);},
 		"Rips Filtration using built using pairwise distances."
+	);
+
+	// RipsFiltration on distance matrix
+	m.def("RipsFiltration_extension",
+		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration_extension<SimplicialComplex>(M, r, k);},
+		"Rips Filtration built using pairwise distances Rips with inverse map returned."
+	);
+	// RipsFiltration on distance matrix
+	m.def("LightRipsFiltration",
+		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration_extension<DefaultLightSimplicialComplex>(M, r, k);},
+		"Rips Filtration built using pairwise distances with inverse map returned."
 	);
 
 	m.def("RipsComplex",
