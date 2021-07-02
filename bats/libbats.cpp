@@ -156,7 +156,9 @@ m.def("InducedMap",\
 .def(py::init<const Filtration<T, CubicalComplex>&>())\
 .def("val", [](FilteredChainComplex<T, MT>& C) {return C.val;}, "filtration values.")\
 .def("perm", [](FilteredChainComplex<T, MT>& C) {return C.perm;}, "permutation from original order")\
-.def("update_filtration", &FilteredChainComplex<T, MT>::update_filtration, "update filtration with new values");
+.def("update_filtration", &FilteredChainComplex<T, MT>::update_filtration, "update filtration with new values")\
+.def("update_filtration_general", &FilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, SimplicialComplex>>>, "general update Filtered Chain Complex with updating information")\
+.def("update_filtration_general", &FilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "general update Filtered Chain Complex with updating information");
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedChainComplexInterface(T) \
@@ -210,6 +212,8 @@ m.def("InducedMap",\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
+.def("nnz_U", &ReducedFilteredChainComplex<T, MT>::get_nnz_U, "get the number of non-zeros in U")\
+.def("nnz_R", &ReducedFilteredChainComplex<T, MT>::get_nnz_R, "get the number of non-zeros in R")\
 .def(py::init<const FilteredChainComplex<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
 .def("reduced_complex", [](ReducedFilteredChainComplex<T, MT>& C){return C.RC;}, "underlying reduced complex")\
 .def("val", [](ReducedFilteredChainComplex<T, MT>& C) {return C.val;}, "filtration values")\
@@ -220,7 +224,15 @@ m.def("InducedMap",\
 .def("representative", [](ReducedFilteredChainComplex<T, MT>& F, PersistencePair<T>& p, bool perm){return F.representative(p, perm); })\
 .def("persistence_pairs", [](ReducedFilteredChainComplex<T, MT>& F, size_t k){return F.persistence_pairs(k);} )\
 .def("persistence_pairs", [](ReducedFilteredChainComplex<T, MT>& F, size_t k, bool perm){return F.persistence_pairs(k, perm);} )\
-.def("update_filtration", &ReducedFilteredChainComplex<T, MT>::update_filtration, "update filtration with new values");
+.def("update_filtration", &ReducedFilteredChainComplex<T, MT>::update_filtration, "update filtration with new values")\
+.def("update_filtration_general", &ReducedFilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, SimplicialComplex>>>, "generally update filtration with updating information")\
+.def("update_filtration_general", &ReducedFilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information");
+
+
+#define Update_infoInterface(T, CpxT, name) py::class_<Update_info<Filtration<T, CpxT>>>(m, name) \
+	.def(py::init<const Filtration<T, CpxT>&, const Filtration<T, CpxT>&>())\
+	.def("filtered_info", &Update_info<Filtration<T, CpxT>>::filtered_info, "if the cells in filtration are not sorted by their filtration values, we find filtered updating information")
+
 
 // ReducedFilteredChainComplex for field type T
 #define AutoReducedFilteredChainComplexInterface(T) \
@@ -443,6 +455,9 @@ PYBIND11_MODULE(libbats, m) {
     PersistencePairInterface(double, "PersistencePair")
     PersistencePairInterface(size_t, "PersistencePair_int")
 	ZigzagPairInterface(double, "ZigzagPair")
+
+	Update_infoInterface(double, SimplicialComplex, "UpdateInfoFiltration");
+	Update_infoInterface(double, DefaultLightSimplicialComplex, "UpdateInfoLightFiltration");
 
 	// Filtration extension
 	m.def("lower_star_filtration", [](const SimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
