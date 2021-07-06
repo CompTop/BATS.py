@@ -75,6 +75,11 @@ PYBIND11_MODULE(topology, m) {
 	MetricInterfaceAll(AngleDist, "AngleDist")
 	MetricInterfaceAll(RPAngleDist, "RPAngleDist")
 
+	m.def("enclosing_radius",
+		[](const Matrix<double>& M){return enclosing_radius(M);},
+		"Enclosing radius from matrix of pairwise distances"
+	);
+
 	FilteredEdgeInterface(double, "FilteredEdge")
 
 	m.def("bivariate_cover", &bivariate_cover);
@@ -96,7 +101,7 @@ PYBIND11_MODULE(topology, m) {
 		"Rips Filtration built using pairwise distances Rips with inverse map returned."
 	);
 	// RipsFiltration on distance matrix
-	m.def("LightRipsFiltration",
+	m.def("LightRipsFiltration_extension",
 		[](const Matrix<double>& M, double r, size_t k){return RipsFiltration_extension<DefaultLightSimplicialComplex>(M, r, k);},
 		"Rips Filtration built using pairwise distances with inverse map returned."
 	);
