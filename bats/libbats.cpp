@@ -263,6 +263,12 @@ m.def("InducedMap",\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("ReducedFilteredChainComplex", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C) {return ReducedFilteredChainComplex(C); });\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag()); });\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag, bats::compute_basis_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag(), bats::compute_basis_flag()); });\
@@ -462,6 +468,8 @@ PYBIND11_MODULE(libbats, m) {
 	// Filtration extension
 	m.def("lower_star_filtration", [](const SimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
 	m.def("lower_star_filtration", [](const DefaultLightSimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
+	m.def("lower_star_filtration", [](const CubicalComplex& X, std::vector<std::vector<double>>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
+	m.def("lower_star_filtration", [](const CubicalComplex& X, std::vector<std::vector<std::vector<double>>>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
 
 
 }
