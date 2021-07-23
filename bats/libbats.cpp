@@ -461,6 +461,7 @@ PYBIND11_MODULE(libbats, m) {
 
 	// Filtration extension
 	m.def("lower_star_filtration", [](const SimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
+	m.def("lower_star_filtration", [](const DefaultLightSimplicialComplex& X, std::vector<double>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
 
 
 }
