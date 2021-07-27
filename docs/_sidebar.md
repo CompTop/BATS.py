@@ -16,6 +16,7 @@
   - [Maps](tutorials/maps.md)
   - [Diagrams](tutorials/diagrams.md)
   - [Visualization](tutorials/visualization.md)
+  - [Zigzag Homology](tutorials/zigzag.md)
 
 - Documentation
 
