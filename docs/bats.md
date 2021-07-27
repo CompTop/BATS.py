@@ -499,6 +499,20 @@ relative chain complex
 
 5. __init__(self: bats.libbats.F2ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
 
+### clear_compress_apparent_pairs
+clear_compress_apparent_pairs(self: bats.libbats.F2ChainComplex) -> None
+
+### dim
+dim(*args, **kwargs)
+Overloaded function.
+
+1. dim(self: bats.libbats.F2ChainComplex, arg0: int) -> int
+
+2. dim(self: bats.libbats.F2ChainComplex) -> int
+
+### maxdim
+maxdim(self: bats.libbats.F2ChainComplex) -> int
+
 ## F2ChainDiagram
 ### __init__
 __init__(*args, **kwargs)
@@ -618,6 +632,11 @@ ncol(self: bats.libbats.F2Mat) -> int
 
 number of columns.
 
+### nnz
+nnz(self: bats.libbats.F2Mat) -> int
+
+number of non-zeros
+
 ### nrow
 nrow(self: bats.libbats.F2Mat) -> int
 
@@ -710,6 +729,20 @@ Overloaded function.
 relative chain complex
 
 5. __init__(self: bats.libbats.F3ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
+
+### clear_compress_apparent_pairs
+clear_compress_apparent_pairs(self: bats.libbats.F3ChainComplex) -> None
+
+### dim
+dim(*args, **kwargs)
+Overloaded function.
+
+1. dim(self: bats.libbats.F3ChainComplex, arg0: int) -> int
+
+2. dim(self: bats.libbats.F3ChainComplex) -> int
+
+### maxdim
+maxdim(self: bats.libbats.F3ChainComplex) -> int
 
 ## F3ChainDiagram
 ### __init__
@@ -830,6 +863,11 @@ ncol(self: bats.libbats.F3Mat) -> int
 
 number of columns.
 
+### nnz
+nnz(self: bats.libbats.F3Mat) -> int
+
+number of non-zeros
+
 ### nrow
 nrow(self: bats.libbats.F3Mat) -> int
 
@@ -920,6 +958,20 @@ relative chain complex
 
 5. __init__(self: bats.libbats.F5ChainComplex, arg0: bats.libbats.CubicalComplex) -> None
 
+### clear_compress_apparent_pairs
+clear_compress_apparent_pairs(self: bats.libbats.F5ChainComplex) -> None
+
+### dim
+dim(*args, **kwargs)
+Overloaded function.
+
+1. dim(self: bats.libbats.F5ChainComplex, arg0: int) -> int
+
+2. dim(self: bats.libbats.F5ChainComplex) -> int
+
+### maxdim
+maxdim(self: bats.libbats.F5ChainComplex) -> int
+
 ## F5ChainMap
 ### __init__
 __init__(*args, **kwargs)
@@ -940,7 +992,9 @@ Overloaded function.
 
 1. __init__(self: bats.libbats.FilteredCubicalComplex) -> None
 
-2. __init__(self: bats.libbats.FilteredCubicalComplex, arg0: int) -> None
+2. __init__(self: bats.libbats.FilteredCubicalComplex, arg0: bats.libbats.CubicalComplex, arg1: List[List[float]]) -> None
+
+3. __init__(self: bats.libbats.FilteredCubicalComplex, arg0: int) -> None
 
 ### add
 add(self: bats.libbats.FilteredCubicalComplex, arg0: float, arg1: List[int]) -> bats.libbats.cell_ind
@@ -985,6 +1039,33 @@ Overloaded function.
 
 4. __init__(self: bats.libbats.FilteredF2ChainComplex, arg0: bats.libbats.FilteredCubicalComplex) -> None
 
+### perm
+perm(self: bats.libbats.FilteredF2ChainComplex) -> List[List[int]]
+
+permutation from original order
+
+### update_filtration
+update_filtration(self: bats.libbats.FilteredF2ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.FilteredF2ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+general update Filtered Chain Complex with updating information
+
+2. update_filtration_general(self: bats.libbats.FilteredF2ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+general update Filtered Chain Complex with updating information
+
+### val
+val(self: bats.libbats.FilteredF2ChainComplex) -> List[List[float]]
+
+filtration values.
+
 ## FilteredF3ChainComplex
 ### __init__
 __init__(*args, **kwargs)
@@ -997,6 +1078,33 @@ Overloaded function.
 3. __init__(self: bats.libbats.FilteredF3ChainComplex, arg0: bats.libbats.FilteredLightSimplicialComplex) -> None
 
 4. __init__(self: bats.libbats.FilteredF3ChainComplex, arg0: bats.libbats.FilteredCubicalComplex) -> None
+
+### perm
+perm(self: bats.libbats.FilteredF3ChainComplex) -> List[List[int]]
+
+permutation from original order
+
+### update_filtration
+update_filtration(self: bats.libbats.FilteredF3ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.FilteredF3ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+general update Filtered Chain Complex with updating information
+
+2. update_filtration_general(self: bats.libbats.FilteredF3ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+general update Filtered Chain Complex with updating information
+
+### val
+val(self: bats.libbats.FilteredF3ChainComplex) -> List[List[float]]
+
+filtration values.
 
 ## FilteredF5ChainComplex
 ### __init__
@@ -1011,9 +1119,41 @@ Overloaded function.
 
 4. __init__(self: bats.libbats.FilteredF5ChainComplex, arg0: bats.libbats.FilteredCubicalComplex) -> None
 
+### perm
+perm(self: bats.libbats.FilteredF5ChainComplex) -> List[List[int]]
+
+permutation from original order
+
+### update_filtration
+update_filtration(self: bats.libbats.FilteredF5ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.FilteredF5ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+general update Filtered Chain Complex with updating information
+
+2. update_filtration_general(self: bats.libbats.FilteredF5ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+general update Filtered Chain Complex with updating information
+
+### val
+val(self: bats.libbats.FilteredF5ChainComplex) -> List[List[float]]
+
+filtration values.
+
 ## FilteredLightSimplicialComplex
 ### __init__
-__init__(self: bats.libbats.FilteredLightSimplicialComplex) -> None
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.FilteredLightSimplicialComplex) -> None
+
+2. __init__(self: bats.libbats.FilteredLightSimplicialComplex, arg0: bats.libbats.LightSimplicialComplex, arg1: List[List[float]]) -> None
 
 ### add
 add(self: bats.libbats.FilteredLightSimplicialComplex, arg0: float, arg1: List[int]) -> bats.libbats.cell_ind
@@ -1049,9 +1189,41 @@ Overloaded function.
 
 4. __init__(self: bats.libbats.FilteredRationalChainComplex, arg0: bats.libbats.FilteredCubicalComplex) -> None
 
+### perm
+perm(self: bats.libbats.FilteredRationalChainComplex) -> List[List[int]]
+
+permutation from original order
+
+### update_filtration
+update_filtration(self: bats.libbats.FilteredRationalChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.FilteredRationalChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+general update Filtered Chain Complex with updating information
+
+2. update_filtration_general(self: bats.libbats.FilteredRationalChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+general update Filtered Chain Complex with updating information
+
+### val
+val(self: bats.libbats.FilteredRationalChainComplex) -> List[List[float]]
+
+filtration values.
+
 ## FilteredSimplicialComplex
 ### __init__
-__init__(self: bats.libbats.FilteredSimplicialComplex) -> None
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.FilteredSimplicialComplex) -> None
+
+2. __init__(self: bats.libbats.FilteredSimplicialComplex, arg0: bats.libbats.SimplicialComplex, arg1: List[List[float]]) -> None
 
 ### add
 add(self: bats.libbats.FilteredSimplicialComplex, arg0: float, arg1: List[int]) -> bats.libbats.cell_ind
@@ -1136,6 +1308,11 @@ appends column
 ncol(self: bats.libbats.IntMat) -> int
 
 number of columns.
+
+### nnz
+nnz(self: bats.libbats.IntMat) -> int
+
+number of non-zeros
 
 ### nrow
 nrow(self: bats.libbats.IntMat) -> int
@@ -1278,6 +1455,42 @@ Overloaded function.
 8. LightRipsFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.FilteredLightSimplicialComplex
 
 Rips Filtration using built using pairwise distances.
+
+## LightRipsFiltration_extension
+LightRipsFiltration_extension(*args, **kwargs)
+Overloaded function.
+
+1. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+2. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+3. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+4. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+5. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+6. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+7. LightRipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+8. LightRipsFiltration_extension(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> Tuple[bats.libbats.FilteredLightSimplicialComplex, List[List[int]]]
+
+Rips Filtration built using pairwise distances with inverse map returned.
 
 ## LightSimplicialComplex
 ### __init__
@@ -1511,6 +1724,20 @@ relative chain complex
 
 5. __init__(self: bats.libbats.RationalChainComplex, arg0: bats.libbats.CubicalComplex) -> None
 
+### clear_compress_apparent_pairs
+clear_compress_apparent_pairs(self: bats.libbats.RationalChainComplex) -> None
+
+### dim
+dim(*args, **kwargs)
+Overloaded function.
+
+1. dim(self: bats.libbats.RationalChainComplex, arg0: int) -> int
+
+2. dim(self: bats.libbats.RationalChainComplex) -> int
+
+### maxdim
+maxdim(self: bats.libbats.RationalChainComplex) -> int
+
 ## RationalChainMap
 ### __init__
 __init__(*args, **kwargs)
@@ -1551,6 +1778,11 @@ appends column
 ncol(self: bats.libbats.RationalMat) -> int
 
 number of columns.
+
+### nnz
+nnz(self: bats.libbats.RationalMat) -> int
+
+number of non-zeros
 
 ### nrow
 nrow(self: bats.libbats.RationalMat) -> int
@@ -1632,6 +1864,16 @@ Overloaded function.
 8. ReducedChainComplex(arg0: bats.libbats.LightSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedRationalChainComplex
 
 ## ReducedF2ChainComplex
+### R
+R(self: bats.libbats.ReducedF2ChainComplex, arg0: int) -> bats.libbats.F2Mat
+
+reduced matrix in specified dimension
+
+### U
+U(self: bats.libbats.ReducedF2ChainComplex, arg0: int) -> bats.libbats.F2Mat
+
+basis matrix in specified dimension
+
 ### __init__
 __init__(*args, **kwargs)
 Overloaded function.
@@ -1692,6 +1934,16 @@ Overloaded function.
 2. to_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> bats.libbats.F2Vector
 
 ## ReducedF3ChainComplex
+### R
+R(self: bats.libbats.ReducedF3ChainComplex, arg0: int) -> bats.libbats.F3Mat
+
+reduced matrix in specified dimension
+
+### U
+U(self: bats.libbats.ReducedF3ChainComplex, arg0: int) -> bats.libbats.F3Mat
+
+basis matrix in specified dimension
+
 ### __init__
 __init__(*args, **kwargs)
 Overloaded function.
@@ -1752,6 +2004,16 @@ Overloaded function.
 2. to_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> bats.libbats.F3Vector
 
 ## ReducedF5ChainComplex
+### R
+R(self: bats.libbats.ReducedF5ChainComplex, arg0: int) -> ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >
+
+reduced matrix in specified dimension
+
+### U
+U(self: bats.libbats.ReducedF5ChainComplex, arg0: int) -> ColumnMatrix<SparseVector<ModP<int, 5u>, unsigned long> >
+
+basis matrix in specified dimension
+
 ### __init__
 __init__(*args, **kwargs)
 Overloaded function.
@@ -1819,17 +2081,25 @@ Overloaded function.
 
 2. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F2) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-3. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
+3. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-4. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
+4. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-5. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+5. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-6. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+6. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-7. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+7. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-8. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+8. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+
+9. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+
+10. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+11. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+12. ReducedFilteredChainComplex(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
 
 ## ReducedFilteredF2ChainComplex
 ### __init__
@@ -1862,11 +2132,63 @@ dim(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: int) -> int
 ### maxdim
 maxdim(self: bats.libbats.ReducedFilteredF2ChainComplex) -> int
 
+### nnz_R
+nnz_R(self: bats.libbats.ReducedFilteredF2ChainComplex) -> List[int]
+
+get the number of non-zeros in R
+
+### nnz_U
+nnz_U(self: bats.libbats.ReducedFilteredF2ChainComplex) -> List[int]
+
+get the number of non-zeros in U
+
+### perm
+perm(self: bats.libbats.ReducedFilteredF2ChainComplex) -> List[List[int]]
+
+permutation from original order
+
 ### persistence_pairs
-persistence_pairs(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+persistence_pairs(*args, **kwargs)
+Overloaded function.
+
+1. persistence_pairs(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+
+2. persistence_pairs(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: int, arg1: bool) -> List[bats::PersistencePair<double>]
+
+### reduced_complex
+reduced_complex(self: bats.libbats.ReducedFilteredF2ChainComplex) -> bats.libbats.ReducedF2ChainComplex
+
+underlying reduced complex
 
 ### representative
-representative(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.F2Vector
+representative(*args, **kwargs)
+Overloaded function.
+
+1. representative(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.F2Vector
+
+2. representative(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: bats::PersistencePair<double>, arg1: bool) -> bats.libbats.F2Vector
+
+### update_filtration
+update_filtration(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+generally update filtration with updating information
+
+2. update_filtration_general(self: bats.libbats.ReducedFilteredF2ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+generally update filtration with updating information
+
+### val
+val(self: bats.libbats.ReducedFilteredF2ChainComplex) -> List[List[float]]
+
+filtration values
 
 ## ReducedFilteredF3ChainComplex
 ### __init__
@@ -1899,11 +2221,63 @@ dim(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: int) -> int
 ### maxdim
 maxdim(self: bats.libbats.ReducedFilteredF3ChainComplex) -> int
 
+### nnz_R
+nnz_R(self: bats.libbats.ReducedFilteredF3ChainComplex) -> List[int]
+
+get the number of non-zeros in R
+
+### nnz_U
+nnz_U(self: bats.libbats.ReducedFilteredF3ChainComplex) -> List[int]
+
+get the number of non-zeros in U
+
+### perm
+perm(self: bats.libbats.ReducedFilteredF3ChainComplex) -> List[List[int]]
+
+permutation from original order
+
 ### persistence_pairs
-persistence_pairs(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+persistence_pairs(*args, **kwargs)
+Overloaded function.
+
+1. persistence_pairs(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+
+2. persistence_pairs(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: int, arg1: bool) -> List[bats::PersistencePair<double>]
+
+### reduced_complex
+reduced_complex(self: bats.libbats.ReducedFilteredF3ChainComplex) -> bats.libbats.ReducedF3ChainComplex
+
+underlying reduced complex
 
 ### representative
-representative(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.F3Vector
+representative(*args, **kwargs)
+Overloaded function.
+
+1. representative(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.F3Vector
+
+2. representative(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: bats::PersistencePair<double>, arg1: bool) -> bats.libbats.F3Vector
+
+### update_filtration
+update_filtration(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+generally update filtration with updating information
+
+2. update_filtration_general(self: bats.libbats.ReducedFilteredF3ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+generally update filtration with updating information
+
+### val
+val(self: bats.libbats.ReducedFilteredF3ChainComplex) -> List[List[float]]
+
+filtration values
 
 ## ReducedFilteredF5ChainComplex
 ### __init__
@@ -1936,11 +2310,63 @@ dim(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: int) -> int
 ### maxdim
 maxdim(self: bats.libbats.ReducedFilteredF5ChainComplex) -> int
 
+### nnz_R
+nnz_R(self: bats.libbats.ReducedFilteredF5ChainComplex) -> List[int]
+
+get the number of non-zeros in R
+
+### nnz_U
+nnz_U(self: bats.libbats.ReducedFilteredF5ChainComplex) -> List[int]
+
+get the number of non-zeros in U
+
+### perm
+perm(self: bats.libbats.ReducedFilteredF5ChainComplex) -> List[List[int]]
+
+permutation from original order
+
 ### persistence_pairs
-persistence_pairs(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+persistence_pairs(*args, **kwargs)
+Overloaded function.
+
+1. persistence_pairs(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+
+2. persistence_pairs(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: int, arg1: bool) -> List[bats::PersistencePair<double>]
+
+### reduced_complex
+reduced_complex(self: bats.libbats.ReducedFilteredF5ChainComplex) -> bats.libbats.ReducedF5ChainComplex
+
+underlying reduced complex
 
 ### representative
-representative(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: bats::PersistencePair<double>) -> SparseVector<ModP<int, 5u>, unsigned long>
+representative(*args, **kwargs)
+Overloaded function.
+
+1. representative(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: bats::PersistencePair<double>) -> SparseVector<ModP<int, 5u>, unsigned long>
+
+2. representative(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: bats::PersistencePair<double>, arg1: bool) -> SparseVector<ModP<int, 5u>, unsigned long>
+
+### update_filtration
+update_filtration(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+generally update filtration with updating information
+
+2. update_filtration_general(self: bats.libbats.ReducedFilteredF5ChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+generally update filtration with updating information
+
+### val
+val(self: bats.libbats.ReducedFilteredF5ChainComplex) -> List[List[float]]
+
+filtration values
 
 ## ReducedFilteredRationalChainComplex
 ### __init__
@@ -1973,13 +2399,75 @@ dim(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: int) -> int
 ### maxdim
 maxdim(self: bats.libbats.ReducedFilteredRationalChainComplex) -> int
 
+### nnz_R
+nnz_R(self: bats.libbats.ReducedFilteredRationalChainComplex) -> List[int]
+
+get the number of non-zeros in R
+
+### nnz_U
+nnz_U(self: bats.libbats.ReducedFilteredRationalChainComplex) -> List[int]
+
+get the number of non-zeros in U
+
+### perm
+perm(self: bats.libbats.ReducedFilteredRationalChainComplex) -> List[List[int]]
+
+permutation from original order
+
 ### persistence_pairs
-persistence_pairs(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+persistence_pairs(*args, **kwargs)
+Overloaded function.
+
+1. persistence_pairs(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: int) -> List[bats::PersistencePair<double>]
+
+2. persistence_pairs(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: int, arg1: bool) -> List[bats::PersistencePair<double>]
+
+### reduced_complex
+reduced_complex(self: bats.libbats.ReducedFilteredRationalChainComplex) -> bats.libbats.ReducedRationalChainComplex
+
+underlying reduced complex
 
 ### representative
-representative(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.RationalVector
+representative(*args, **kwargs)
+Overloaded function.
+
+1. representative(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: bats::PersistencePair<double>) -> bats.libbats.RationalVector
+
+2. representative(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: bats::PersistencePair<double>, arg1: bool) -> bats.libbats.RationalVector
+
+### update_filtration
+update_filtration(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: List[List[float]]) -> None
+
+update filtration with new values
+
+### update_filtration_general
+update_filtration_general(*args, **kwargs)
+Overloaded function.
+
+1. update_filtration_general(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::SimplicialComplex> >) -> None
+
+generally update filtration with updating information
+
+2. update_filtration_general(self: bats.libbats.ReducedFilteredRationalChainComplex, arg0: bats::Update_info<bats::Filtration<double, bats::LightSimplicialComplex<unsigned long, std::unordered_map<unsigned long, unsigned long, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, unsigned long> > > > > >) -> None
+
+generally update filtration with updating information
+
+### val
+val(self: bats.libbats.ReducedFilteredRationalChainComplex) -> List[List[float]]
+
+filtration values
 
 ## ReducedRationalChainComplex
+### R
+R(self: bats.libbats.ReducedRationalChainComplex, arg0: int) -> bats.libbats.RationalMat
+
+reduced matrix in specified dimension
+
+### U
+U(self: bats.libbats.ReducedRationalChainComplex, arg0: int) -> bats.libbats.RationalMat
+
+basis matrix in specified dimension
+
 ### __init__
 __init__(*args, **kwargs)
 Overloaded function.
@@ -2126,6 +2614,42 @@ Overloaded function.
 8. RipsFiltration(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.FilteredSimplicialComplex
 
 Rips Filtration using built using pairwise distances.
+
+## RipsFiltration_extension
+RipsFiltration_extension(*args, **kwargs)
+Overloaded function.
+
+1. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+2. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+3. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+4. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+5. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+6. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+7. RipsFiltration_extension(arg0: bats::DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration with inverse map returned
+
+8. RipsFiltration_extension(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> Tuple[bats.libbats.FilteredSimplicialComplex, List[List[int]]]
+
+Rips Filtration built using pairwise distances Rips with inverse map returned.
 
 ## SetDiagram
 ### __init__
@@ -2314,13 +2838,96 @@ U, E_U commutation
 
 U, E_U commutation
 
+## UpdateInfoFiltration
+### __init__
+__init__(self: bats.libbats.UpdateInfoFiltration, arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.FilteredSimplicialComplex) -> None
+
+### filtered_info
+filtered_info(self: bats.libbats.UpdateInfoFiltration, arg0: List[List[int]]) -> None
+
+if the cells in filtration are not sorted by their filtration values, we find filtered updating information
+
+## UpdateInfoLightFiltration
+### __init__
+__init__(self: bats.libbats.UpdateInfoLightFiltration, arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.FilteredLightSimplicialComplex) -> None
+
+### filtered_info
+filtered_info(self: bats.libbats.UpdateInfoLightFiltration, arg0: List[List[int]]) -> None
+
+if the cells in filtration are not sorted by their filtration values, we find filtered updating information
+
 ## WitnessFiltration
 WitnessFiltration(arg0: bats::DataSet<double>, arg1: bats::DataSet<double>, arg2: bats.topology.Euclidean, arg3: float, arg4: int) -> bats.libbats.FilteredSimplicialComplex
+
+## ZigzagBarcode
+ZigzagBarcode(*args, **kwargs)
+Overloaded function.
+
+1. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2) -> List[List[bats::zigzag::ZigzagPair<double>]]
+
+2. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2, arg3: bats::extra_reduction_flag) -> List[List[bats::zigzag::ZigzagPair<double>]]
+
+## ZigzagPair
+### __init__
+__init__(self: bats.libbats.ZigzagPair) -> None
+
+### birth
+birth(self: bats.libbats.ZigzagPair) -> float
+
+### birth_ind
+birth_ind(self: bats.libbats.ZigzagPair) -> int
+
+### death
+death(self: bats.libbats.ZigzagPair) -> float
+
+### death_ind
+death_ind(self: bats.libbats.ZigzagPair) -> int
+
+### dim
+dim(self: bats.libbats.ZigzagPair) -> int
+
+### length
+length(self: bats.libbats.ZigzagPair) -> float
+
+### mid
+mid(self: bats.libbats.ZigzagPair) -> float
 
 ## ZigzagSetDiagram
 ZigzagSetDiagram(arg0: List[Set[int]]) -> bats.diagram.SetDiagram
 
 Create a zigzag diagram of sets and pairwise unions.
+
+## ZigzagSimplicialComplex
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.ZigzagSimplicialComplex) -> None
+
+2. __init__(self: bats.libbats.ZigzagSimplicialComplex, arg0: bats.libbats.SimplicialComplex, arg1: List[List[List[Tuple[float, float]]]]) -> None
+
+### add
+add(self: bats.libbats.ZigzagSimplicialComplex, arg0: float, arg1: float, arg2: List[int]) -> bats.libbats.cell_ind
+
+### add_recursive
+add_recursive(self: bats.libbats.ZigzagSimplicialComplex, arg0: float, arg1: float, arg2: List[int]) -> List[bats.libbats.cell_ind]
+
+### complex
+complex(self: bats.libbats.ZigzagSimplicialComplex) -> bats.libbats.SimplicialComplex
+
+### maxdim
+maxdim(self: bats.libbats.ZigzagSimplicialComplex) -> int
+
+### ncells
+ncells(self: bats.libbats.ZigzagSimplicialComplex, arg0: int) -> int
+
+### vals
+vals(*args, **kwargs)
+Overloaded function.
+
+1. vals(self: bats.libbats.ZigzagSimplicialComplex) -> List[List[List[Tuple[float, float]]]]
+
+2. vals(self: bats.libbats.ZigzagSimplicialComplex, arg0: int) -> List[List[Tuple[float, float]]]
 
 ## approx_center
 approx_center(*args, **kwargs)
@@ -2382,6 +2989,14 @@ __init__(self: bats.libbats.compute_basis_flag) -> None
 
 ## dense
 ## diagram
+## enclosing_radius
+enclosing_radius(arg0: A<Dense<double, RowMaj> >) -> float
+
+Enclosing radius from matrix of pairwise distances
+
+## extend_zigzag_filtration
+extend_zigzag_filtration(arg0: List[float], arg1: bats.libbats.SimplicialComplex, arg2: float) -> bats.libbats.ZigzagSimplicialComplex
+
 ## extra_reduction_flag
 ### __init__
 __init__(self: bats.libbats.extra_reduction_flag) -> None
@@ -2483,6 +3098,26 @@ Overloaded function.
 
 ## libbats
 Basic Applied Topology Subprograms interface
+## lower_star_filtration
+lower_star_filtration(*args, **kwargs)
+Overloaded function.
+
+1. lower_star_filtration(arg0: bats.libbats.SimplicialComplex, arg1: List[float]) -> Tuple[List[List[float]], List[List[int]]]
+
+extend function on 0-cells to filtration
+
+2. lower_star_filtration(arg0: bats.libbats.LightSimplicialComplex, arg1: List[float]) -> Tuple[List[List[float]], List[List[int]]]
+
+extend function on 0-cells to filtration
+
+3. lower_star_filtration(arg0: bats.libbats.CubicalComplex, arg1: List[List[float]]) -> List[List[float]]
+
+extend function on 0-cells to filtration
+
+4. lower_star_filtration(arg0: bats.libbats.CubicalComplex, arg1: List[List[List[float]]]) -> List[List[float]]
+
+extend function on 0-cells to filtration
+
 ## no_optimization_flag
 ### __init__
 __init__(self: bats.libbats.no_optimization_flag) -> None
@@ -2828,225 +3463,265 @@ Overloaded function.
 
 154. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F2, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-155. reduce(arg0: bats.libbats.FilteredF2ChainComplex) -> bats.libbats.ReducedFilteredF2ChainComplex
+155. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-156. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+156. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-157. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+157. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-158. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+158. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-159. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+159. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F2, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-160. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+160. reduce(arg0: bats.libbats.FilteredF2ChainComplex) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-161. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+161. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-162. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+162. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-163. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+163. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-164. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+164. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-165. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
+165. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-166. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
+166. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-167. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+167. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-168. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+168. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-169. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+169. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-170. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+170. reduce(arg0: bats.libbats.FilteredF2ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF2ChainComplex
 
-171. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+171. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-172. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+172. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-173. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+173. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-174. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+174. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-175. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+175. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-176. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+176. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-177. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
+177. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-178. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+178. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-179. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+179. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-180. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+180. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-181. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+181. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-182. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+182. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-183. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+183. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-184. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+184. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-185. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+185. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-186. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+186. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-187. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+187. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-188. reduce(arg0: bats.libbats.FilteredF3ChainComplex) -> bats.libbats.ReducedFilteredF3ChainComplex
+188. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-189. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+189. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-190. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+190. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-191. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+191. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-192. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+192. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F3, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-193. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+193. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-194. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+194. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-195. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+195. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-196. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+196. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-197. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+197. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F3, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-198. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
+198. reduce(arg0: bats.libbats.FilteredF3ChainComplex) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-199. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+199. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-200. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+200. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-201. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+201. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-202. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+202. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-203. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+203. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-204. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+204. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-205. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+205. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-206. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+206. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-207. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+207. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-208. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+208. reduce(arg0: bats.libbats.FilteredF3ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF3ChainComplex
 
-209. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+209. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-210. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
+210. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-211. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+211. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-212. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+212. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-213. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+213. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-214. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+214. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-215. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+215. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-216. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+216. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-217. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+217. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-218. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+218. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-219. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+219. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-220. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+220. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-221. reduce(arg0: bats.libbats.FilteredF5ChainComplex) -> bats.libbats.ReducedFilteredF5ChainComplex
+221. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-222. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+222. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-223. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+223. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-224. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+224. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-225. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+225. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-226. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+226. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-227. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+227. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-228. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+228. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-229. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+229. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-230. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+230. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.F5, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-231. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
+231. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-232. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+232. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-233. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+233. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-234. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+234. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-235. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+235. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.F5, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-236. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+236. reduce(arg0: bats.libbats.FilteredF5ChainComplex) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-237. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+237. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-238. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+238. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-239. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+239. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-240. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+240. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-241. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+241. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-242. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+242. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-243. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+243. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-244. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+244. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-245. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+245. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-246. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+246. reduce(arg0: bats.libbats.FilteredF5ChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredF5ChainComplex
 
-247. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+247. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-248. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+248. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-249. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+249. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-250. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+250. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-251. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+251. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-252. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+252. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-253. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+253. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-254. reduce(arg0: bats.libbats.FilteredRationalChainComplex) -> bats.libbats.ReducedFilteredRationalChainComplex
+254. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-255. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+255. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-256. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+256. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-257. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+257. reduce(arg0: bats.libbats.FilteredSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-258. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+258. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-259. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+259. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-260. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+260. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-261. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+261. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-262. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+262. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-263. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+263. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
-264. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+264. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+265. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+266. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+267. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+268. reduce(arg0: bats.libbats.FilteredLightSimplicialComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.extra_reduction_flag, arg3: bats.libbats.compression_flag, arg4: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+269. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+270. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+271. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+272. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+273. reduce(arg0: bats.libbats.FilteredCubicalComplex, arg1: bats.libbats.Rational, arg2: bats.libbats.standard_reduction_flag, arg3: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+274. reduce(arg0: bats.libbats.FilteredRationalChainComplex) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+275. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+276. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+277. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+278. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+279. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.standard_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+280. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+281. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+282. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.clearing_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+283. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
+
+284. reduce(arg0: bats.libbats.FilteredRationalChainComplex, arg1: bats.libbats.extra_reduction_flag, arg2: bats.libbats.compression_flag, arg3: bats.libbats.compute_basis_flag) -> bats.libbats.ReducedFilteredRationalChainComplex
 
 ## reduce_matrix
 reduce_matrix(*args, **kwargs)
