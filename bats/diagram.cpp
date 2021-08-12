@@ -23,6 +23,8 @@ using namespace bats;
 
 #define ChainFunctorInterface(MT, DT, name) m.def(name, &(ChainFunctor<MT, DT>));
 
+#define DGLinearFunctorInterface(MT, DT, name) m.def(name, &(DGLinearFunctor<MT, DT>));
+
 #define AutoChainFunctorInterface(DT, FT) \
 m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__ChainFunctor)); \
 
@@ -36,8 +38,11 @@ m.def("Chain", [](const CellComplex &X, FT) {return ChainComplex<ColumnMatrix<Sp
 
 
 #define HomFunctorInterface(MT, name) \
-m.def(name, &(Hom<MT>));\
+m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, size_t k) {return Hom(D, k);});\
+m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
 m.def("barcode", [](const Diagram<ReducedChainComplex<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
+m.def("barcode", [](const Diagram<ReducedDGVectorSpace<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
+m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse));\
 m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse));
 
 
@@ -52,6 +57,10 @@ PYBIND11_MODULE(diagram, m) {
 	DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
 	DiagramInterface(ReducedF2ChainComplex, M2, "F2HomDiagram")
 	DiagramInterface(ReducedF3ChainComplex, M3, "F3HomDiagram")
+	DiagramInterface(F2DGVectorSpace, F2DGLinearMap, "F2DGLinearDiagram")
+	DiagramInterface(F3DGVectorSpace, F3DGLinearMap, "F3DGLinearDiagram")
+	DiagramInterface(ReducedF2DGVectorSpace, M2, "F2DGHomDiagram")
+	DiagramInterface(ReducedF3DGVectorSpace, M3, "F3DGHomDiagram")
 
 	// NerveFunctor
     m.def("NerveDiagram", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
@@ -65,6 +74,9 @@ PYBIND11_MODULE(diagram, m) {
 
     ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
+
+	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")
+	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")
 
 	AutoChainFunctorInterface(SimplicialComplexDiagram, F2)
 	AutoChainFunctorInterface(SimplicialComplexDiagram, F3)

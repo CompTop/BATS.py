@@ -45,6 +45,13 @@ using F3ChainMap = ChainMap<M3>;
 using F5ChainMap = ChainMap<M5>;
 using FQChainMap = ChainMap<MQ>;
 
+using F2DGVectorSpace = DGVectorSpace<M2>;
+using F3DGVectorSpace = DGVectorSpace<M3>;
+using F2DGLinearMap = DGLinearMap<M2>;
+using F3DGLinearMap = DGLinearMap<M3>;
+using ReducedF2DGVectorSpace = ReducedDGVectorSpace<M2>;
+using ReducedF3DGVectorSpace = ReducedDGVectorSpace<M3>;
+
 // diagrams
 using CoverDiagram = Diagram<bats::Cover, std::vector<size_t>>;
 using SetDiagram = Diagram<std::set<size_t>, std::vector<size_t>>;
@@ -53,3 +60,5 @@ using CubicalComplexDiagram = Diagram<CubicalComplex, CellularMap>;
 using CellComplexDiagram = Diagram<CellComplex, CellularMap>;
 using F2ChainDiagram = Diagram<F2ChainComplex, F2ChainMap>;
 using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;
+using F2DGLinearDiagram = Diagram<F2DGVectorSpace, F2DGLinearMap>;
+using F3DGLinearDiagram = Diagram<F3DGVectorSpace, F3DGLinearMap>;
