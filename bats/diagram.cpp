@@ -21,7 +21,9 @@ using namespace bats;
 .def("edge_source", [](Diagram<NT, ET>& D, size_t k){return D.edge_source(k);})\
 .def("edge_target", [](Diagram<NT, ET>& D, size_t k){return D.edge_target(k);});
 
-#define ChainFunctorInterface(MT, DT, name) m.def(name, &(ChainFunctor<MT, DT>));
+#define ChainFunctorInterface(MT, DT, name)\
+m.def(name, [](const DT& diag) {return ChainFunctor<MT>(diag);});\
+m.def("ChainFunctor", [](const DT& diag, typename MT::val_type) {return ChainFunctor(diag, typename MT::val_type());});
 
 #define DGLinearFunctorInterface(MT, DT, name) m.def(name, &(DGLinearFunctor<MT, DT>));
 
@@ -42,8 +44,12 @@ m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, size_t k) {retu
 m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
 m.def("barcode", [](const Diagram<ReducedChainComplex<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
 m.def("barcode", [](const Diagram<ReducedDGVectorSpace<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
-m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse));\
-m.def("barcode_sparse", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse));
+m.def("barcode_leftward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_leftright));\
+m.def("barcode_leftward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_leftright));\
+m.def("barcode_rightward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_rightleft));\
+m.def("barcode_rightward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_rightleft));\
+m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_divide_conquer));\
+m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_divide_conquer));
 
 
 PYBIND11_MODULE(diagram, m) {

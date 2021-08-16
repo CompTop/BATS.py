@@ -39,7 +39,7 @@ m.def("greedy_landmarks_hausdorff", (std::tuple<std::vector<size_t>, std::vector
 // m.def("approx_center", (size_t (*)(const DataSet<double>&, const M&))(&approx_center), "Find index approximately in the center using an iterative landmarking procedure.");
 
 // define discrete morozov zigzag interfaces for metric
-#define dmzzInterface(M) \
+#define ZZZooInterface(M) \
 m.def("DiscreteMorozovZigzag", \
 	(std::tuple<SimplicialComplexDiagram, std::vector<double>> (*)(const DataSet<double>&, const M&, double, size_t))(&DiscreteMorozovZigzag), \
 	"discrete Morozov Zigzag (dM-ZZ) construction." \
@@ -47,6 +47,10 @@ m.def("DiscreteMorozovZigzag", \
 m.def("DiscreteMorozovZigzagSets", \
 	(std::tuple<Diagram<std::set<size_t>, std::vector<size_t>>, std::vector<double>> (*)(const DataSet<double>&, const M&, double))(&DiscreteMorozovZigzagSets), \
 	"SetDiagram for discrete Morozov Zigzag (dM-ZZ) construction." \
+);\
+m.def("OscillatingRipsZigzagSets",\
+	[](const DataSet<double>& X, const M& dist, double rho, double eps) {return OscillatingRipsZigzagSets(X, dist, rho, eps);}, \
+	"SetDiagram for Oscillating Rips Zigzag constrution."\
 );
 
 // define RipsComplex interface
@@ -61,8 +65,14 @@ m.def("RipsComplex",\
 MetricInterface(M, name)\
 FiltrationInterface(M)\
 LandmarkInterface(M)\
-dmzzInterface(M)\
+ZZZooInterface(M)\
 RipsInterface(M)
+
+#define FreudenthalInterface(name, CpxT) \
+m.def(name, [](size_t m, size_t n){return Freudenthal<CpxT>(m,n);});\
+m.def(name, [](size_t n1, size_t n2, size_t n3){return Freudenthal<CpxT>(n1,n2,n3);});\
+m.def(name, [](size_t n1, size_t n2, size_t n3, size_t i0, size_t i1, size_t j0, size_t j1, size_t k0, size_t k1){return Freudenthal<CpxT>(n1, n2, n3, i0, i1, j0, j1, k0, k1);});\
+m.def(name, [](CubicalComplex& X, size_t n1, size_t n2, size_t n3){return Freudenthal<CpxT>(X, n1, n2, n3);});
 
 
 PYBIND11_MODULE(topology, m) {
@@ -134,4 +144,13 @@ PYBIND11_MODULE(topology, m) {
 		&serpinski_diagram,
 		"Diagram of Sierpinski triangle iterations."
 	);
+
+	// Freudenthal constructions
+	FreudenthalInterface("Freudenthal", SimplicialComplex)
+	FreudenthalInterface("LightFreudenthal", DefaultLightSimplicialComplex)
+	// Cubes
+	m.def("Cube", [](size_t m, size_t n){return Cube(m,n);});\
+	m.def("Cube", [](size_t n1, size_t n2, size_t n3){return Cube(n1,n2,n3);});\
+	m.def("Cube", [](size_t n1, size_t n2, size_t n3, size_t i0, size_t i1, size_t j0, size_t j1, size_t k0, size_t k1){return Cube(n1, n2, n3, i0, i1, j0, j1, k0, k1);});
+
 }

@@ -158,6 +158,7 @@ m.def("InducedMap",\
 .def("complex", &Filtration<T, CpxT>::complex)\
 .def("maxdim", &Filtration<T, CpxT>::maxdim)\
 .def("ncells", &Filtration<T, CpxT>::ncells)\
+.def("sublevelset", &Filtration<T, CpxT>::sublevelset)\
 .def("vals", py::overload_cast<size_t>(&Filtration<T, CpxT>::vals, py::const_))\
 .def("all_vals", py::overload_cast<>(&Filtration<T, CpxT>::vals, py::const_))
 
@@ -169,8 +170,13 @@ m.def("InducedMap",\
 .def("complex", &zigzag::ZigzagFiltration<CpxT, T>::complex)\
 .def("maxdim", &zigzag::ZigzagFiltration<CpxT, T>::maxdim)\
 .def("ncells", &zigzag::ZigzagFiltration<CpxT, T>::ncells)\
+.def("levelset", &zigzag::ZigzagFiltration<CpxT, T>::levelset)\
 .def("vals", [](zigzag::ZigzagFiltration<CpxT, T>& F){ return F.vals(); })\
-.def("vals", [](zigzag::ZigzagFiltration<CpxT, T>& F, size_t k){ return F.vals(k); })
+.def("vals", [](zigzag::ZigzagFiltration<CpxT, T>& F, size_t k){ return F.vals(k); });\
+m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<CpxT, T>& F, size_t maxdim, F2){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), standard_reduction_flag()); });\
+m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<CpxT, T>& F, size_t maxdim, F2, extra_reduction_flag){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), extra_reduction_flag()); });\
+m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, T t1){return zigzag_levelsets(X, eps, t0, t1);});
+
 
 #define FilteredChainComplexInterface(T, MT, name) py::class_<FilteredChainComplex<T, MT>>(m, name)\
 .def(py::init<>())\
@@ -339,7 +345,7 @@ m.def("InducedMap",\
 	.def("add_recursive", [](T& X, std::vector<size_t>& s){return X.add_recursive(s);}, "add simplex and missing faces")\
 	.def("find_idx", [](const T& X, const std::vector<size_t>& s){return X.find_idx(s);})\
 	.def("boundary", &T::boundary_csc)\
-	.def("get_simplex", &T::get_simplex)\
+	.def("get_simplex", [](T& X, size_t dim, size_t i){return X.get_simplex(dim, i);})\
 	.def("get_simplices", py::overload_cast<const size_t>(&T::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")\
 	.def("get_simplices", py::overload_cast<>(&T::get_simplices, py::const_), "Returns a list of all simplices.");
 
@@ -420,14 +426,18 @@ PYBIND11_MODULE(libbats, m) {
 	.def(py::init<size_t>());
 
 	// Zigzag barcodes
-	ZigzagComplexInterface(double, SimplicialComplex, "ZigzagSimplicialComplex");
+	ZigzagComplexInterface(double, CubicalComplex, "ZigzagCubicalComplex")
+	ZigzagComplexInterface(double, SimplicialComplex, "ZigzagSimplicialComplex")
 	m.def("extend_zigzag_filtration", [](std::vector<double>& f0, SimplicialComplex& X, double eps){return zigzag::extend_zigzag_filtration(f0, X, eps); });
-	m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<SimplicialComplex, double>& F, size_t maxdim, F2){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), standard_reduction_flag()); });
-	m.def("ZigzagBarcode", [](zigzag::ZigzagFiltration<SimplicialComplex, double>& F, size_t maxdim, F2, extra_reduction_flag){return zigzag::barcode(F, maxdim, F2(), no_optimization_flag(), extra_reduction_flag()); });
+	m.def("zigzag_toplex", [](std::vector<std::vector<std::vector<double>>>& img){return zigzag_toplex(img);});
+
 
     py::class_<CellularMap>(m, "CellularMap")
         .def(py::init<>())
         .def(py::init<size_t>())
+		.def(py::init<SimplicialComplex, SimplicialComplex>())
+		.def(py::init<DefaultLightSimplicialComplex, DefaultLightSimplicialComplex>())
+		.def(py::init<CubicalComplex, CubicalComplex>())
         .def("__getitem__", py::overload_cast<size_t>(&CellularMap::operator[], py::const_))\
         .def("__setitem__", [](CellularMap &M, size_t k, ColumnMatrix<VInt> &A){return M[k] = A;} );
 	m.def("IdentityMap", (CellularMap (*)(const SimplicialComplex &))(&CellularMap::identity));

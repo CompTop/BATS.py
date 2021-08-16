@@ -111,6 +111,12 @@ Overloaded function.
 
 2. __init__(self: bats.libbats.CellularMap, arg0: int) -> None
 
+3. __init__(self: bats.libbats.CellularMap, arg0: bats.libbats.SimplicialComplex, arg1: bats.libbats.SimplicialComplex) -> None
+
+4. __init__(self: bats.libbats.CellularMap, arg0: bats.libbats.LightSimplicialComplex, arg1: bats.libbats.LightSimplicialComplex) -> None
+
+5. __init__(self: bats.libbats.CellularMap, arg0: bats.libbats.CubicalComplex, arg1: bats.libbats.CubicalComplex) -> None
+
 ## Chain
 Chain(*args, **kwargs)
 Overloaded function.
@@ -150,6 +156,14 @@ Overloaded function.
 17. Chain(arg0: bats.libbats.CubicalComplex, arg1: bats.libbats.F3) -> bats.libbats.F3ChainComplex
 
 18. Chain(arg0: bats.libbats.CellComplex, arg1: bats.libbats.F3) -> bats.libbats.F3ChainComplex
+
+## ChainFunctor
+ChainFunctor(*args, **kwargs)
+Overloaded function.
+
+1. ChainFunctor(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F2) -> bats.diagram.F2ChainDiagram
+
+2. ChainFunctor(arg0: bats.diagram.SimplicialComplexDiagram, arg1: bats.libbats.F3) -> bats.diagram.F3ChainDiagram
 
 ## CosineDist
 ### __init__
@@ -193,6 +207,16 @@ set_edge(self: bats.diagram.CoverDiagram, arg0: int, arg1: int, arg2: int, arg3:
 
 ### set_node
 set_node(self: bats.diagram.CoverDiagram, arg0: int, arg1: List[Set[int]]) -> None
+
+## Cube
+Cube(*args, **kwargs)
+Overloaded function.
+
+1. Cube(arg0: int, arg1: int) -> bats.libbats.CubicalComplex
+
+2. Cube(arg0: int, arg1: int, arg2: int) -> bats.libbats.CubicalComplex
+
+3. Cube(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: int) -> bats.libbats.CubicalComplex
 
 ## CubicalComplex
 ### __init__
@@ -565,6 +589,117 @@ Overloaded function.
 
 relative chain map
 
+## F2DGHomDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.F2DGHomDiagram) -> None
+
+2. __init__(self: bats.diagram.F2DGHomDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.F2DGHomDiagram, arg0: int, arg1: int, arg2: bats.libbats.F2Mat) -> int
+
+### add_node
+add_node(self: bats.diagram.F2DGHomDiagram, arg0: bats.libbats.ReducedF2DGVectorSpace) -> int
+
+### edge_data
+edge_data(self: bats.diagram.F2DGHomDiagram, arg0: int) -> bats.libbats.F2Mat
+
+### edge_source
+edge_source(self: bats.diagram.F2DGHomDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.F2DGHomDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.F2DGHomDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.F2DGHomDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.F2DGHomDiagram, arg0: int) -> bats.libbats.ReducedF2DGVectorSpace
+
+### set_edge
+set_edge(self: bats.diagram.F2DGHomDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.F2Mat) -> None
+
+### set_node
+set_node(self: bats.diagram.F2DGHomDiagram, arg0: int, arg1: bats.libbats.ReducedF2DGVectorSpace) -> None
+
+## F2DGLinearDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.F2DGLinearDiagram) -> None
+
+2. __init__(self: bats.diagram.F2DGLinearDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.F2DGLinearDiagram, arg0: int, arg1: int, arg2: bats.libbats.F2DGLinearMap) -> int
+
+### add_node
+add_node(self: bats.diagram.F2DGLinearDiagram, arg0: bats.libbats.F2DGVectorSpace) -> int
+
+### edge_data
+edge_data(self: bats.diagram.F2DGLinearDiagram, arg0: int) -> bats.libbats.F2DGLinearMap
+
+### edge_source
+edge_source(self: bats.diagram.F2DGLinearDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.F2DGLinearDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.F2DGLinearDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.F2DGLinearDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.F2DGLinearDiagram, arg0: int) -> bats.libbats.F2DGVectorSpace
+
+### set_edge
+set_edge(self: bats.diagram.F2DGLinearDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.F2DGLinearMap) -> None
+
+### set_node
+set_node(self: bats.diagram.F2DGLinearDiagram, arg0: int, arg1: bats.libbats.F2DGVectorSpace) -> None
+
+## F2DGLinearFunctor
+F2DGLinearFunctor(*args, **kwargs)
+Overloaded function.
+
+1. F2DGLinearFunctor(arg0: bats.diagram.SimplicialComplexDiagram, arg1: int) -> bats.diagram.F2DGLinearDiagram
+
+2. F2DGLinearFunctor(arg0: bats.diagram.SimplicialComplexDiagram, arg1: int) -> bats.diagram.F2DGLinearDiagram
+
+## F2DGLinearMap
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.F2DGLinearMap) -> None
+
+2. __init__(self: bats.libbats.F2DGLinearMap, arg0: bats.libbats.CellularMap) -> None
+
+## F2DGVectorSpace
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.F2DGVectorSpace) -> None
+
+2. __init__(self: bats.libbats.F2DGVectorSpace, arg0: bats.libbats.SimplicialComplex, arg1: int) -> None
+
+3. __init__(self: bats.libbats.F2DGVectorSpace, arg0: bats.libbats.LightSimplicialComplex, arg1: int) -> None
+
+4. __init__(self: bats.libbats.F2DGVectorSpace, arg0: bats.libbats.CubicalComplex, arg1: int) -> None
+
+### maxdim
+maxdim(self: bats.libbats.F2DGVectorSpace) -> int
+
 ## F2HomDiagram
 ### __init__
 __init__(*args, **kwargs)
@@ -796,6 +931,109 @@ Overloaded function.
 
 relative chain map
 
+## F3DGHomDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.F3DGHomDiagram) -> None
+
+2. __init__(self: bats.diagram.F3DGHomDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.F3DGHomDiagram, arg0: int, arg1: int, arg2: bats.libbats.F3Mat) -> int
+
+### add_node
+add_node(self: bats.diagram.F3DGHomDiagram, arg0: bats.libbats.ReducedF3DGVectorSpace) -> int
+
+### edge_data
+edge_data(self: bats.diagram.F3DGHomDiagram, arg0: int) -> bats.libbats.F3Mat
+
+### edge_source
+edge_source(self: bats.diagram.F3DGHomDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.F3DGHomDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.F3DGHomDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.F3DGHomDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.F3DGHomDiagram, arg0: int) -> bats.libbats.ReducedF3DGVectorSpace
+
+### set_edge
+set_edge(self: bats.diagram.F3DGHomDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.F3Mat) -> None
+
+### set_node
+set_node(self: bats.diagram.F3DGHomDiagram, arg0: int, arg1: bats.libbats.ReducedF3DGVectorSpace) -> None
+
+## F3DGLinearDiagram
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.diagram.F3DGLinearDiagram) -> None
+
+2. __init__(self: bats.diagram.F3DGLinearDiagram, arg0: int, arg1: int) -> None
+
+### add_edge
+add_edge(self: bats.diagram.F3DGLinearDiagram, arg0: int, arg1: int, arg2: bats.libbats.F3DGLinearMap) -> int
+
+### add_node
+add_node(self: bats.diagram.F3DGLinearDiagram, arg0: bats.libbats.F3DGVectorSpace) -> int
+
+### edge_data
+edge_data(self: bats.diagram.F3DGLinearDiagram, arg0: int) -> bats.libbats.F3DGLinearMap
+
+### edge_source
+edge_source(self: bats.diagram.F3DGLinearDiagram, arg0: int) -> int
+
+### edge_target
+edge_target(self: bats.diagram.F3DGLinearDiagram, arg0: int) -> int
+
+### nedge
+nedge(self: bats.diagram.F3DGLinearDiagram) -> int
+
+### nnode
+nnode(self: bats.diagram.F3DGLinearDiagram) -> int
+
+### node_data
+node_data(self: bats.diagram.F3DGLinearDiagram, arg0: int) -> bats.libbats.F3DGVectorSpace
+
+### set_edge
+set_edge(self: bats.diagram.F3DGLinearDiagram, arg0: int, arg1: int, arg2: int, arg3: bats.libbats.F3DGLinearMap) -> None
+
+### set_node
+set_node(self: bats.diagram.F3DGLinearDiagram, arg0: int, arg1: bats.libbats.F3DGVectorSpace) -> None
+
+## F3DGLinearMap
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.F3DGLinearMap) -> None
+
+2. __init__(self: bats.libbats.F3DGLinearMap, arg0: bats.libbats.CellularMap) -> None
+
+## F3DGVectorSpace
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.F3DGVectorSpace) -> None
+
+2. __init__(self: bats.libbats.F3DGVectorSpace, arg0: bats.libbats.SimplicialComplex, arg1: int) -> None
+
+3. __init__(self: bats.libbats.F3DGVectorSpace, arg0: bats.libbats.LightSimplicialComplex, arg1: int) -> None
+
+4. __init__(self: bats.libbats.F3DGVectorSpace, arg0: bats.libbats.CubicalComplex, arg1: int) -> None
+
+### maxdim
+maxdim(self: bats.libbats.F3DGVectorSpace) -> int
+
 ## F3HomDiagram
 ### __init__
 __init__(*args, **kwargs)
@@ -1014,6 +1252,9 @@ maxdim(self: bats.libbats.FilteredCubicalComplex) -> int
 ### ncells
 ncells(self: bats.libbats.FilteredCubicalComplex, arg0: int) -> int
 
+### sublevelset
+sublevelset(self: bats.libbats.FilteredCubicalComplex, arg0: float) -> bats.libbats.CubicalComplex
+
 ### vals
 vals(self: bats.libbats.FilteredCubicalComplex, arg0: int) -> List[float]
 
@@ -1173,6 +1414,9 @@ maxdim(self: bats.libbats.FilteredLightSimplicialComplex) -> int
 ### ncells
 ncells(self: bats.libbats.FilteredLightSimplicialComplex, arg0: int) -> int
 
+### sublevelset
+sublevelset(self: bats.libbats.FilteredLightSimplicialComplex, arg0: float) -> bats.libbats.LightSimplicialComplex
+
 ### vals
 vals(self: bats.libbats.FilteredLightSimplicialComplex, arg0: int) -> List[float]
 
@@ -1243,8 +1487,23 @@ maxdim(self: bats.libbats.FilteredSimplicialComplex) -> int
 ### ncells
 ncells(self: bats.libbats.FilteredSimplicialComplex, arg0: int) -> int
 
+### sublevelset
+sublevelset(self: bats.libbats.FilteredSimplicialComplex, arg0: float) -> bats.libbats.SimplicialComplex
+
 ### vals
 vals(self: bats.libbats.FilteredSimplicialComplex, arg0: int) -> List[float]
+
+## Freudenthal
+Freudenthal(*args, **kwargs)
+Overloaded function.
+
+1. Freudenthal(arg0: int, arg1: int) -> bats.libbats.SimplicialComplex
+
+2. Freudenthal(arg0: int, arg1: int, arg2: int) -> bats.libbats.SimplicialComplex
+
+3. Freudenthal(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: int) -> bats.libbats.SimplicialComplex
+
+4. Freudenthal(arg0: bats.libbats.CubicalComplex, arg1: int, arg2: int, arg3: int) -> bats.libbats.SimplicialComplex
 
 ## Hom
 Hom(*args, **kwargs)
@@ -1252,7 +1511,11 @@ Overloaded function.
 
 1. Hom(arg0: bats.diagram.F2ChainDiagram, arg1: int) -> bats.diagram.F2HomDiagram
 
-2. Hom(arg0: bats.diagram.F3ChainDiagram, arg1: int) -> bats.diagram.F3HomDiagram
+2. Hom(arg0: bats.diagram.F2DGLinearDiagram, arg1: int) -> bats.diagram.F2DGHomDiagram
+
+3. Hom(arg0: bats.diagram.F3ChainDiagram, arg1: int) -> bats.diagram.F3HomDiagram
+
+4. Hom(arg0: bats.diagram.F3DGLinearDiagram, arg1: int) -> bats.diagram.F3DGHomDiagram
 
 ## Identity
 Identity(*args, **kwargs)
@@ -1277,7 +1540,15 @@ Overloaded function.
 
 Induced map on homology.
 
-2. InducedMap(arg0: bats.libbats.F3ChainMap, arg1: bats.libbats.ReducedF3ChainComplex, arg2: bats.libbats.ReducedF3ChainComplex, arg3: int) -> bats.libbats.F3Mat
+2. InducedMap(arg0: bats.libbats.F2DGLinearMap, arg1: bats.libbats.ReducedF2DGVectorSpace, arg2: bats.libbats.ReducedF2DGVectorSpace, arg3: int) -> bats.libbats.F2Mat
+
+Induced map on homology.
+
+3. InducedMap(arg0: bats.libbats.F3ChainMap, arg1: bats.libbats.ReducedF3ChainComplex, arg2: bats.libbats.ReducedF3ChainComplex, arg3: int) -> bats.libbats.F3Mat
+
+Induced map on homology.
+
+4. InducedMap(arg0: bats.libbats.F3DGLinearMap, arg1: bats.libbats.ReducedF3DGVectorSpace, arg2: bats.libbats.ReducedF3DGVectorSpace, arg3: int) -> bats.libbats.F3Mat
 
 Induced map on homology.
 
@@ -1428,6 +1699,18 @@ L, E_L commutation
 3. L_EL_commute(arg0: bats.libbats.RationalMat, arg1: bats.libbats.RationalMat) -> bats.libbats.RationalMat
 
 L, E_L commutation
+
+## LightFreudenthal
+LightFreudenthal(*args, **kwargs)
+Overloaded function.
+
+1. LightFreudenthal(arg0: int, arg1: int) -> bats.libbats.LightSimplicialComplex
+
+2. LightFreudenthal(arg0: int, arg1: int, arg2: int) -> bats.libbats.LightSimplicialComplex
+
+3. LightFreudenthal(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: int) -> bats.libbats.LightSimplicialComplex
+
+4. LightFreudenthal(arg0: bats.libbats.CubicalComplex, arg1: int, arg2: int, arg3: int) -> bats.libbats.LightSimplicialComplex
 
 ## LightRipsComplex
 LightRipsComplex(arg0: A<Dense<double, RowMaj> >, arg1: float, arg2: int) -> bats.libbats.LightSimplicialComplex
@@ -1588,6 +1871,38 @@ Nerve(arg0: List[Set[int]], arg1: int) -> bats.libbats.SimplicialComplex
 
 ## NerveDiagram
 NerveDiagram(arg0: bats.diagram.CoverDiagram, arg1: int) -> bats.diagram.SimplicialComplexDiagram
+
+## OscillatingRipsZigzagSets
+OscillatingRipsZigzagSets(*args, **kwargs)
+Overloaded function.
+
+1. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.Euclidean, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+2. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.L1Dist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+3. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.LInfDist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+4. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.CosineDist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+5. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.RPCosineDist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+6. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.AngleDist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
+
+7. OscillatingRipsZigzagSets(arg0: bats::DataSet<double>, arg1: bats.topology.RPAngleDist, arg2: float, arg3: float) -> Tuple[bats::Diagram<std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >, std::vector<unsigned long, std::allocator<unsigned long> > >, List[float]]
+
+SetDiagram for Oscillating Rips Zigzag constrution.
 
 ## PLEU
 PLEU(*args, **kwargs)
@@ -1933,6 +2248,21 @@ Overloaded function.
 
 2. to_hom_basis(self: bats.libbats.ReducedF2ChainComplex, arg0: bats.libbats.F2Vector, arg1: int) -> bats.libbats.F2Vector
 
+## ReducedF2DGVectorSpace
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.ReducedF2DGVectorSpace) -> None
+
+2. __init__(self: bats.libbats.ReducedF2DGVectorSpace, arg0: bats.libbats.F2DGVectorSpace) -> None
+
+### hdim
+hdim(self: bats.libbats.ReducedF2DGVectorSpace, arg0: int) -> int
+
+### maxdim
+maxdim(self: bats.libbats.ReducedF2DGVectorSpace) -> int
+
 ## ReducedF3ChainComplex
 ### R
 R(self: bats.libbats.ReducedF3ChainComplex, arg0: int) -> bats.libbats.F3Mat
@@ -2002,6 +2332,21 @@ Overloaded function.
 1. to_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Mat, arg1: int) -> bats.libbats.F3Mat
 
 2. to_hom_basis(self: bats.libbats.ReducedF3ChainComplex, arg0: bats.libbats.F3Vector, arg1: int) -> bats.libbats.F3Vector
+
+## ReducedF3DGVectorSpace
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.ReducedF3DGVectorSpace) -> None
+
+2. __init__(self: bats.libbats.ReducedF3DGVectorSpace, arg0: bats.libbats.F3DGVectorSpace) -> None
+
+### hdim
+hdim(self: bats.libbats.ReducedF3DGVectorSpace, arg0: int) -> int
+
+### maxdim
+maxdim(self: bats.libbats.ReducedF3DGVectorSpace) -> int
 
 ## ReducedF5ChainComplex
 ### R
@@ -2863,9 +3208,48 @@ WitnessFiltration(arg0: bats::DataSet<double>, arg1: bats::DataSet<double>, arg2
 ZigzagBarcode(*args, **kwargs)
 Overloaded function.
 
-1. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2) -> List[List[bats::zigzag::ZigzagPair<double>]]
+1. ZigzagBarcode(arg0: bats.libbats.ZigzagCubicalComplex, arg1: int, arg2: bats.libbats.F2) -> List[List[bats::zigzag::ZigzagPair<double>]]
 
-2. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2, arg3: bats::extra_reduction_flag) -> List[List[bats::zigzag::ZigzagPair<double>]]
+2. ZigzagBarcode(arg0: bats.libbats.ZigzagCubicalComplex, arg1: int, arg2: bats.libbats.F2, arg3: bats::extra_reduction_flag) -> List[List[bats::zigzag::ZigzagPair<double>]]
+
+3. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2) -> List[List[bats::zigzag::ZigzagPair<double>]]
+
+4. ZigzagBarcode(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: int, arg2: bats.libbats.F2, arg3: bats::extra_reduction_flag) -> List[List[bats::zigzag::ZigzagPair<double>]]
+
+## ZigzagCubicalComplex
+### __init__
+__init__(*args, **kwargs)
+Overloaded function.
+
+1. __init__(self: bats.libbats.ZigzagCubicalComplex) -> None
+
+2. __init__(self: bats.libbats.ZigzagCubicalComplex, arg0: bats.libbats.CubicalComplex, arg1: List[List[List[Tuple[float, float]]]]) -> None
+
+### add
+add(self: bats.libbats.ZigzagCubicalComplex, arg0: float, arg1: float, arg2: List[int]) -> bats.libbats.cell_ind
+
+### add_recursive
+add_recursive(self: bats.libbats.ZigzagCubicalComplex, arg0: float, arg1: float, arg2: List[int]) -> List[bats.libbats.cell_ind]
+
+### complex
+complex(self: bats.libbats.ZigzagCubicalComplex) -> bats.libbats.CubicalComplex
+
+### levelset
+levelset(self: bats.libbats.ZigzagCubicalComplex, arg0: float, arg1: float) -> bats.libbats.CubicalComplex
+
+### maxdim
+maxdim(self: bats.libbats.ZigzagCubicalComplex) -> int
+
+### ncells
+ncells(self: bats.libbats.ZigzagCubicalComplex, arg0: int) -> int
+
+### vals
+vals(*args, **kwargs)
+Overloaded function.
+
+1. vals(self: bats.libbats.ZigzagCubicalComplex) -> List[List[List[Tuple[float, float]]]]
+
+2. vals(self: bats.libbats.ZigzagCubicalComplex, arg0: int) -> List[List[Tuple[float, float]]]
 
 ## ZigzagPair
 ### __init__
@@ -2915,6 +3299,9 @@ add_recursive(self: bats.libbats.ZigzagSimplicialComplex, arg0: float, arg1: flo
 ### complex
 complex(self: bats.libbats.ZigzagSimplicialComplex) -> bats.libbats.SimplicialComplex
 
+### levelset
+levelset(self: bats.libbats.ZigzagSimplicialComplex, arg0: float, arg1: float) -> bats.libbats.SimplicialComplex
+
 ### maxdim
 maxdim(self: bats.libbats.ZigzagSimplicialComplex) -> int
 
@@ -2953,15 +3340,47 @@ Overloaded function.
 
 1. barcode(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
 
-2. barcode(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+2. barcode(arg0: bats.diagram.F2DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
 
-## barcode_sparse
-barcode_sparse(*args, **kwargs)
+3. barcode(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+4. barcode(arg0: bats.diagram.F3DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+## barcode_dq
+barcode_dq(*args, **kwargs)
 Overloaded function.
 
-1. barcode_sparse(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+1. barcode_dq(arg0: bats.diagram.F2DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
 
-2. barcode_sparse(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+2. barcode_dq(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+3. barcode_dq(arg0: bats.diagram.F3DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+4. barcode_dq(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+## barcode_leftward
+barcode_leftward(*args, **kwargs)
+Overloaded function.
+
+1. barcode_leftward(arg0: bats.diagram.F2DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+2. barcode_leftward(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+3. barcode_leftward(arg0: bats.diagram.F3DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+4. barcode_leftward(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+## barcode_rightward
+barcode_rightward(*args, **kwargs)
+Overloaded function.
+
+1. barcode_rightward(arg0: bats.diagram.F2DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+2. barcode_rightward(arg0: bats.diagram.F2HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+3. barcode_rightward(arg0: bats.diagram.F3DGHomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
+
+4. barcode_rightward(arg0: bats.diagram.F3HomDiagram, arg1: int) -> List[bats.libbats.PersistencePair_int]
 
 ## bivariate_cover
 bivariate_cover(arg0: List[Set[int]], arg1: List[Set[int]]) -> Tuple[List[Set[int]], List[int], List[int]]
@@ -3768,3 +4187,14 @@ __init__(self: bats.libbats.standard_reduction_flag) -> None
 
 ## topology
 ## visualization
+## zigzag_levelsets
+zigzag_levelsets(*args, **kwargs)
+Overloaded function.
+
+1. zigzag_levelsets(arg0: bats.libbats.ZigzagCubicalComplex, arg1: float, arg2: float, arg3: float) -> bats::Diagram<bats::CubicalComplex, bats::CellularMap>
+
+2. zigzag_levelsets(arg0: bats.libbats.ZigzagSimplicialComplex, arg1: float, arg2: float, arg3: float) -> bats::Diagram<bats::SimplicialComplex, bats::CellularMap>
+
+## zigzag_toplex
+zigzag_toplex(arg0: List[List[List[float]]]) -> bats.libbats.ZigzagCubicalComplex
+
