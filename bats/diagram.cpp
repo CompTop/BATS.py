@@ -44,12 +44,16 @@ m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, size_t k) {retu
 m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
 m.def("barcode", [](const Diagram<ReducedChainComplex<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
 m.def("barcode", [](const Diagram<ReducedDGVectorSpace<MT>, MT>& D, size_t hdim){return barcode(D, hdim); });\
+m.def("barcode", [](const Diagram<size_t, MT>& D, size_t hdim){return barcode(D, hdim); });\
 m.def("barcode_leftward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_leftright));\
 m.def("barcode_leftward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_leftright));\
+m.def("barcode_leftward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<size_t, MT>&, size_t))(&barcode_sparse_leftright));\
 m.def("barcode_rightward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_rightleft));\
 m.def("barcode_rightward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_rightleft));\
+m.def("barcode_rightward", (std::vector<PersistencePair<size_t>> (*)(const Diagram<size_t, MT>&, size_t))(&barcode_sparse_rightleft));\
 m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedDGVectorSpace<MT>, MT>&, size_t))(&barcode_sparse_divide_conquer));\
-m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_divide_conquer));
+m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<ReducedChainComplex<MT>, MT>&, size_t))(&barcode_sparse_divide_conquer));\
+m.def("barcode_dq", (std::vector<PersistencePair<size_t>> (*)(const Diagram<size_t, MT>&, size_t))(&barcode_sparse_divide_conquer));
 
 
 PYBIND11_MODULE(diagram, m) {
@@ -67,6 +71,8 @@ PYBIND11_MODULE(diagram, m) {
 	DiagramInterface(F3DGVectorSpace, F3DGLinearMap, "F3DGLinearDiagram")
 	DiagramInterface(ReducedF2DGVectorSpace, M2, "F2DGHomDiagram")
 	DiagramInterface(ReducedF3DGVectorSpace, M3, "F3DGHomDiagram")
+	DiagramInterface(size_t, M2, "F2Diagram")
+	DiagramInterface(size_t, M3, "F3Diagram")
 
 	// NerveFunctor
     m.def("NerveDiagram", py::overload_cast<const CoverDiagram&, const size_t>(&Nerve));
@@ -96,5 +102,7 @@ PYBIND11_MODULE(diagram, m) {
 
 	HomFunctorInterface(M2, "Hom")
 	HomFunctorInterface(M3, "Hom")
+
+	m.def("RipsHom", [](SetDiagram& D, DataSet<double>& X, Euclidean& M, std::vector<double>& rmax, size_t hdim, F2) {return RipsHom(D, X, M, rmax, hdim, F2()); });
 
 }
