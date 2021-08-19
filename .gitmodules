@@ -4,5 +4,5 @@
 	branch = master
 [submodule "BATS_include"]
 	path = BATS_include
-	url = https://github.com/bnels/BATS.git
+	url = https://github.com/CompTop/BATS.git
 	branch = master
