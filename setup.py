@@ -14,7 +14,7 @@ this_dir + '/pybind11/include/'
 ]
 extra = {'cxx': ['-std=c++17', '-fopenmp']} # '-fopenmp'
 
-__version__ = '0.0.0'
+__version__ = '0.0.1'
 
 
 ext_modules = [
