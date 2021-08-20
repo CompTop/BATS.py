@@ -1,3 +1,5 @@
+# Installation
+
 ## Setup
 
 ```bash
