@@ -1,0 +1,4 @@
+recursive-include pybind11/include *.h
+recursive-include BATS_include/include *.hpp
+recursive-exclude BATS *.cpp
+recursive-include bats *.hpp *.cpp *.py
