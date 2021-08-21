@@ -6,3 +6,4 @@ __pycache__
 dist
 files.txt
 ipynb
+.DS_Store
