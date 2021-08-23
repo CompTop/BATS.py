@@ -3,10 +3,19 @@ on: [push, pull_request]
 jobs:
   install-and-test:
     runs-on: macos-latest
+
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
       - run: brew install libomp
       - name: Install bats
         run: |
