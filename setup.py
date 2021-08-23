@@ -3,6 +3,7 @@ import setuptools
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys, os
+import distutils
 
 # from pybind11.setup_helpers import Pybind11Extension, build_ext
 
@@ -12,7 +13,23 @@ include_dirs = [
 this_dir + '/BATS_include/include/',
 this_dir + '/pybind11/include/'
 ]
-extra = {'cxx': ['-std=c++17', '-fopenmp']} # '-fopenmp'
+
+print('default compiler:', distutils.ccompiler.get_default_compiler())
+
+try:
+    if os.environ['CC'] == "clang":
+        clang = True
+except KeyError:
+    clang = False
+
+if clang or distutils.ccompiler.get_default_compiler() == 'clang':
+    # We're using clang
+    extra = {'cxx': ['-std=c++17']} # '-fopenmp'
+    extra_link = ['-lomp']
+else:
+    # assume we're using gcc
+    extra = {'cxx': ['-std=c++17', '-fopenmp']} # '-fopenmp'
+    extra_link = ['-lgomp']
 
 __version__ = '0.0.1'
 
@@ -23,7 +40,7 @@ ext_modules = [
         ['bats/libbats.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
-        extra_link_args=["-lgomp"],
+        extra_link_args=extra_link,
         language='c++'
     ),
     Extension(
@@ -31,7 +48,7 @@ ext_modules = [
         ['bats/topology.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
-        extra_link_args=["-lgomp"],
+        extra_link_args=extra_link,
         language='c++'
     ),
     Extension(
@@ -39,7 +56,7 @@ ext_modules = [
         ['bats/dense.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
-        extra_link_args=["-lgomp"],
+        extra_link_args=extra_link,
         language='c++'
     ),
     Extension(
@@ -47,7 +64,7 @@ ext_modules = [
         ['bats/diagram.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
-        extra_link_args=["-lgomp"],
+        extra_link_args=extra_link,
         language='c++'
     ),
 ]

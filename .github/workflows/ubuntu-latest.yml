@@ -1,0 +1,18 @@
+name: ubuntu-latest
+on: [push, pull_request]
+jobs:
+  run-all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: egor-tensin/setup-gcc@v1
+      - name: Install bats
+        run: |
+          python setup.py install
+      - name: run tests
+        run: |
+          cd test
+          python -m unittest simplicial.py
+          python -m unittest cubical.py

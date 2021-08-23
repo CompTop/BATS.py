@@ -1,0 +1,18 @@
+name: macos-latest
+on: [push, pull_request]
+jobs:
+  install-and-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: brew install libomp
+      - name: Install bats
+        run: |
+          CC=clang python setup.py install
+      - name: run tests
+        run: |
+          cd test
+          python -m unittest simplicial.py
+          python -m unittest cubical.py
