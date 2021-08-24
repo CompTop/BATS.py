@@ -1,10 +1,13 @@
 # BATS.py
 
-[![PyPi](https://img.shields.io/pypi/v/bats-tda.svg)](https://pypi.org/project/bats-tda/)
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/bats-tda.svg)](https://pypi.org/project/bats-tda/)
+[![PyPi](https://img.shields.io/pypi/v/bats-tda.svg)](https://pypi.org/project/bats-tda/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 [![Ubuntu Tests](https://github.com/CompTop/BATS.py/workflows/ubuntu-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
 [![MacOS Tests](https://github.com/CompTop/BATS.py/workflows/macos-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/bats-tda/badge/?version=latest)](https://bats-tda.readthedocs.io/en/latest/?badge=latest)
+
 
 Python bindings for the [Basic Applied Topology Subprograms (BATS) library](https://github.com/CompTop/BATS).
 This includes:
@@ -17,7 +20,7 @@ This includes:
 
 Note that the C++ repository is the main library, and contains more features.  This repository provides bindings for a subset of the functionality of BATS, and is under active development.
 
-Documentation, examples, and tutorials can be found at [comptop.github.io/BATS.py](https://comptop.github.io/BATS.py/#/)
+Documentation, examples, and tutorials can be found at [bats-tda.readthedocs.io](https://bats-tda.readthedocs.io/en/latest/)
 
 Once installed, you can import the `bats` namespace:
 ```python

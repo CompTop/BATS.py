@@ -352,17 +352,13 @@ PYBIND11_MODULE(libbats, m) {
 
 
     FieldInterface(F3, "F3")
-    FieldInterface(F5, "F5")
-    FieldInterface(FQ, "Rational")
 
     SparseVectorInterface(int, "IntVector")
     SparseVectorInterface(F3, "F3Vector")
-    SparseVectorInterface(FQ, "RationalVector")
 
     ColumnMatrixInterface(VInt, "IntMat")
 	m.def("Mat", [](const CSCMatrix<int, size_t> &A) { return ColumnMatrix<VInt>(A); });
     ColumnMatrixInterfaceField(V3, "F3Mat")
-    ColumnMatrixInterfaceField(VQ, "RationalMat")
 
     py::class_<CSCMatrix<int, size_t>>(m, "CSCMatrix")
         .def(py::init<>())
@@ -373,12 +369,8 @@ PYBIND11_MODULE(libbats, m) {
         .def("print", py::overload_cast<>(&CSCMatrix<int, size_t>::print, py::const_));
 
     ChainComplexInterface(M3, "F3ChainComplex")
-    ChainComplexInterface(M5, "F5ChainComplex")
-    ChainComplexInterface(MQ, "RationalChainComplex")
 
     ChainMapInterface(m, M3, "F3ChainMap")
-    ChainMapInterface(m, M5, "F5ChainMap")
-    ChainMapInterface(m, MQ, "RationalChainMap")
 
 	FlagInterface(bats::no_optimization_flag, "no_optimization_flag")
 	FlagInterface(bats::clearing_flag, "clearing_flag")
@@ -388,8 +380,6 @@ PYBIND11_MODULE(libbats, m) {
 	FlagInterface(bats::compute_basis_flag, "compute_basis_flag")
 
     ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
-    ReducedChainComplexInterface(M5, "ReducedF5ChainComplex")
-    ReducedChainComplexInterface(MQ, "ReducedRationalChainComplex")
 
 	DGVectorSpaceInterface(M3, "F3DGVectorSpace")
 	DGLinearMapInterface(m, M3, "F3DGLinearMap")
@@ -398,24 +388,15 @@ PYBIND11_MODULE(libbats, m) {
 	InducedMapInterface(m, M3)
 
     AutoReducedChainComplexInterface(F3)
-    AutoReducedChainComplexInterface(F5)
-    AutoReducedChainComplexInterface(FQ)
 
     FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
-    FilteredChainComplexInterface(double, M5, "FilteredF5ChainComplex")
-    FilteredChainComplexInterface(double, MQ, "FilteredRationalChainComplex")
 
     ReducedFilteredChainComplexInterface(double, M3, "ReducedFilteredF3ChainComplex")
-    ReducedFilteredChainComplexInterface(double, M5, "ReducedFilteredF5ChainComplex")
-    ReducedFilteredChainComplexInterface(double, MQ, "ReducedFilteredRationalChainComplex")
 
     AutoReducedFilteredChainComplexInterface(F3)
-    AutoReducedFilteredChainComplexInterface(F5)
-    AutoReducedFilteredChainComplexInterface(FQ)
 
     PersistencePairInterface(double, "PersistencePair")
     PersistencePairInterface(size_t, "PersistencePair_int")
 	ZigzagPairInterface(double, "ZigzagPair")
-
 
 }
