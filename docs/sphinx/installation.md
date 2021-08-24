@@ -14,17 +14,21 @@ conda install ipython notebook
 
 clone repository *use recursive option for submodules*
 ```bash
-git clone --recursive git@github.com:bnels/BATS.py.git
+git clone --recurse-submodules git@github.com:CompTop/BATS.py.git
 ```
 or if you want to use `https` protocol:
 ```bash
-git clone --recursive https://github.com/bnels/BATS.py.git
+git clone --recurse-submodules https://github.com/CompTop/BATS.py.git
 ```
 
 Assuming you cloned the repository successfully, just move to the root directory of the repository and install
 ```bash
 cd BATS.py
 python setup.py install
+```
+If you want to use `clang` (for example, on a mac), try
+```bash
+CC=clang python setup.py install
 ```
 
 
