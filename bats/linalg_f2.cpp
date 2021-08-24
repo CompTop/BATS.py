@@ -244,36 +244,37 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 	.def(py::init<>());
 
 
-PYBIND11_MODULE(linalg, m) {
+PYBIND11_MODULE(linalg_f2, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
 
+	BasicFieldInterface(F2, "F2")
+        .def("__neg__", py::overload_cast<>(&F2::operator-));
 
-    SparseVectorInterface(int, "IntVector")
+    SparseVectorInterface(F2, "F2Vector")
 
-    ColumnMatrixInterface(VInt, "IntMat")
-	m.def("Mat", [](const CSCMatrix<int, size_t> &A) { return ColumnMatrix<VInt>(A); });
+	ColumnMatrixInterfaceField(V2, "F2Mat")
 
-    py::class_<CSCMatrix<int, size_t>>(m, "CSCMatrix")
-        .def(py::init<>())
-        .def(py::init<size_t, size_t, const std::vector<size_t> &, const std::vector<size_t> &, const std::vector<int> &>())
-        .def("__call__", &CSCMatrix<int, size_t>::getval)
-		.def("nrow", &CSCMatrix<int, size_t>::nrow, "number of rows.")\
-		.def("ncol", &CSCMatrix<int, size_t>::ncol, "number of columns.")\
-        .def("print", py::overload_cast<>(&CSCMatrix<int, size_t>::print, py::const_));
+	ChainComplexInterface(M2, "F2ChainComplex")
 
-	FlagInterface(bats::no_optimization_flag, "no_optimization_flag")
-	FlagInterface(bats::clearing_flag, "clearing_flag")
-	FlagInterface(bats::compression_flag, "compression_flag")
-	FlagInterface(bats::standard_reduction_flag, "standard_reduction_flag")
-	FlagInterface(bats::extra_reduction_flag, "extra_reduction_flag")
-	FlagInterface(bats::compute_basis_flag, "compute_basis_flag")
-	FlagInterface(flags::divide_conquer, "divide_conquer")
-	FlagInterface(flags::rightward, "rightward")
-	FlagInterface(flags::leftward, "leftward")
+	ChainMapInterface(m, M2, "F2ChainMap")
 
-    PersistencePairInterface(double, "PersistencePair")
-    PersistencePairInterface(size_t, "PersistencePair_int")
-	ZigzagPairInterface(double, "ZigzagPair")
+	ReducedChainComplexInterface(M2, "ReducedF2ChainComplex")
 
+	DGVectorSpaceInterface(M2, "F2DGVectorSpace")
+	DGLinearMapInterface(m, M2, "F2DGLinearMap")
+	ReducedDGVectorSpaceInterface(M2, "ReducedF2DGVectorSpace")
+
+	InducedMapInterface(m, M2)
+
+	FilteredChainComplexInterface(double, M2, "FilteredF2ChainComplex")
+
+	ReducedFilteredChainComplexInterface(double, M2, "ReducedFilteredF2ChainComplex")
+
+	DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
+	DiagramInterface(ReducedF2ChainComplex, M2, "F2HomDiagram")
+	DiagramInterface(ReducedF2ChainComplex, std::vector<M2>, "F2HomDiagramAll")
+	DiagramInterface(F2DGVectorSpace, F2DGLinearMap, "F2DGLinearDiagram")
+	DiagramInterface(ReducedF2DGVectorSpace, M2, "F2DGHomDiagram")
+	DiagramInterface(size_t, M2, "F2Diagram")
 
 }

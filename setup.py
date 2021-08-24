@@ -44,6 +44,22 @@ ext_modules = [
         language='c++'
     ),
     Extension(
+        'bats.linalg_f2',
+        ['bats/linalg_f2.cpp'],
+        include_dirs=include_dirs,
+        extra_compile_args=extra['cxx'],
+        extra_link_args=extra_link,
+        language='c++'
+    ),
+    Extension(
+        'bats.linalg_f3',
+        ['bats/linalg_f3.cpp'],
+        include_dirs=include_dirs,
+        extra_compile_args=extra['cxx'],
+        extra_link_args=extra_link,
+        language='c++'
+    ),
+    Extension(
         'bats.linalg_auto',
         ['bats/linalg_auto.cpp'],
         include_dirs=include_dirs,
