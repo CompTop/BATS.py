@@ -1,3 +1,4 @@
+from ._version import __version__
 from .topology import *
 from .dense import *
 from .linalg import *

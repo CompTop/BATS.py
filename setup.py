@@ -6,6 +6,9 @@ import sys, os
 import distutils
 
 # from pybind11.setup_helpers import Pybind11Extension, build_ext
+sys.path = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/bats'] + sys.path
+from _version import __version__
+sys.path = sys.path[1:]
 
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -30,8 +33,6 @@ else:
     # assume we're using gcc
     extra = {'cxx': ['-std=c++17', '-fopenmp']} # '-fopenmp'
     extra_link = ['-lgomp']
-
-__version__ = '0.0.1'
 
 
 ext_modules = [

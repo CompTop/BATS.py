@@ -14,6 +14,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
 
+import bats
+
 
 # -- Project information -----------------------------------------------------
 
@@ -22,8 +24,7 @@ copyright = '2021, Brad Nelson'
 author = 'Brad Nelson'
 
 # The full version, including alpha/beta/rc tags
-version = '0.0.0'
-release = '0.0.0'
+version = bats.__version__
 
 
 # -- General configuration ---------------------------------------------------
