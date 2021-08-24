@@ -97,8 +97,12 @@ setup(
         'Topic :: Scientific/Engineering :: Mathematics',
         'Programming Language :: C++',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: POSIX :: Linux'
+        'Operating System :: POSIX :: Linux',
+        'Operating System :: MacOS :: MacOS X'
     ],
     install_requires=[
         'numpy',

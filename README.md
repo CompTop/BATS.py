@@ -1,8 +1,9 @@
 # BATS.py
 
 [![PyPi](https://img.shields.io/pypi/v/bats-tda.svg)](https://pypi.org/project/bats-tda/)
-[![CI](https://github.com/CompTop/BATS.py/workflows/ubuntu-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
-[![CI](https://github.com/CompTop/BATS.py/workflows/macos-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/bats-tda.svg)](https://pypi.org/project/bats-tda/)
+[![Ubuntu Tests](https://github.com/CompTop/BATS.py/workflows/ubuntu-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
+[![MacOS Tests](https://github.com/CompTop/BATS.py/workflows/macos-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Python bindings for the [Basic Applied Topology Subprograms (BATS) library](https://github.com/CompTop/BATS).
@@ -30,3 +31,8 @@ pip install bats-tda
 ```
 
 Note that you need a C++17 compiler and OpenMP installed.  You can also build from source.
+
+If you want to use `clang` (for example, on a mac), try
+```
+CC=clang pip install bats-tda
+```
