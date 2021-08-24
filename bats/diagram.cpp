@@ -70,17 +70,12 @@ PYBIND11_MODULE(diagram, m) {
 	DiagramInterface(SimplicialComplex, CellularMap, "SimplicialComplexDiagram")
 	DiagramInterface(CubicalComplex, CellularMap, "CubicalComplexDiagram")
 	DiagramInterface(CellComplex, CellularMap, "CellComplexDiagram")
-	DiagramInterface(F2ChainComplex, F2ChainMap, "F2ChainDiagram")
+
 	DiagramInterface(F3ChainComplex, F3ChainMap, "F3ChainDiagram")
-	DiagramInterface(ReducedF2ChainComplex, M2, "F2HomDiagram")
-	DiagramInterface(ReducedF2ChainComplex, std::vector<M2>, "F2HomDiagramAll")
 	DiagramInterface(ReducedF3ChainComplex, M3, "F3HomDiagram")
 	DiagramInterface(ReducedF3ChainComplex, std::vector<M3>, "F3HomDiagramAll")
-	DiagramInterface(F2DGVectorSpace, F2DGLinearMap, "F2DGLinearDiagram")
 	DiagramInterface(F3DGVectorSpace, F3DGLinearMap, "F3DGLinearDiagram")
-	DiagramInterface(ReducedF2DGVectorSpace, M2, "F2DGHomDiagram")
 	DiagramInterface(ReducedF3DGVectorSpace, M3, "F3DGHomDiagram")
-	DiagramInterface(size_t, M2, "F2Diagram")
 	DiagramInterface(size_t, M3, "F3Diagram")
 
 	// NerveFunctor
@@ -93,29 +88,23 @@ PYBIND11_MODULE(diagram, m) {
 	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const std::vector<double>&, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 
-    ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
     ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
 
-	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")
 	DGLinearFunctorInterface(M2, CubicalComplexDiagram, "F2DGLinearFunctor")
 
-	AutoChainFunctorInterface(SimplicialComplexDiagram, F2)
+
 	AutoChainFunctorInterface(SimplicialComplexDiagram, F3)
-	AutoChainFunctorInterface(CubicalComplexDiagram, F2)
 	AutoChainFunctorInterface(CubicalComplexDiagram, F3)
-	AutoChainFunctorInterface(CellComplexDiagram, F2)
 	AutoChainFunctorInterface(CellComplexDiagram, F3)
 
-	SimpleChainFunctorInterface(m, F2)
 	SimpleChainFunctorInterface(m, F3)
 
 	FlagInterface(flags::divide_conquer, "divide_conquer")
 	FlagInterface(flags::rightward, "rightward")
 	FlagInterface(flags::leftward, "leftward")
 
-	HomFunctorInterface(M2, "Hom")
+
 	HomFunctorInterface(M3, "Hom")
 
-	m.def("RipsHom", [](SetDiagram& D, DataSet<double>& X, Euclidean& M, std::vector<double>& rmax, size_t hdim, F2) {return RipsHom(D, X, M, rmax, hdim, F2()); });
 
 }

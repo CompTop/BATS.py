@@ -44,6 +44,22 @@ ext_modules = [
         language='c++'
     ),
     Extension(
+        'bats.linalg_f2',
+        ['bats/linalg_f2.cpp'],
+        include_dirs=include_dirs,
+        extra_compile_args=extra['cxx'],
+        extra_link_args=extra_link,
+        language='c++'
+    ),
+    Extension(
+        'bats.complex',
+        ['bats/complex.cpp'],
+        include_dirs=include_dirs,
+        extra_compile_args=extra['cxx'],
+        extra_link_args=extra_link,
+        language='c++'
+    ),
+    Extension(
         'bats.topology',
         ['bats/topology.cpp'],
         include_dirs=include_dirs,
