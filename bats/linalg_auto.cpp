@@ -330,73 +330,75 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 .def("mid", &zigzag::ZigzagPair<T>::mid)\
 .def("__str__", &zigzag::ZigzagPair<T>::str);
 
-#define SimplicialCpxInterface(T, name) py::class_<T>(m, name)\
-	.def(py::init<>())\
-	.def(py::init<size_t, size_t>())\
-	.def("maxdim", &T::maxdim, "maximum dimension simplex")\
-	.def("ncells", py::overload_cast<>(&T::ncells, py::const_), "number of cells")\
-	.def("ncells", py::overload_cast<const size_t>(&T::ncells, py::const_), "number of cells in given dimension")\
-	.def("add", [](T& X, std::vector<size_t>& s){return X.add(s);}, "add simplex")\
-	.def("add_recursive", [](T& X, std::vector<size_t>& s){return X.add_recursive(s);}, "add simplex and missing faces")\
-	.def("find_idx", [](const T& X, const std::vector<size_t>& s){return X.find_idx(s);})\
-	.def("boundary", &T::boundary_csc)\
-	.def("get_simplex", [](T& X, size_t dim, size_t i){return X.get_simplex(dim, i);})\
-	.def("get_simplices", py::overload_cast<const size_t>(&T::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")\
-	.def("get_simplices", py::overload_cast<>(&T::get_simplices, py::const_), "Returns a list of all simplices.");
-
 #define FlagInterface(T, name) py::class_<T>(m, name) \
 	.def(py::init<>());
 
-PYBIND11_MODULE(libbats, m) {
+
+#define ChainFunctorInterface(MT, DT, name)\
+m.def(name, [](const DT& diag) {return ChainFunctor<MT>(diag);});\
+m.def("ChainFunctor", [](const DT& diag, typename MT::val_type) {return ChainFunctor(diag, typename MT::val_type());});
+
+#define DGLinearFunctorInterface(MT, DT, name) m.def(name, &(DGLinearFunctor<MT, DT>));
+
+#define AutoChainFunctorInterface(DT, FT) \
+m.def("Chain", (Diagram<ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>, ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>> (*)(const DT&, FT))(&__ChainFunctor)); \
+
+#define SimpleChainFunctorInterface(m, FT) \
+m.def("Chain", [](const CellularMap & A, FT) { return ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>(A); });\
+m.def("Chain", [](const CellularMap & f, const SimplicialComplex &X, const SimplicialComplex &A, const SimplicialComplex &Y, const SimplicialComplex &B, FT) { return ChainMap<ColumnMatrix<SparseVector<FT, size_t>>>(f, X, A, Y, B); });\
+m.def("Chain", [](const SimplicialComplex &X, FT) {return ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>(X); });\
+m.def("Chain", [](const SimplicialComplex &X, const SimplicialComplex &A, FT) {return ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>(X, A); });\
+m.def("Chain", [](const CubicalComplex &X, FT) {return ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>(X); });\
+m.def("Chain", [](const CellComplex &X, FT) {return ChainComplex<ColumnMatrix<SparseVector<FT, size_t>>>(X); });
+
+
+#define BarcodeInterface(NT, MT) \
+m.def("barcode", [](const Diagram<NT, MT>& D, size_t hdim){return barcode(D, hdim); });\
+m.def("barcode", [](const Diagram<NT, MT>& D, size_t hdim, flags::divide_conquer){return barcode(D, hdim, flags::divide_conquer()); });\
+m.def("barcode", [](const Diagram<NT, MT>& D, size_t hdim, flags::rightward){return barcode(D, hdim, flags::rightward()); });\
+m.def("barcode", [](const Diagram<NT, MT>& D, size_t hdim, flags::leftward){return barcode(D, hdim, flags::leftward()); });\
+m.def("barcode", [](const Diagram<NT, std::vector<MT>>& D){return barcode(D); });\
+m.def("barcode", [](const Diagram<NT, std::vector<MT>>& D, flags::divide_conquer){return barcode(D, flags::divide_conquer()); });\
+m.def("barcode", [](const Diagram<NT, std::vector<MT>>& D, flags::rightward){return barcode(D, flags::rightward()); });\
+m.def("barcode", [](const Diagram<NT, std::vector<MT>>& D, flags::leftward){return barcode(D, flags::leftward()); });
+
+
+
+#define HomFunctorInterface(MT, name) \
+m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, size_t k) {return Hom(D, k);});\
+m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
+m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D) {return Hom(D);});\
+m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, bool topd) {return Hom(D, topd);});\
+BarcodeInterface(ReducedChainComplex<MT>, MT)\
+BarcodeInterface(ReducedDGVectorSpace<MT>, MT)\
+BarcodeInterface(int, MT)
+
+PYBIND11_MODULE(linalg_auto, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
 
-
-    FieldInterface(F3, "F3")
-
-    SparseVectorInterface(int, "IntVector")
-    SparseVectorInterface(F3, "F3Vector")
-
-    ColumnMatrixInterface(VInt, "IntMat")
-	m.def("Mat", [](const CSCMatrix<int, size_t> &A) { return ColumnMatrix<VInt>(A); });
-    ColumnMatrixInterfaceField(V3, "F3Mat")
-
-    py::class_<CSCMatrix<int, size_t>>(m, "CSCMatrix")
-        .def(py::init<>())
-        .def(py::init<size_t, size_t, const std::vector<size_t> &, const std::vector<size_t> &, const std::vector<int> &>())
-        .def("__call__", &CSCMatrix<int, size_t>::getval)
-		.def("nrow", &CSCMatrix<int, size_t>::nrow, "number of rows.")\
-		.def("ncol", &CSCMatrix<int, size_t>::ncol, "number of columns.")\
-        .def("print", py::overload_cast<>(&CSCMatrix<int, size_t>::print, py::const_));
-
-    ChainComplexInterface(M3, "F3ChainComplex")
-
-    ChainMapInterface(m, M3, "F3ChainMap")
-
-	FlagInterface(bats::no_optimization_flag, "no_optimization_flag")
-	FlagInterface(bats::clearing_flag, "clearing_flag")
-	FlagInterface(bats::compression_flag, "compression_flag")
-	FlagInterface(bats::standard_reduction_flag, "standard_reduction_flag")
-	FlagInterface(bats::extra_reduction_flag, "extra_reduction_flag")
-	FlagInterface(bats::compute_basis_flag, "compute_basis_flag")
-
-    ReducedChainComplexInterface(M3, "ReducedF3ChainComplex")
-
-	DGVectorSpaceInterface(M3, "F3DGVectorSpace")
-	DGLinearMapInterface(m, M3, "F3DGLinearMap")
-	ReducedDGVectorSpaceInterface(M3, "ReducedF3DGVectorSpace")
-
-	InducedMapInterface(m, M3)
-
+	AutoReducedChainComplexInterface(F2)
     AutoReducedChainComplexInterface(F3)
 
-    FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
-
-    ReducedFilteredChainComplexInterface(double, M3, "ReducedFilteredF3ChainComplex")
-
+	AutoReducedFilteredChainComplexInterface(F2)
     AutoReducedFilteredChainComplexInterface(F3)
 
-    PersistencePairInterface(double, "PersistencePair")
-    PersistencePairInterface(size_t, "PersistencePair_int")
-	ZigzagPairInterface(double, "ZigzagPair")
+	ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
+	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")
 
+	ChainFunctorInterface(M3, SimplicialComplexDiagram, "F3Chain")
+	DGLinearFunctorInterface(M3, CubicalComplexDiagram, "F3DGLinearFunctor")
+
+	AutoChainFunctorInterface(SimplicialComplexDiagram, F2)
+	AutoChainFunctorInterface(CubicalComplexDiagram, F2)
+	AutoChainFunctorInterface(CellComplexDiagram, F2)
+	SimpleChainFunctorInterface(m, F2)
+	HomFunctorInterface(M2, "Hom")
+
+	AutoChainFunctorInterface(SimplicialComplexDiagram, F3)
+	AutoChainFunctorInterface(CubicalComplexDiagram, F3)
+	AutoChainFunctorInterface(CellComplexDiagram, F3)
+	SimpleChainFunctorInterface(m, F3)
+	HomFunctorInterface(M3, "Hom")
+
+	m.def("RipsHom", [](SetDiagram& D, DataSet<double>& X, Euclidean& M, std::vector<double>& rmax, size_t hdim, F2) {return RipsHom(D, X, M, rmax, hdim, F2()); });
 }

@@ -62,3 +62,17 @@ using F2ChainDiagram = Diagram<F2ChainComplex, F2ChainMap>;
 using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;
 using F2DGLinearDiagram = Diagram<F2DGVectorSpace, F2DGLinearMap>;
 using F3DGLinearDiagram = Diagram<F3DGVectorSpace, F3DGLinearMap>;
+
+#define DiagramInterface(NT, ET, name) py::class_<Diagram<NT, ET>>(m, name)\
+.def(py::init<>())\
+.def(py::init<size_t, size_t>())\
+.def("set_node", (void (Diagram<NT, ET>::*)(size_t, NT&))(&Diagram<NT, ET>::set_node))\
+.def("set_edge", (void (Diagram<NT, ET>::*)(size_t, size_t, size_t, const ET&))(&Diagram<NT, ET>::set_edge))\
+.def("add_node", (size_t (Diagram<NT, ET>::*)(NT&))(&Diagram<NT, ET>::add_node))\
+.def("add_edge", (size_t (Diagram<NT, ET>::*)(size_t, size_t, ET&))(&Diagram<NT, ET>::add_edge))\
+.def("nnode", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nnode))\
+.def("nedge", (size_t (Diagram<NT, ET>::*)())(&Diagram<NT, ET>::nedge))\
+.def("node_data", [](Diagram<NT, ET>& D, size_t k){return D.node_data(k);})\
+.def("edge_data", [](Diagram<NT, ET>& D, size_t k){return D.edge_data(k);})\
+.def("edge_source", [](Diagram<NT, ET>& D, size_t k){return D.edge_source(k);})\
+.def("edge_target", [](Diagram<NT, ET>& D, size_t k){return D.edge_target(k);});

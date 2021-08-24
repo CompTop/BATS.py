@@ -36,24 +36,16 @@ __version__ = '0.0.1'
 
 ext_modules = [
     Extension(
-        'bats.libbats',
-        ['bats/libbats.cpp'],
+        'bats.linalg',
+        ['bats/linalg.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
         extra_link_args=extra_link,
         language='c++'
     ),
     Extension(
-        'bats.linalg_f2',
-        ['bats/linalg_f2.cpp'],
-        include_dirs=include_dirs,
-        extra_compile_args=extra['cxx'],
-        extra_link_args=extra_link,
-        language='c++'
-    ),
-    Extension(
-        'bats.complex',
-        ['bats/complex.cpp'],
+        'bats.linalg_auto',
+        ['bats/linalg_auto.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
         extra_link_args=extra_link,
@@ -70,14 +62,6 @@ ext_modules = [
     Extension(
         'bats.dense',
         ['bats/dense.cpp'],
-        include_dirs=include_dirs,
-        extra_compile_args=extra['cxx'],
-        extra_link_args=extra_link,
-        language='c++'
-    ),
-    Extension(
-        'bats.diagram',
-        ['bats/diagram.cpp'],
         include_dirs=include_dirs,
         extra_compile_args=extra['cxx'],
         extra_link_args=extra_link,
