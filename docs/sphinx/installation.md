@@ -1,6 +1,35 @@
 # Installation
 
-## Setup
+The easiest way to install `bats` is using `pip`
+```
+pip install bats-tda # gcc
+```
+To use clang (e.g. on a Mac) try
+```
+CC=clang pip install bats-tda # clang
+```
+
+Because `bats` uses OpenMP, it has to be compiled from source with a C++17 compliant complier.  This means installation can take a few minutes.  You can pass `--verbose` to `pip` to see what is going on with installation.
+
+If you don't have OpenMP, you can install with a package manager.
+
+GCC (e.g. on Linux)
+```
+dnf install libgomp-devel # Fedora
+```
+```
+apt-get install libgomp1-dev # Ubuntu
+```
+
+Clang (e.g. on Mac)
+```
+brew install libomp
+```
+
+## Compiling from Source
+
+You can also complile `bats` from the source code.  This can be useful for debugging installation
+or contributing to `bats`.
 
 ```bash
 conda create -n bats python=3
@@ -33,6 +62,8 @@ CC=clang python setup.py install
 
 
 ## Development
+
+Some useful commands for development:
 
 build in directory
 ```bash
