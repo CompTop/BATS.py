@@ -37,6 +37,9 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.autosummary',
     'myst_parser',
+    'nbsphinx',
+    'sphinx_copybutton',
+    'sphinx.ext.mathjax',
 ]
 
 autodoc_default_options = {
