@@ -276,6 +276,7 @@ PYBIND11_MODULE(linalg_f3, m) {
 	DiagramInterface(ReducedF3ChainComplex, std::vector<M3>, "F3HomDiagramAll")
 	DiagramInterface(F3DGVectorSpace, F3DGLinearMap, "F3DGLinearDiagram")
 	DiagramInterface(ReducedF3DGVectorSpace, M3, "F3DGHomDiagram")
+	DiagramInterface(ReducedF3DGVectorSpace, std::vector<M3>, "F3DGHomDiagramAll")
 	DiagramInterface(size_t, M3, "F3Diagram")
 
 

@@ -275,6 +275,7 @@ PYBIND11_MODULE(linalg_f2, m) {
 	DiagramInterface(ReducedF2ChainComplex, std::vector<M2>, "F2HomDiagramAll")
 	DiagramInterface(F2DGVectorSpace, F2DGLinearMap, "F2DGLinearDiagram")
 	DiagramInterface(ReducedF2DGVectorSpace, M2, "F2DGHomDiagram")
+	DiagramInterface(ReducedF2DGVectorSpace, std::vector<M2>, "F2DGHomDiagramAll")
 	DiagramInterface(size_t, M2, "F2Diagram")
 
 }

@@ -366,12 +366,14 @@ m.def("barcode", [](const Diagram<NT, std::vector<MT>>& D, flags::leftward){retu
 
 #define HomFunctorInterface(MT, name) \
 m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, size_t k) {return Hom(D, k);});\
-m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
 m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D) {return Hom(D);});\
 m.def(name, [](const Diagram<ChainComplex<MT>, ChainMap<MT>> &D, bool topd) {return Hom(D, topd);});\
+m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, size_t k) {return Hom(D, k);});\
+m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D) {return Hom(D);});\
+m.def(name, [](const Diagram<DGVectorSpace<MT>, DGLinearMap<MT>> &D, bool topd) {return Hom(D, topd);});\
 BarcodeInterface(ReducedChainComplex<MT>, MT)\
 BarcodeInterface(ReducedDGVectorSpace<MT>, MT)\
-BarcodeInterface(int, MT)
+BarcodeInterface(size_t, MT)
 
 PYBIND11_MODULE(linalg_auto, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
