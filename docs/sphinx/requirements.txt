@@ -2,3 +2,4 @@ Sphinx==4.0.1
 exhale==0.2.3
 sphinx-rtd-theme
 myst-parser
+nbsphinx
