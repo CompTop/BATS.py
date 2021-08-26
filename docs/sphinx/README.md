@@ -1,14 +1,24 @@
 # How to make documentation
-I highly recommend using a separate conda environment:
+It is recommended to use a separate conda environment to ensure the Sphinx version is correct.
 ```bash
 conda create -n doc-bats python=3
 conda activate doc-bats 
-pip install -r requirements.txt 
-CC=clang pip install bats-tda # or pip install bats-tda
-python3 -m pip install nbsphinx
+pip install -r requirements.txt
+conda install -c anaconda scipy
+cd ../..
+python setup.py install # installs bats
 conda install -c conda-forge pandoc
 conda install -c conda-forge ipython
 conda install -c conda-forge ipykernel
 conda install ipython notebook
-conda install -c anaconda scipy
+```
+
+Then, you are free to build documentation locally by Sphinx.
+```bash
+conda activate doc-bats
+pip install -r requirements.txt
+cd ../..
+python setup.py install # installs bats
+cd docs/sphinx
+make html # makes HTML
 ```
