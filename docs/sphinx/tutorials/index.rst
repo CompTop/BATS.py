@@ -10,6 +10,7 @@ Tutorials
   data
   diagrams
   geometric
+  Rips
   linalg
   maps
   reduction
