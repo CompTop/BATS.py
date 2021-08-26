@@ -49,6 +49,8 @@ autodoc_default_options = {
 
 autosummary_generate = True
 
+html_sourcelink_suffix = ''
+
 # Tell sphinx what the primary language being documented is.
 primary_domain = 'py'
 
