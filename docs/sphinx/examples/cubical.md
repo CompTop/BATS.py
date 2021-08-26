@@ -49,7 +49,7 @@ for i in range(m):
         A[i,j] = np.sin(i/10) * np.cos(j/10)
 plt.imshow(A)
 ```
-![image](figures/cubical_image.png")
+![image](figures/cubical_image.png)
 
 We'll zigzag through cubical complexes defined by level sets and their unions:
 
@@ -129,7 +129,7 @@ fig, ax = bats.visualization.persistence_barcode(ps)
 
 We'll now look at computing persistent homology on the image from before
 
-![image](figures/cubical_image.png")
+![image](figures/cubical_image.png)
 
 The idea is to filter toplexes by the largest pixel value
 

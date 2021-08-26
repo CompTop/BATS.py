@@ -21,7 +21,7 @@ fig = plt.scatter(X[:,0], X[:,1])
 fig.axes.set_aspect('equal')
 plt.savefig('figures/RipsEx_data.png')
 ```
-![data](figures/RipsEx_data.png")
+![data](./figures/RipsEx_data.png)
 
 # Use a BATS metric
 
@@ -40,7 +40,7 @@ for d in range(R.maxdim()):
 fig, ax = bats.persistence_diagram(ps, tmax = 2.0)
 plt.savefig('figures/RipsEx_pd_euc.png')
 ```
-![PD](figures/RipsEx_pd_euc.png")
+![PD](./figures/RipsEx_pd_euc.png)
 
 We see a robust H1 class because we sampled near a circle.
 
@@ -74,7 +74,7 @@ for d in range(R.maxdim()):
 fig, ax = bats.persistence_diagram(ps, tmax = 2.0)
 plt.savefig('figures/RipsEx_pd.png')
 ```
-![PD](figures/RipsEx_pd.png")
+![PD](./figures/RipsEx_pd.png)
 
 # Greedy Subsampling
 
@@ -95,7 +95,7 @@ fig.suptitle('hausdorff distance: {:.3f}'.format(dists[k]))
 ret.axes.set_aspect('equal')
 plt.savefig('figures/RipsEx_data_landmark.png')
 ```
-![PD](figures/RipsEx_data_landmark.png")
+![PD](./figures/RipsEx_data_landmark.png)
 
 Now, we can compute persistent homology of a Rips filtration in the standard way.
 ```python
@@ -112,7 +112,7 @@ for d in range(R.maxdim()):
 fig, ax = bats.persistence_diagram(ps, tmax = 2.0)
 plt.savefig('figures/RipsEx_pd_landmark.png')
 ```
-![PD](figures/RipsEx_pd_landmark.png")
+![PD](./figures/RipsEx_pd_landmark.png)
 
 We still see a robust H1 class, but the birth is a bit later now.
 
@@ -202,4 +202,4 @@ fig = plot_representative_2D(X, F, R, pair, pdist_np, width=800, height=800)
 fig.write_image('figures/H1_rep.png')
 ```
 
-![representative](figures/H1_rep.png")
+![representative](./figures/H1_rep.png)
