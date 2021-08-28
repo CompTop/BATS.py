@@ -3,22 +3,22 @@ It is recommended to use a separate conda environment to ensure the Sphinx versi
 ```bash
 conda create -n doc-bats python=3
 conda activate doc-bats 
-pip install -r requirements.txt
-conda install -c anaconda scipy
+conda install -c anaconda scipy # install scipy
 cd ../..
-python setup.py install # installs bats
+python setup.py install # install bats
+```
+
+Then, you need to install necessary packages for Sphinx
+```bash
+pip install -r requirements.txt
 conda install -c conda-forge pandoc
 conda install -c conda-forge ipython
 conda install -c conda-forge ipykernel
 conda install ipython notebook
 ```
 
-Then, you are free to build documentation locally by Sphinx.
+Finally, you are free to build documentation locally by Sphinx.
 ```bash
-conda activate doc-bats
-pip install -r requirements.txt
-cd ../..
-python setup.py install # installs bats
 cd docs/sphinx
 make html # makes HTML
 ```
