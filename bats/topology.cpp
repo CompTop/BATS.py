@@ -199,9 +199,9 @@ PYBIND11_MODULE(topology, m) {
 	m.def("lower_star_filtration", [](const CubicalComplex& X, std::vector<std::vector<double>>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
 	m.def("lower_star_filtration", [](const CubicalComplex& X, std::vector<std::vector<std::vector<double>>>& f0) {return lower_star_filtration(X, f0);}, "extend function on 0-cells to filtration");
 	m.def("lower_star_backwards", [](
-		const std::vector<std::vector<std::vector<double>>>& grad_dgms,
-    	const std::vector<std::vector<std::vector<int>>>& bdinds,
-    	const std::vector<std::vector<size_t>>& imap) {return lower_star_backwards(grad_dgms, bdinds, imap); }, "compute gradient on function from gradient on lower star filtration diagram.");
+		const std::vector<std::vector<double>>& grad_dgms,
+    	const std::vector<std::vector<int>>& bdinds,
+    	const std::vector<std::vector<size_t>>& imap) {return lower_star_backwards(grad_dgms, bdinds, imap); }, "compute gradient on function from gradient on lower star filtration diagram");
 
 	MetricInterfaceAll(Euclidean, "Euclidean")
 	MetricInterfaceAll(L1Dist, "L1Dist")
