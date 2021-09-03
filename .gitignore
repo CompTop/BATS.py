@@ -1,7 +1,7 @@
 build
 *.so
 __pycache__
-*.ipynb
+.ipynb_checkpoints
 *.egg-info
 dist
 files.txt

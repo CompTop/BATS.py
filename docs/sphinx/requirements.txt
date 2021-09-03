@@ -4,3 +4,4 @@ sphinx-rtd-theme
 myst-parser
 nbsphinx
 sphinx_copybutton
+ipykernel
