@@ -7,7 +7,9 @@
 namespace py = pybind11;
 using namespace bats;
 
-#define FilteredComplexInterface(T, CpxT, name) py::class_<Filtration<T, CpxT>>(m, name)\
+#define FilteredComplexInterface(T, CpxT, name) \
+m.def("Filtration", [](CpxT& X, std::vector<std::vector<T>>& vals) {return Filtration<T, CpxT>(X, vals);});\
+py::class_<Filtration<T, CpxT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const CpxT&, const std::vector<std::vector<T>>& >())\
 .def("add", (cell_ind (Filtration<T, CpxT>::*)(T, std::vector<size_t>&))(&Filtration<T, CpxT>::add))\
@@ -16,6 +18,7 @@ using namespace bats;
 .def("maxdim", &Filtration<T, CpxT>::maxdim)\
 .def("ncells", &Filtration<T, CpxT>::ncells)\
 .def("sublevelset", &Filtration<T, CpxT>::sublevelset)\
+.def("update_filtration", &Filtration<T, CpxT>::update_filtration)\
 .def("vals", py::overload_cast<size_t>(&Filtration<T, CpxT>::vals, py::const_))\
 .def("all_vals", py::overload_cast<>(&Filtration<T, CpxT>::vals, py::const_))
 
