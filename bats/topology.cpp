@@ -251,6 +251,16 @@ PYBIND11_MODULE(topology, m) {
 		"Rips Complex constructed from pairwise distances."
 	);
 
+	m.def("FlagComplex",
+		[](const std::vector<size_t> &edges, const size_t n, const size_t maxdim) {return FlagComplex<SimplicialComplex>(edges, n, maxdim);},
+		"Flag complex constructed from a (flattened) list of edges."
+	);
+	m.def("LightFlagComplex",
+		[](const std::vector<size_t> &edges, const size_t n, const size_t maxdim) {return FlagComplex<DefaultLightSimplicialComplex>(edges, n, maxdim);},
+		"Flag complex constructed from a (flattened) list of edges."
+	);
+
+
 
 	// m.def("FlagFiltration", (Filtration<double, SimplicialComplex> (*)(std::vector<filtered_edge<double>>&, const size_t, const size_t, const double))(&FlagFiltration));
 	m.def("WitnessFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const Euclidean&, double, size_t))(&WitnessFiltration));
