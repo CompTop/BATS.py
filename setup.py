@@ -19,6 +19,7 @@ this_dir + '/pybind11/include/'
 
 print('default compiler:', distutils.ccompiler.get_default_compiler())
 
+clang = False
 try:
     if os.environ['CC'] == "clang":
         clang = True
