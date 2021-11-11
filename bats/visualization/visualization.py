@@ -39,8 +39,11 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
     cs=plt.get_cmap('Set1')(dims) # set colors
 
     eps = essential_pair_filter(a)
-    tmax = np.max((tmax, np.max(a[eps != True,:2])))
-    tmin = np.min((tmin, np.min(a[eps != True,:2])))
+    tmax = np.max((tmax, np.ma.masked_invalid(a[:,:2]).max()))
+    tmin = np.min((tmin, np.ma.masked_invalid(a[:,:2]).min()))
+    if tmax == tmin:
+        # handle identical tmax, tmin
+        tmax = tmax*1.1 + 1.0
     inf_to = tmax * 1.1
     minf_to = tmin * 1.1
 
