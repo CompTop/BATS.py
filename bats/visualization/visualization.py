@@ -69,19 +69,17 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
         ad = a[dinds]
         cd = cs[dinds]
 
-        eps = essential_pair_filter(ad, remove_zeros)
+        ax.scatter(np.NaN, np.NaN, color=cs[d], marker='o', label="H{}".format(d))
+
         neps = non_essential_pair_filter(ad)
         # plot non-essential pairs
-        ax.scatter(ad[neps, 0], ad[neps, 1], c=cd[neps], marker='o', label="H{}".format(d))
+        ax.scatter(ad[neps, 0], ad[neps, 1], c=cd[neps], marker='o')
 
         # plot essential pairs
         eps = essential_pair_filter(ad)
         eb = ad[eps, 0]
         ed = [inf_to for _ in eb]
         ax.scatter(eb, ed, c=cd[eps], marker='*')
-
-
-
 
 
     if show_legend:
