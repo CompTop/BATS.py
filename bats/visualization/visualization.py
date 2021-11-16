@@ -10,7 +10,7 @@ def process_pairs(ps, remove_zeros=True):
     for p in ps:
         a.append([*pair_to_arr(p)])
     a = np.array(a)
-    lens = a[:,1] - a[:,0]
+    lens = np.abs(a[:,1] - a[:,0])
     if remove_zeros:
         a = a[lens > 0]
     return a
@@ -20,7 +20,7 @@ def essential_pair_filter(a, tub=np.inf):
     """
     tub - upper bound on what will be displayed
     """
-    return np.max(a, axis=1) >= tub
+    return np.max(np.abs(a), axis=1) >= tub
 
 
 def non_essential_pair_filter(a, tub=np.inf):
@@ -38,25 +38,34 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
     dims = np.array(a[:,2], dtype=np.int) # homology dimension
     cs=plt.get_cmap('Set1')(dims) # set colors
 
+    issublevel = a[0,0] < a[0,1]
+
     eps = essential_pair_filter(a)
     tmax = np.max((tmax, np.ma.masked_invalid(a[:,:2]).max()))
     tmin = np.min((tmin, np.ma.masked_invalid(a[:,:2]).min()))
     if tmax == tmin:
         # handle identical tmax, tmin
         tmax = tmax*1.1 + 1.0
-    inf_to = tmax * 1.1
-    minf_to = tmin * 1.1
+    span = tmax - tmin
+    inf_to = tmax + span/10
+    minf_to = tmin - span/10
 
     # set axes
-    xbnds = (minf_to*1.05, inf_to*1.05)
-    ybnds = (minf_to*1.05, inf_to*1.05)
+    xbnds = (minf_to -span/20, inf_to+span/20)
+    ybnds = (minf_to-span/20, inf_to+span/20)
     ax.set_xlim(xbnds)
     ax.set_ylim(ybnds)
     ax.set_aspect('equal')
 
     # add visual lines
     ax.plot(xbnds, ybnds, '--k')
-    ax.plot([minf_to*1.05,tmax], [tmax, tmax], '--r')
+    if issublevel:
+        # +infinity
+        ax.plot([minf_to-span/20,tmax], [tmax, tmax], '--r')
+    else:
+        # -infinity
+        ax.plot([tmin,xbnds[1]], [tmin,tmin], '--r')
+
 
     # add labels
     ax.set_xlabel("Birth")
@@ -78,12 +87,19 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
         # plot essential pairs
         eps = essential_pair_filter(ad)
         eb = ad[eps, 0]
-        ed = [inf_to for _ in eb]
+        ed = []
+        if issublevel:
+            ed = [inf_to for _ in eb]
+        else:
+            ed = [minf_to for _ in eb]
         ax.scatter(eb, ed, c=cd[eps], marker='*')
 
 
     if show_legend:
-        ax.legend(loc='lower right')
+        if issublevel:
+            ax.legend(loc='lower right')
+        else:
+            ax.legend(loc='upper left')
 
     return fig, ax
 
