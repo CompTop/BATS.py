@@ -69,7 +69,7 @@ def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=
         ad = a[dinds]
         cd = cs[dinds]
 
-        ax.scatter(np.NaN, np.NaN, color=cs[d], marker='o', label="H{}".format(d))
+        ax.scatter(np.NaN, np.NaN, color=plt.get_cmap('Set1')(d), marker='o', label="H{}".format(d))
 
         neps = non_essential_pair_filter(ad)
         # plot non-essential pairs
