@@ -384,6 +384,9 @@ PYBIND11_MODULE(linalg_auto, m) {
 	AutoReducedFilteredChainComplexInterface(F2)
     AutoReducedFilteredChainComplexInterface(F3)
 
+	m.def("union_find_pairs", [](FilteredChainComplex<double, M2> &X){ return union_find_pairs(X); });
+	m.def("union_find_pairs", [](FilteredChainComplex<double, M3> &X){ return union_find_pairs(X); });
+
 	ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
 	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")
 
