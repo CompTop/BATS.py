@@ -1,7 +1,11 @@
-Sphinx==4.0.1
-exhale==0.2.3
+python >= 3.8
+Sphinx == 4.0.1
+exhale == 0.2.3
 sphinx-rtd-theme
 myst-parser
 nbsphinx
 sphinx_copybutton
 ipykernel
+numpy
+scipy
+matplotlib
