@@ -16,3 +16,4 @@ Tutorials
   reduction
   visualization
   zigzag
+  opcount

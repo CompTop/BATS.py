@@ -248,6 +248,13 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 PYBIND11_MODULE(linalg_f2, m) {
     m.doc() = "Basic Applied Topology Subprograms interface";
 
+	#ifdef BATS_OPCOUNT
+	m.def("reset_field_ops", [](){bats::field_ops = 0; return;}, "Set global counter for field operations to be zero.");
+	m.def("get_field_ops", [](){return bats::field_ops;}, "return global counter of field operations.");
+	m.def("reset_column_ops", [](){bats::column_ops = 0; return;}, "Set global counter for column operations to be zero");
+	m.def("get_column_ops", [](){return bats::column_ops;}, "return global counter of column operations");
+	#endif
+
 	BasicFieldInterface(F2, "F2")
         .def("__neg__", py::overload_cast<>(&F2::operator-));
 
