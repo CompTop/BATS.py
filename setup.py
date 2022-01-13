@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys, os
 import distutils
-
+import platform
 # from pybind11.setup_helpers import Pybind11Extension, build_ext
 sys.path = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/bats'] + sys.path
 from _version import __version__
@@ -17,7 +17,8 @@ this_dir + '/BATS_include/include/',
 this_dir + '/pybind11/include/'
 ]
 
-print('default compiler:', distutils.ccompiler.get_default_compiler())
+# print('default compiler:', distutils.ccompiler.get_default_compiler())
+print('default compiler:', platform.python_compiler()[:5] )
 
 clang = False
 try:
@@ -26,7 +27,8 @@ try:
 except KeyError:
     clang = False
 
-if clang or distutils.ccompiler.get_default_compiler() == 'clang':
+# if clang or distutils.ccompiler.get_default_compiler() == 'clang':
+if clang or platform.python_compiler()[:5] == 'Clang':
     # We're using clang
     extra = {'cxx': ['-std=c++17']} # '-fopenmp'
     extra_link = ['-lomp']
