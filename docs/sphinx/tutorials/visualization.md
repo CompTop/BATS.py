@@ -115,7 +115,8 @@ fig.update_layout(scene_aspectmode='manual',
                   scene_aspectratio=dict(x=1, y=1, z=0.5))
 fig.show()
 ```
-[First Map](figures/map0.html ':include width=100% height=600px')
+<!-- [First Map](figures/map0.html ':include width=100% height=600px') -->
+ <iframe src="../_static/map0.html" height="600" width="100%" title="First Map"></iframe>
 
 The `show_generator` method will visualize homology generators in the domain by visualizing the preferred representative used in calculations.  By default, the image of the chain is visualized in the range, as well as the preferred representative for the homology class.
 
@@ -124,7 +125,8 @@ fig.reset()
 fig.show_generator(1)
 fig.show()
 ```
-[Generator](figures/map_gen.html ':include width=100% height=600px')
+<!-- [Generator](figures/map_gen.html ':include width=100% height=600px') -->
+<iframe src="../_static/map_gen.html" height="600" width="100%" title="Generator"></iframe>
 
 The `reset` method clears the visualization of chains/generators.  You can also change the color of chains and homology.  `group_suffix` can be used to group visualizations in the legend - try using the legend to toggle visualizations below:
 ```python
@@ -133,7 +135,8 @@ fig.show_generator(5, group_suffix=0)
 fig.show_generator(3, color='orange', hcolor='black', group_suffix=1)
 fig.show()
 ```
-[Generators](figures/map_gen2.html ':include width=100% height=600px')
+<!-- [Generators](figures/map_gen2.html ':include width=100% height=600px') -->
+ <iframe src="../_static/map_gen2.html" height="600" width="100%" title="Generators"></iframe>
 
 Let's now create a second map from the full data set to a projection onto two coordinates.
 ```python
@@ -154,4 +157,5 @@ fig.show_generator(5, color='red', hcolor='blue', group_suffix=5)
 fig.show()
 ```
 
-[Generators](figures/map_gen3.html ':include width=100% height=600px')
+<!-- [Generators](figures/map_gen3.html ':include width=100% height=600px') -->
+<iframe src="../_static/map_gen3.html" height="600" width="100%" title="Genertors"></iframe>
