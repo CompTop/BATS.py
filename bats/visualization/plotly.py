@@ -47,7 +47,7 @@ class ScatterVisualization(go.Figure):
         if not hasattr(self, '_RC'):
             self._RC = bats.ReducedChainComplex(self._cpx, field())
 
-    def show_chain(self, c, dim=1, color="red"):
+    def show_chain(self, c, dim=1, color="red", width=2, **kwargs):
         if dim != 1:
             raise NotImplementedError("Only 1-chains are supported")
 
@@ -60,19 +60,25 @@ class ScatterVisualization(go.Figure):
             edge_y.extend([self._pos[i,1], self._pos[j,1], None])
         self.add_trace(go.Scatter(
             x=edge_x, y=edge_y,
-            line=dict(width=2, color=color),
+            line=dict(width=width, color=color),
             hoverinfo='none',
-            mode='lines')
+            mode='lines',
+            **kwargs)
          )
 
-    def show_generator(self, i, hdim=1, color="red"):
+    def show_generator(self, i, hdim=1, **kwargs):
+        """
+        Show homology generator i in dimension hdim
+        'color' and 'width' kwargs specify the line width and color
+        other kwargs are passed to the Scatter trace.
+        """
         if hdim != 1:
             raise NotImplementedError("Only H1 generators are supported")
 
         self.reduce()
         r = self._RC.get_preferred_representative(i, hdim)
 
-        self.show_chain(r, dim=hdim, color=color)
+        self.show_chain(r, dim=hdim, **kwargs)
 
     def show_generators(self, hdim):
         self.reduce()
@@ -219,7 +225,7 @@ class MapVisualization(go.Figure):
         self.compute_chain()
         return self._chain
 
-    def show_chain(self, c, dim=1, color='red', hcolor='blue', show_rep=True, group_suffix=None):
+    def show_chain(self, c, dim=1, color='red', hcolor='blue', show_rep=True, group_suffix=None, **kwargs):
         """
         visualize chain in first space
 
@@ -243,13 +249,15 @@ class MapVisualization(go.Figure):
             c = self._chain.edge_data(i)[dim] * c
             self._render_chain(i+1, c, dim=dim, color=color,
                                legendgroup="chain{}".format(group_suffix),
-                               name="chain{}".format(i+1))
+                               name="chain{}".format(i+1),
+                               **kwargs)
             if show_rep:
                 R = self._hom.node_data(i+1)
                 rc = R.chain_preferred_representative(c, dim)
                 self._render_chain(i+1, rc, dim=dim, color=hcolor,
                                    legendgroup="hom{}".format(group_suffix),
-                                   name="rep{}".format(i+1))
+                                   name="rep{}".format(i+1),
+                                   **kwargs)
 
     def _render_chain(self, cpxind, c, dim=1, color='red', **kwargs):
         """

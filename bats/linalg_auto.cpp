@@ -386,6 +386,7 @@ PYBIND11_MODULE(linalg_auto, m) {
 
 	m.def("union_find_pairs", [](FilteredChainComplex<double, M2> &X){ return union_find_pairs(X); });
 	m.def("union_find_pairs", [](FilteredChainComplex<double, M3> &X){ return union_find_pairs(X); });
+	m.def("rips_union_find_pairs", &rips_union_find_pairs<double>, "find Rips pairs");
 
 	ChainFunctorInterface(M2, SimplicialComplexDiagram, "F2Chain")
 	DGLinearFunctorInterface(M2, SimplicialComplexDiagram, "F2DGLinearFunctor")

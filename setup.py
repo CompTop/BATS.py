@@ -34,7 +34,7 @@ if clang or platform.python_compiler()[:5] == 'Clang':
     extra_link = ['-lomp']
 else:
     # assume we're using gcc
-    extra = {'cxx': ['-std=c++17', '-fopenmp']} # '-fopenmp'
+    extra = {'cxx': ['-std=c++17', '-fopenmp', '-march=native']} # '-fopenmp'
     extra_link = ['-lgomp']
 
 
