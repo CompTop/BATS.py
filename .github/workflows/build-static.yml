@@ -50,7 +50,7 @@ jobs:
       - name: Delocate bats
         run: |
           if [ "$RUNNER_OS" == "macOS" ]; then
-            delocate-wheel -v bats.py/dist/*.whl
+            delocate-wheel -v dist/*.whl
           elif [ "$RUNNER_OS" == "Linux" ]; then
             echo "FIXME: $RUNNER_OS support coming soon (auditwheel)"
             exit 1
