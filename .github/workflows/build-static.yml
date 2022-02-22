@@ -1,0 +1,104 @@
+name: build-static
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest]
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install OpenMP
+        run: brew install libomp
+
+      - name: Install dependencies
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            python -m pip install --upgrade pip wheel delocate
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            python -m pip install --upgrade pip wheel auditwheel
+          else
+            echo "$RUNNER_OS not supported"
+            exit 1
+          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Build bats
+        run: |
+          python setup.py clean --all
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            CC=clang python setup.py bdist_wheel
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            python setup.py bdist_wheel
+          else
+            echo "$RUNNER_OS not supported"
+            exit 1
+          fi
+
+      - name: Delocate bats
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            delocate-wheel -v bats.py/dist/*.whl
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            echo "FIXME: $RUNNER_OS support coming soon (auditwheel)"
+            exit 1
+          else
+            echo "$RUNNER_OS not supported"
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: bats_tda_wheel-${{ matrix.os }}-${{ matrix.python-version }}-${{ github.sha }}
+          path: dist/*.whl
+
+
+  install-and-test:
+    runs-on: ${{ matrix.os }}
+    needs: build
+
+    strategy:
+      matrix:
+        os: [macos-latest]
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: bats_tda_wheel-${{ matrix.os }}-${{ matrix.python-version }}-${{ github.sha }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel pytest
+
+      - name: Install bats
+        run: |
+          pip install bats_tda-*.whl
+
+      - name: Run Tests
+        run: |
+          cd test
+          python -m unittest simplicial.py
+          python -m unittest cubical.py
