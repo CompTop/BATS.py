@@ -4,8 +4,9 @@
 [![PyPi](https://img.shields.io/pypi/v/bats-tda.svg)](https://pypi.org/project/bats-tda/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![Ubuntu Tests](https://github.com/CompTop/BATS.py/workflows/ubuntu-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
-[![MacOS Tests](https://github.com/CompTop/BATS.py/workflows/macos-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions)
+[![Build Static](https://github.com/CompTop/BATS.py/actions/workflows/build-static.yml/badge.svg)](https://github.com/CompTop/BATS.py/actions/workflows/build-static.yml)
+[![Ubuntu Tests](https://github.com/CompTop/BATS.py/workflows/ubuntu-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions/workflows/ubuntu-latest.yml)
+[![MacOS Tests](https://github.com/CompTop/BATS.py/workflows/macos-latest/badge.svg)](https://github.com/CompTop/BATS.py/actions/workflows/macos-latest.yml)
 [![Documentation Status](https://readthedocs.org/projects/bats-tda/badge/?version=latest)](https://bats-tda.readthedocs.io/en/latest/?badge=latest)
 
 
