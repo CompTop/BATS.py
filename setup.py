@@ -117,17 +117,19 @@ setup(
         'Topic :: Scientific/Engineering :: Mathematics',
         'Programming Language :: C++',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10'
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Operating System :: MacOS :: MacOS X'
     ],
     install_requires=[
         'numpy',
-        'matplotlib',
+        #'matplotlib',
       ],
-    python_requires=">=3.7",
+    python_requires=">=3.6",
     keywords='algebraic topology, topological data analysis, persistent homology, zigzag homology',
 )
