@@ -126,10 +126,6 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Operating System :: MacOS :: MacOS X'
     ],
-    install_requires=[
-        'numpy',
-        #'matplotlib',
-      ],
     python_requires=">=3.6",
     keywords='algebraic topology, topological data analysis, persistent homology, zigzag homology',
 )

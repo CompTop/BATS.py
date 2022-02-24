@@ -1,5 +1,10 @@
 # History of Releases
 
+### v0.2.0
+* Improvements to performance
+* Customized Rips union-find
+* Add support/testing for Python 3.6 - 3.10
+
 ### v0.1.0
 
 * Now able to install on MacOS
