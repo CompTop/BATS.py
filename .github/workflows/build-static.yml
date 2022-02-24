@@ -91,6 +91,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           python -m pip install --upgrade pip wheel pytest
 
       - name: Install bats
