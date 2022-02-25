@@ -34,12 +34,17 @@ The easiest way to install `bats` is using `pip`
 ```
 pip install bats-tda # gcc
 ```
-To use clang (e.g. on a Mac) try
+To use clang (e.g. on a Mac) __note that you must install openMP first__
 ```
 CC=clang pip install bats-tda # clang
 ```
 
-Because `bats` uses OpenMP, it has to be compiled from source with a C++17 compliant complier.  This means installation can take a few minutes.  You can pass `--verbose` to `pip` to see what is going on with installation.
+Wheels are provided for Linux.  If you want to force compilation from source, you can use
+```
+pip install --verbose --no-binary bats-tda bats-tda
+```
+
+`bats` uses OpenMP, and it has to be compiled from source with a C++17 compliant compiler.  This means installation can take a few minutes.  You can pass `--verbose` to `pip` to see what is going on with installation.
 
 If you don't have OpenMP, you can install with a package manager.
 

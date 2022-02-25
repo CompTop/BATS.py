@@ -19,8 +19,9 @@ function repair_wheel {
 
 # Install a system package required by our library
 # yum install -y atlas-devel
-yum install -y libjpeg-devel # centOS
-# apt-get install -y libjpeg-dev # debian
+# yum install -y libjpeg-devel # centOS
+apt update
+apt install -y libjpeg-dev # debian
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
