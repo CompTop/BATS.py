@@ -120,25 +120,6 @@ m.def("EU_U_commute", [](const ColumnMatrix<VT> &EU, const ColumnMatrix<VT> &U) 
 .def("from_hom_basis", [](const ReducedChainComplex<MT> &R, const MT::col_type &A, size_t k) {return R.from_hom_basis(A, k);})\
 .def("maxdim", &ReducedChainComplex<MT>::maxdim);
 
-#define DGVectorSpaceInterface(MT, name) py::class_<DGVectorSpace<MT>>(m, name)\
-.def(py::init<>())\
-.def(py::init<const SimplicialComplex&, int>())\
-.def(py::init<const DefaultLightSimplicialComplex&, int>())\
-.def(py::init<const CubicalComplex&, int>())\
-.def("maxdim", &DGVectorSpace<MT>::maxdim);
-
-#define DGLinearMapInterface(m, MT, name) py::class_<DGLinearMap<MT>>(m, name)\
-.def(py::init<>())\
-.def(py::init<const CellularMap&>())\
-.def("__getitem__", py::overload_cast<ssize_t>(&DGLinearMap<MT>::operator[], py::const_))\
-.def("__setitem__", py::overload_cast<ssize_t>(&DGLinearMap<MT>::operator[]));
-
-#define ReducedDGVectorSpaceInterface(MT, name) py::class_<ReducedDGVectorSpace<MT>>(m, name)\
-.def(py::init<>())\
-.def(py::init<const DGVectorSpace<MT>&>())\
-.def("hdim", &ReducedDGVectorSpace<MT>::hdim)\
-.def("maxdim", &ReducedDGVectorSpace<MT>::maxdim);
-
 #define InducedMapInterface(m, MT) \
 m.def("InducedMap",\
 	(MT (*)(const ChainMap<MT> &, const ReducedChainComplex<MT> &, const ReducedChainComplex<MT>&, size_t))(&induced_map), \

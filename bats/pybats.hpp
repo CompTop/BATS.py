@@ -76,3 +76,43 @@ using F3DGLinearDiagram = Diagram<F3DGVectorSpace, F3DGLinearMap>;
 .def("edge_data", [](Diagram<NT, ET>& D, size_t k){return D.edge_data(k);})\
 .def("edge_source", [](Diagram<NT, ET>& D, size_t k){return D.edge_source(k);})\
 .def("edge_target", [](Diagram<NT, ET>& D, size_t k){return D.edge_target(k);});
+
+#define DGVectorSpaceInterface(MT, name) py::class_<DGVectorSpace<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const SimplicialComplex&, int>())\
+.def(py::init<const SimplicialComplex&, int, bool>())\
+.def(py::init<const DefaultLightSimplicialComplex&, int>())\
+.def(py::init<const CubicalComplex&, int>())\
+.def_readwrite("degree", &DGVectorSpace<MT>::degree)\
+.def("maxdim", &DGVectorSpace<MT>::maxdim)\
+.def("__getitem__", py::overload_cast<ssize_t>(&DGVectorSpace<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<ssize_t>(&DGVectorSpace<MT>::operator[]));
+
+#define DGLinearMapInterface(m, MT, name) py::class_<DGLinearMap<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const CellularMap&>())\
+.def("__getitem__", py::overload_cast<ssize_t>(&DGLinearMap<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<ssize_t>(&DGLinearMap<MT>::operator[]));
+
+#define ReducedDGVectorSpaceInterface(MT, name) py::class_<ReducedDGVectorSpace<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const DGVectorSpace<MT>&>())\
+.def("hdim", &ReducedDGVectorSpace<MT>::hdim)\
+.def("maxdim", &ReducedDGVectorSpace<MT>::maxdim);
+
+#define FilteredDGVectorSpaceInterface(T, MT, name) py::class_<FilteredDGVectorSpace<T, MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const Filtration<T, SimplicialComplex>&, int>())\
+.def(py::init<const Filtration<T, DefaultLightSimplicialComplex>&, int>())\
+.def(py::init<const Filtration<T, CubicalComplex>&, int>())\
+.def("val", [](FilteredDGVectorSpace<T, MT>& C) {return C.val;}, "filtration values.")\
+.def("perm", [](FilteredDGVectorSpace<T, MT>& C) {return C.perm;}, "permutation from original order")\
+.def("update_filtration", &FilteredDGVectorSpace<T, MT>::update_filtration, "update filtration with new values");
+
+#define ReducedFilteredDGVectorSpaceInterface(T, MT, name) py::class_<ReducedFilteredDGVectorSpace<T, MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const FilteredDGVectorSpace<T, MT>&>())\
+.def("dim", &ReducedFilteredDGVectorSpace<T, MT>::dim)\
+.def("hdim", &ReducedFilteredDGVectorSpace<T, MT>::hdim)\
+.def("maxdim", &ReducedFilteredDGVectorSpace<T, MT>::maxdim)\
+.def("persistence_pairs", [](ReducedFilteredDGVectorSpace<T, MT>& F, size_t k){return F.persistence_pairs(k);} );
