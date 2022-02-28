@@ -40,7 +40,7 @@ G.get_simplices(1) # [[0, 1]]
 [Documentation](bats?id=simplicialcomplex)
 
 
-# Filtrations
+## Filtrations
 
 BATS also exposes functionality for filtered verisons of `SimplicialComplex`, `ChainComplex`, and `ReducedChainComplex`
 

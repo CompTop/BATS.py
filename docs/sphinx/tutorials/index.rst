@@ -11,6 +11,7 @@ Tutorials
   diagrams
   geometric
   Rips
+  lower_star
   linalg
   maps
   reduction
