@@ -15,6 +15,7 @@ Tutorials
   linalg
   maps
   reduction
+  cohomology
   visualization
   zigzag
   opcount
