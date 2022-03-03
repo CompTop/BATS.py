@@ -117,11 +117,14 @@ using F3DGLinearDiagram = Diagram<F3DGVectorSpace, F3DGLinearMap>;
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::standard_reduction_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::standard_reduction_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::standard_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::standard_reduction_flag, bats::clearing_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::standard_reduction_flag, bats::compression_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag>())\
+.def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
+.def("update_filtration", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration, "update filtration with new values")\
 .def("dim", &ReducedFilteredDGVectorSpace<T, MT>::dim)\
 .def("hdim", &ReducedFilteredDGVectorSpace<T, MT>::hdim)\
 .def("maxdim", &ReducedFilteredDGVectorSpace<T, MT>::maxdim)\
