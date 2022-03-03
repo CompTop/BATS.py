@@ -32,8 +32,21 @@ def non_essential_pair_filter(a, tub=np.inf):
     return f
 
 
-def persistence_diagram(ps, remove_zeros=True, show_legend=True, tmax=0.0, tmin=0.0, **kwargs):
-    fig, ax = plt.subplots(**kwargs)
+def persistence_diagram(ps,
+        remove_zeros=True,
+        show_legend=True,
+        tmax=0.0,
+        tmin=0.0,
+        ax = None,
+        **kwargs):
+    """
+    Plot persistence diagram of PersistencePair
+    """
+    if ax is None:
+        fig, ax = plt.subplots(**kwargs)
+    else:
+        fig = None
+        
     a = process_pairs(ps, remove_zeros)
     dims = np.array(a[:,2], dtype=np.int) # homology dimension
     cs=plt.get_cmap('Set1')(dims) # set colors
