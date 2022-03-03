@@ -307,4 +307,8 @@ PYBIND11_MODULE(topology, m) {
 	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const double, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 	m.def("Rips", (SimplicialComplexDiagram (*)(const SetDiagram&, const DataSet<double>&, const Euclidean&, const std::vector<double>&, const size_t))(&Rips), "Construct a diagram of Rips complexes from a SetDiagram.");
 
+	// Kendall-Tau distance
+	m.def("kendall_tau", [](std::vector<size_t> &perm) {return bats::Kendall_tau(perm);}, "Kendall-Tau distance between permutation and identity.");
+	m.def("kendall_tau", [](std::vector<size_t> &perm1, std::vector<size_t> &perm2) {return bats::Kendall_tau(perm1, perm2);}, "Kendall-Tau distance between two permutations.");
+
 }
