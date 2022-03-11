@@ -63,6 +63,36 @@ using F3ChainDiagram = Diagram<F3ChainComplex, F3ChainMap>;
 using F2DGLinearDiagram = Diagram<F2DGVectorSpace, F2DGLinearMap>;
 using F3DGLinearDiagram = Diagram<F3DGVectorSpace, F3DGLinearMap>;
 
+#define ChainComplexInterface(MT, name) py::class_<ChainComplex<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const SimplicialComplex&>())\
+.def(py::init<const DefaultLightSimplicialComplex&>())\
+.def(py::init<const SimplicialComplex&, const SimplicialComplex&>(), "relative chain complex")\
+.def(py::init<const CubicalComplex&>())\
+.def("__getitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<size_t>(&ChainComplex<MT>::operator[]))\
+.def("maxdim", &ChainComplex<MT>::maxdim)\
+.def("dim", [](const ChainComplex<MT>& C, size_t k){return C.dim(k);})\
+.def("dim", [](const ChainComplex<MT>& C){return C.dim();})\
+.def("clear_compress_apparent_pairs", &ChainComplex<MT>::clear_compress_apparent_pairs);
+
+#define ChainMapInterface(m, MT, name) py::class_<ChainMap<MT>>(m, name)\
+.def(py::init<>())\
+.def(py::init<const CellularMap&>())\
+.def(py::init<const CellularMap&, const SimplicialComplex&, const SimplicialComplex&, const SimplicialComplex&, const SimplicialComplex&>(), "relative chain map")\
+.def("__getitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[], py::const_))\
+.def("__setitem__", py::overload_cast<size_t>(&ChainMap<MT>::operator[]));
+
+#define InducedMapInterface(m, MT) \
+m.def("InducedMap",\
+	(MT (*)(const ChainMap<MT> &, const ReducedChainComplex<MT> &, const ReducedChainComplex<MT>&, size_t))(&induced_map), \
+	"Induced map on homology." \
+);\
+m.def("InducedMap",\
+	(MT (*)(const DGLinearMap<MT> &, const ReducedDGVectorSpace<MT> &, const ReducedDGVectorSpace<MT>&, size_t))(&induced_map), \
+	"Induced map on homology." \
+);
+
 #define DiagramInterface(NT, ET, name) py::class_<Diagram<NT, ET>>(m, name)\
 .def(py::init<>())\
 .def(py::init<size_t, size_t>())\

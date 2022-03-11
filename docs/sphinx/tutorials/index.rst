@@ -16,6 +16,7 @@ Tutorials
   maps
   reduction
   cohomology
+  relative
   visualization
   zigzag
   opcount
