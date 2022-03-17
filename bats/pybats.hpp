@@ -155,6 +155,8 @@ m.def("InducedMap",\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::clearing_flag, bats::compute_basis_flag>())\
 .def(py::init<const FilteredDGVectorSpace<T, MT>&, bats::extra_reduction_flag, bats::compression_flag>())\
 .def("update_filtration", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration, "update filtration with new values")\
+.def("update_filtration_general", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general<Update_info<Filtration<T, SimplicialComplex>>>, "generally update filtration with updating information")\
+.def("update_filtration_general", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information")\
 .def("dim", &ReducedFilteredDGVectorSpace<T, MT>::dim)\
 .def("hdim", &ReducedFilteredDGVectorSpace<T, MT>::hdim)\
 .def("maxdim", &ReducedFilteredDGVectorSpace<T, MT>::maxdim)\
