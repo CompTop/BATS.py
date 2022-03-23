@@ -182,6 +182,7 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::standard_reduction_flag, bats::compression_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, DefaultLightSimplicialComplex>&, T, bats::extra_reduction_flag))(&__ReducedFilteredChainComplex));\
@@ -194,6 +195,7 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag))(&__ReducedFilteredChainComplex));\
+	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::clearing_flag, bats::compute_basis_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", (ReducedFilteredChainComplex<double, MT> (*)(const Filtration<double, CubicalComplex>&, T, bats::standard_reduction_flag, bats::compression_flag))(&__ReducedFilteredChainComplex));\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C) {return ReducedFilteredChainComplex(C); });\
 	m.def("reduce", [](const FilteredChainComplex<double, MT>& C, bats::standard_reduction_flag) {return ReducedFilteredChainComplex(C, bats::standard_reduction_flag()); });\
