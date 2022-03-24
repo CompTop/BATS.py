@@ -54,6 +54,10 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 
 #define Update_infoInterface(T, CpxT, name) py::class_<Update_info<Filtration<T, CpxT>>>(m, name) \
 	.def(py::init<const Filtration<T, CpxT>&, const Filtration<T, CpxT>&>())\
+	.def_readwrite("deletion_indices", &Update_info<Filtration<T, CpxT>>::deletion_indices)\
+	.def_readwrite("addition_indices", &Update_info<Filtration<T, CpxT>>::addition_indices)\
+	.def_readwrite("permutations", &Update_info<Filtration<T, CpxT>>::permutations)\
+	.def_readwrite("kendall_tau_dists", &Update_info<Filtration<T, CpxT>>::kendall_tau_dists)\
 	.def("filtered_info", &Update_info<Filtration<T, CpxT>>::filtered_info, "if the cells in filtration are not sorted by their filtration values, we find filtered updating information")
 
 #define MetricInterface(M, name) py::class_<M>(m, name)\
