@@ -1,3 +1,4 @@
+.vscode/
 wheelhouse
 build
 *.so

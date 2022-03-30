@@ -157,6 +157,8 @@ m.def("InducedMap",\
 .def("update_filtration", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration, "update filtration with new values")\
 .def("update_filtration_general", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general<Update_info<Filtration<T, SimplicialComplex>>>, "generally update filtration with updating information")\
 .def("update_filtration_general", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information")\
+.def("update_filtration_general_clearing", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general_clearing<Update_info<Filtration<T, SimplicialComplex>>>, "generally update filtration with updating information")\
+.def("update_filtration_general_clearing", &ReducedFilteredDGVectorSpace<T, MT>::update_filtration_general_clearing<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information")\
 .def("dim", &ReducedFilteredDGVectorSpace<T, MT>::dim)\
 .def("hdim", &ReducedFilteredDGVectorSpace<T, MT>::hdim)\
 .def("maxdim", &ReducedFilteredDGVectorSpace<T, MT>::maxdim)\
