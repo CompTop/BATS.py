@@ -60,6 +60,15 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 	.def_readwrite("kendall_tau_dists", &Update_info<Filtration<T, CpxT>>::kendall_tau_dists)\
 	.def("filtered_info", &Update_info<Filtration<T, CpxT>>::filtered_info, "if the cells in filtration are not sorted by their filtration values, we find filtered updating information")
 
+#define Update_infoInterface2(name) py::class_<UpdateInfo2>(m, name) \
+	.def(py::init<const Filtration<double, SimplicialComplex>&, const Filtration<double, SimplicialComplex>&>())\
+	.def(py::init<const Filtration<double, DefaultLightSimplicialComplex>&, const Filtration<double, DefaultLightSimplicialComplex>&>())\
+	.def("reverse_for_cohomology", &UpdateInfo2::reverse_for_cohomology, "reverse for cohomology")\
+	.def_readwrite("ndeletions", &UpdateInfo2::ndeletions)\
+	.def_readwrite("insertion_indices", &UpdateInfo2::insertion_indices)\
+	.def_readwrite("insertion_cols", &UpdateInfo2::insertion_cols)\
+	.def_readwrite("perm", &UpdateInfo2::perm)
+
 #define MetricInterface(M, name) py::class_<M>(m, name)\
 .def(py::init<>())\
 .def("__call__", (Matrix<double> (M::*)(const DataSet<double>&, const DataSet<double>&) const)(&M::operator()), "returns Matrix of pairwise distances");
@@ -195,6 +204,8 @@ PYBIND11_MODULE(topology, m) {
 
 	Update_infoInterface(double, SimplicialComplex, "UpdateInfoFiltration");
 	Update_infoInterface(double, DefaultLightSimplicialComplex, "UpdateInfoLightFiltration");
+
+	Update_infoInterface2("UpdateInfo2");
 
 
 	// Filtration extension
