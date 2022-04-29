@@ -161,6 +161,7 @@ m.def("InducedMap",\
 .def("dim", &ReducedFilteredDGVectorSpace<T, MT>::dim)\
 .def("hdim", &ReducedFilteredDGVectorSpace<T, MT>::hdim)\
 .def("maxdim", &ReducedFilteredDGVectorSpace<T, MT>::maxdim)\
+.def("persistence_pairs_vec", [](ReducedFilteredDGVectorSpace<T, MT>& F, size_t k){return F.persistence_pairs_vec(k);} )\
 .def("persistence_pairs", [](ReducedFilteredDGVectorSpace<T, MT>& F, size_t k){return F.persistence_pairs(k);} );
 
 #define ReducedChainComplexInterface(MT, name) py::class_<ReducedChainComplex<MT>>(m, name)\
