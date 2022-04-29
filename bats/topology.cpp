@@ -83,6 +83,7 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 m.def("RipsFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
 m.def("LightRipsFiltration", (Filtration<double, DefaultLightSimplicialComplex> (*)(const DataSet<double>&, const M&, double, size_t))(&RipsFiltration));\
 m.def("RipsCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const bats::Cover&, const M&, double, size_t))(&RipsFiltration));\
+m.def("StrictRipsCoverFiltration", [](const DataSet<double>& X, const bats::Cover &cover, const M &dist, double rmax, size_t dmax){return StrictRipsCoverFiltration<double, SimplicialComplex, M>(X, cover, dist, rmax, dmax);}, "Rips Cover Filtration");\
 m.def("DowkerFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, double, size_t))(&DowkerFiltration));\
 m.def("DowkerCoverFiltration", (Filtration<double, SimplicialComplex> (*)(const DataSet<double>&, const DataSet<double>&, const M&, const bats::Cover&, double, size_t))(&DowkerFiltration));\
 m.def("RipsFiltration_extension", [](const DataSet<double>& X, const M& dist, double rmax,  size_t dmax) {return RipsFiltration_extension<SimplicialComplex>(X, dist, rmax, dmax);}, "Rips Filtration with inverse map returned");\
