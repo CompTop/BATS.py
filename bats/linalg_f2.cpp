@@ -27,6 +27,7 @@ using namespace bats;
 .def(py::init<>())\
 .def(py::init<const std::vector<size_t>&, const std::vector<F>&>())\
 .def(py::init<const std::vector<std::tuple<size_t, int>>&>(), "construct from a list of index-value tuples")\
+.def("axpy", [](SparseVector<F, size_t>&x, SparseVector<F, size_t>& y){return x.axpy(F(1), y); }, "add vector y")\
 .def("nzinds", &SparseVector<F, size_t>::nzinds)\
 .def("nzvals", &SparseVector<F, size_t>::nzvals)\
 .def("nnz", &SparseVector<F, size_t>::nnz, "number of non-zeros")\
