@@ -164,6 +164,8 @@ PYBIND11_MODULE(linalg_f3, m) {
 	DGVectorSpaceInterface(M3, "F3DGVectorSpace")
 	DGLinearMapInterface(m, M3, "F3DGLinearMap")
 	ReducedDGVectorSpaceInterface(M3, "ReducedF3DGVectorSpace")
+	FilteredDGVectorSpaceInterface(double, M3, "FilteredF3DGVectorSpace")
+	ReducedFilteredDGVectorSpaceInterface(double, M3, "ReducedFilteredF3DGVectorSpace")
 
     FilteredChainComplexInterface(double, M3, "FilteredF3ChainComplex")
 
