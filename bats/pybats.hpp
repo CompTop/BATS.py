@@ -217,4 +217,5 @@ m.def("InducedMap",\
 .def("persistence_pairs_vec", [](ReducedFilteredChainComplex<T, MT>& F, size_t k){return F.persistence_pairs_vec(k);} )\
 .def("update_filtration", &ReducedFilteredChainComplex<T, MT>::update_filtration, "update filtration with new values")\
 .def("update_filtration_general", &ReducedFilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, SimplicialComplex>>>, "generally update filtration with updating information")\
-.def("update_filtration_general", &ReducedFilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information");
+.def("update_filtration_general", &ReducedFilteredChainComplex<T, MT>::update_filtration_general<Update_info<Filtration<T, DefaultLightSimplicialComplex>>>, "generally update filtration with updating information");\
+m.def("extract_pairs", [](MT& R, std::vector<size_t>& p2c, std::vector<T>& valsk, std::vector<T>& valsk1, size_t k) {return extract_pairs(R, p2c, valsk, valsk1, k);}, "extract persistence pairs");
