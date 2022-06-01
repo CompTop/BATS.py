@@ -205,8 +205,10 @@ m.def("InducedMap",\
 #define FilteredDGVectorSpaceInterface(T, MT, name) py::class_<FilteredDGVectorSpace<T, MT>>(m, name)\
 .def(py::init<>())\
 .def(py::init<const Filtration<T, SimplicialComplex>&, int>())\
+.def(py::init<const Filtration<T, SimplicialComplex>&, int, bool>())\
 .def(py::init<const Filtration<T, DefaultLightSimplicialComplex>&, int>())\
 .def(py::init<const Filtration<T, CubicalComplex>&, int>())\
+.def(py::init<const std::vector<MT>&, const std::vector<std::vector<T>>&, int>())\
 .def("val", [](FilteredDGVectorSpace<T, MT>& C) {return C.val;}, "filtration values.")\
 .def("perm", [](FilteredDGVectorSpace<T, MT>& C) {return C.perm;}, "permutation from original order")\
 .def("update_filtration", &FilteredDGVectorSpace<T, MT>::update_filtration, "update filtration with new values");

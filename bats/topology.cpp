@@ -49,7 +49,7 @@ m.def("zigzag_levelsets", [](zigzag::ZigzagFiltration<CpxT, T>& X, T eps, T t0, 
 	.def("boundary", &T::boundary_csc)\
 	.def("get_simplex", [](T& X, size_t dim, size_t i){return X.get_simplex(dim, i);})\
 	.def("get_simplices", py::overload_cast<const size_t>(&T::get_simplices, py::const_), "Returns a list of all simplices in given dimension.")\
-	.def("get_simplices", py::overload_cast<>(&T::get_simplices, py::const_), "Returns a list of all simplices.");
+	.def("get_simplices", py::overload_cast<>(&T::get_simplices, py::const_), "Returns a list of all simplices.")
 
 
 #define Update_infoInterface(T, CpxT, name) py::class_<Update_info<Filtration<T, CpxT>>>(m, name) \
@@ -150,13 +150,15 @@ PYBIND11_MODULE(topology, m) {
         .def("maxdim", &CellComplex::maxdim, "maximum dimension cell")
         .def("ncells", py::overload_cast<>(&CellComplex::ncells, py::const_), "number of cells")
         .def("ncells", py::overload_cast<const size_t>(&CellComplex::ncells, py::const_), "number of cells in given dimension")
-		.def("add_vertex", &CellComplex::add_vertex, "add vertex to cell complex")
-		.def("add_vertices", &CellComplex::add_vertices, "add vertices to cell complex")
+				.def("add_vertex", &CellComplex::add_vertex, "add vertex to cell complex")
+				.def("add_vertices", &CellComplex::add_vertices, "add vertices to cell complex")
         .def("add", (size_t (CellComplex::*)(const std::vector<size_t>&, const std::vector<int>&, size_t))( &CellComplex::add ), "add cell in dimension k by specifying boundary and coefficients.")
         .def("boundary", &CellComplex::boundary_csc);
 
-	SimplicialCpxInterface(SimplicialComplex, "SimplicialComplex")
-	SimplicialCpxInterface(DefaultLightSimplicialComplex, "LightSimplicialComplex")
+	SimplicialCpxInterface(SimplicialComplex, "SimplicialComplex")\
+	.def("add_directed", [](SimplicialComplex& X, std::vector<size_t>& s){return X.add_directed(s);}, "add directed or degenerate simplex")\
+	.def("add_directed_recursive", [](SimplicialComplex& X, std::vector<size_t>& s){return X.add_directed_recursive(s);}, "add directed or degenerate simplex recursively");
+	SimplicialCpxInterface(DefaultLightSimplicialComplex, "LightSimplicialComplex");
 
 	m.def("TriangulatedProduct", [](const SimplicialComplex &X, const SimplicialComplex& Y){ return TriangulatedProduct(X, Y);} );
 
@@ -178,7 +180,8 @@ PYBIND11_MODULE(topology, m) {
 
 
 
-    FilteredComplexInterface(double, SimplicialComplex, "FilteredSimplicialComplex");
+  FilteredComplexInterface(double, SimplicialComplex, "FilteredSimplicialComplex")\
+	.def("add_directed", [](Filtration<double, SimplicialComplex>& F, double t, std::vector<size_t>& s){return F.add_directed(t, s); });
 	FilteredComplexInterface(double, DefaultLightSimplicialComplex, "FilteredLightSimplicialComplex");
 	FilteredComplexInterface(double, CubicalComplex, "FilteredCubicalComplex")\
 	.def(py::init<size_t>());
